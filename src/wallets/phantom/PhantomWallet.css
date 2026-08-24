@@ -13,7 +13,7 @@
   --ph-green: #00e557;
   --ph-green-soft: rgba(0, 229, 87, 0.18);
   --ph-line: rgba(255, 255, 255, 0.08);
-  --ph-font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter SemiBold", sans-serif;
+  --ph-font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", sans-serif;
 }
 
 *,
@@ -150,7 +150,7 @@
 .ph-hero-balance {
   font-family: var(--ph-font-stack);
   font-size: 48px;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
   color: #ffffff;
@@ -216,7 +216,7 @@
   color: #ffffff;
   font-family: var(--ph-font-stack);
   font-size: 18px;
-  font-weight: 900;
+ font-weight: 600;
   letter-spacing: -0.01em;
 }
 
@@ -256,7 +256,7 @@
   font-family: var(--ph-font-stack);
   margin: 0;
   font-size: 24px;
-  font-weight: 900;
+  font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.01em;
 }
@@ -364,7 +364,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
@@ -373,7 +373,7 @@
   margin-top: 3px;
   color: #8e8e93;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.1;
 }
 
@@ -396,7 +396,7 @@
 .ph-token-pnl {
   font-family: var(--ph-font-stack);
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.1;
 }
 
@@ -476,7 +476,7 @@
   color: #8e8e93;
   font-family: var(--ph-font-stack);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 400;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75);
   cursor: pointer;
 }
