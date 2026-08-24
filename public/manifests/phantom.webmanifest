@@ -1,0 +1,19 @@
+{
+  "id": "/app/phantom",
+  "name": "Phantom",
+  "short_name": "Phantom",
+  "description": "Visual-only Phantom wallet simulator.",
+  "start_url": "/app/phantom",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#181818",
+  "theme_color": "#181818",
+  "icons": [
+    {
+      "src": "/tool-icons/phantom.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

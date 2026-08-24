@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/apps/phantom",
+      "destination": "/apps/phantom/install.html"
+    },
+    {
+      "source": "/apps/phantom/",
+      "destination": "/apps/phantom/install.html"
+    },
+    {
+      "source": "/apps/trust",
+      "destination": "/apps/trust/install.html"
+    },
+    {
+      "source": "/apps/trust/",
+      "destination": "/apps/trust/install.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

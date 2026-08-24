@@ -1,0 +1,98 @@
+.ptr-viewport {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ptr-scroll {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  z-index: 1;
+}
+
+.ptr-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  width: 100%;
+  height: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.ptr-indicator.visible {
+  opacity: 1;
+}
+
+.ptr-spinner {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin-top: 8px;
+  transition: opacity 140ms ease;
+}
+
+.ptr-spinner-segment {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 6px;
+  border-radius: 999px;
+  transform-origin: center -5px;
+  background: rgba(189, 189, 194, 0.95);
+  transition: opacity 120ms linear;
+}
+
+.ptr-indicator.refreshing .ptr-spinner {
+  animation: none;
+}
+
+.ptr-indicator.refreshing .ptr-spinner-segment {
+  animation: ptr-segment-cycle 0.9s linear infinite;
+}
+
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(1) { animation-delay: 0s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(2) { animation-delay: 0.1125s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(3) { animation-delay: 0.225s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(4) { animation-delay: 0.3375s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(5) { animation-delay: 0.45s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(6) { animation-delay: 0.5625s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(7) { animation-delay: 0.675s; }
+.ptr-indicator.refreshing .ptr-spinner-segment:nth-child(8) { animation-delay: 0.7875s; }
+
+.ptr-content {
+  will-change: transform;
+  transition: transform 180ms ease;
+}
+
+.ptr-content.refreshing {
+  transition-duration: 120ms;
+}
+
+@keyframes ptr-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ptr-segment-cycle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  35% {
+    opacity: 1;
+  }
+}

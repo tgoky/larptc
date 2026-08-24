@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Phantom" />
+    <meta name="theme-color" content="#181818" />
+    <link rel="manifest" href="/manifests/phantom.webmanifest" />
+    <link rel="apple-touch-icon" href="/tool-icons/phantom.png" />
+    <title>Install Phantom</title>
+    <style>
+      *{box-sizing:border-box}body{min-height:100dvh;margin:0;padding:28px;background:#181818;color:#fff;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;place-items:center}.panel{width:min(100%,480px)}img{width:88px;height:88px;border-radius:22px}.tag{margin-top:28px;color:#ab9ff2;font-size:11px;text-transform:uppercase}h1{margin:10px 0 0;font-size:42px;line-height:1.05}p{color:#b9b9bd}.code{width:100%;margin:28px 0 0;padding:18px;border:1px solid #4c4c52;border-radius:12px;background:#222229;color:#fff;font:700 24px/1 monospace;letter-spacing:2px;text-align:center}.steps{margin-top:28px;padding-top:20px;border-top:1px solid #38383d}.steps strong{display:block;margin-bottom:6px}.steps span{color:#b9b9bd}a{color:#ab9ff2}
+    </style>
+  </head>
+  <body>
+    <main class="panel">
+      <img src="/tool-icons/phantom.png" alt="" />
+      <div class="tag">Home screen setup</div>
+      <h1>Install Phantom</h1>
+      <p id="intro-copy">Add this exact page to your home screen. When the app opens, enter the pairing code below.</p>
+      <button class="code" id="pairing-code" type="button">NO CODE</button>
+      <p id="copy-status">Tap the code to copy it.</p>
+      <div class="steps"><strong>iPhone or iPad</strong><span>Tap Share, choose Add to Home Screen, then open the new Phantom icon.</span></div>
+    </main>
+    <script>
+      const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+      const params = new URLSearchParams(window.location.search);
+      const previewMode = params.get('preview') === '1';
+      const previewTarget = params.get('target') || '/app/phantom';
+
+      if (standalone) {
+        window.location.replace(previewMode ? previewTarget : '/installed/phantom');
+      } else {
+        const codeButton = document.getElementById('pairing-code');
+        const status = document.getElementById('copy-status');
+        const intro = document.getElementById('intro-copy');
+        if (previewMode) {
+          intro.textContent = 'Add this page to your home screen, then open the new icon to preview Phantom in standalone app mode.';
+          codeButton.textContent = 'PREVIEW MODE';
+          status.textContent = 'No code needed while public preview mode is on.';
+          return;
+        }
+        codeButton.textContent = params.get('pair') || 'NO CODE';
+        codeButton.addEventListener('click', async () => {
+          await navigator.clipboard.writeText(codeButton.textContent);
+          status.textContent = 'Copied. Paste this when the installed app opens.';
+        });
+      }
+    </script>
+  </body>
+</html>

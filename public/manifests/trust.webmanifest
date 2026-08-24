@@ -1,0 +1,19 @@
+{
+  "id": "/app/trust",
+  "name": "Trust Wallet",
+  "short_name": "Trust",
+  "description": "Visual-only Trust Wallet simulator.",
+  "start_url": "/app/trust",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/tool-logos/trust.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
