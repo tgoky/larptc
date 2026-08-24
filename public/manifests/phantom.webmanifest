@@ -4,7 +4,7 @@
   "short_name": "Phantom",
   "description": "Visual-only Phantom wallet simulator.",
   "start_url": "/app/phantom",
-  "scope": "/",
+  "scope": "/app/phantom",
   "display": "standalone",
   "background_color": "#181818",
   "theme_color": "#181818",
