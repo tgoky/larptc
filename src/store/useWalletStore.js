@@ -413,7 +413,7 @@ export const useWalletStore = create(
     }),
     {
       name: 'wallet-spoof-storage',
-      version: 4,
+      version: 5,
       migrate: (persistedState, version) => {
         if (!persistedState) return persistedState;
         if (version < 4) {
