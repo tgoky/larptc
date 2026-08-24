@@ -416,7 +416,7 @@ export const useWalletStore = create(
       version: 5,
       migrate: (persistedState, version) => {
         if (!persistedState) return persistedState;
-        if (version < 4) {
+        if (version < 5) {
           return {
             ...persistedState,
             trust: { ...defaultTrust },
