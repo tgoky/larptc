@@ -91,6 +91,7 @@ const FALLBACK_ICON_STYLES = {
   ethereum: { bg: '#e8e8ed', fg: '#1b1b1f', text: 'ETH', fontSize: 28 },
   bitcoin: { bg: '#f7931a', fg: '#ffffff', text: 'BTC', fontSize: 28 },
   sui: { bg: '#6ec7ff', fg: '#ffffff', text: 'SUI', fontSize: 28 },
+  usdc: { bg: '#2775ca', fg: '#ffffff', text: 'USDC', fontSize: 24 },
   polygon: { bg: '#8247e5', fg: '#ffffff', text: 'POL', fontSize: 26 },
   bnb: { bg: '#0c1017', fg: '#f0b90b', text: 'BNB', fontSize: 28 },
   hype: { bg: '#0f1318', fg: '#ffffff', text: 'HYPE', fontSize: 23 },
@@ -183,14 +184,8 @@ function getTokenOverlayMarketKey(token) {
 }
 
 const defaultPhantomTokens = [
-  { id: 'solana', name: 'Solana', symbol: 'SOL', verified: true, amount: 0, marketKey: 'solana', dexscreenerAddress: DEX_MARKETS.solana.address, network: 'Solana', icon: getPreferredTokenIconUrl('solana') },
   { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', verified: true, amount: 0, marketKey: 'ethereum', dexscreenerAddress: DEX_MARKETS.ethereum.address, network: 'Ethereum', icon: getPreferredTokenIconUrl('ethereum') },
-  { id: 'bitcoin-taproot', name: 'Bitcoin', symbol: 'BTC', verified: true, amount: 0, marketKey: 'bitcoin', dexscreenerAddress: DEX_MARKETS.bitcoin.address, label: 'Taproot', network: 'Bitcoin', icon: getPreferredTokenIconUrl('bitcoin') },
-  { id: 'bitcoin-segwit', name: 'Bitcoin', symbol: 'BTC', verified: true, amount: 0, marketKey: 'bitcoin', dexscreenerAddress: DEX_MARKETS.bitcoin.address, label: 'Native Segwit', network: 'Bitcoin', icon: getPreferredTokenIconUrl('bitcoin') },
-  { id: 'monad', name: 'Monad', symbol: 'MON', verified: true, amount: 0, marketKey: 'monad', dexscreenerAddress: '', network: 'Monad', icon: getFallbackIconUrl('monad') },
-  { id: 'sui', name: 'Sui', symbol: 'SUI', verified: true, amount: 0, marketKey: 'sui', dexscreenerAddress: DEX_MARKETS.sui.address, network: 'Sui', icon: getFallbackIconUrl('sui') },
-  { id: 'polygon', name: 'Polygon', symbol: 'POL', verified: true, amount: 0, marketKey: 'polygon', dexscreenerAddress: DEX_MARKETS.polygon.address, network: 'Polygon', icon: getFallbackIconUrl('polygon') },
-  { id: 'hype', name: 'HYPE', symbol: 'HYPE', verified: true, amount: 0, marketKey: 'hype', dexscreenerAddress: '', network: 'Hyperliquid', icon: getFallbackIconUrl('hype') },
+  { id: 'solana', name: 'Solana', symbol: 'SOL', verified: true, amount: 0, marketKey: 'solana', dexscreenerAddress: DEX_MARKETS.solana.address, network: 'Solana', icon: getPreferredTokenIconUrl('solana') },
   {
     id: 'usdc',
     name: 'USD Coin',
@@ -234,6 +229,7 @@ const TOKEN_PRICE_INDEX = {
   ethereum: ['ethereum', 'custom-eth'],
   bitcoin: ['bitcoin-taproot', 'bitcoin-segwit', 'custom-btc'],
   bnb: ['custom-bnb'],
+  usdc: ['usdc'],
 };
 
 function mergeTokenDefaults(tokens, defaults) {
