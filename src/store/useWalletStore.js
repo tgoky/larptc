@@ -38,6 +38,12 @@ const DEX_MARKETS = {
     nativeSymbol: 'SUI',
     network: 'Sui',
   },
+  usdc: {
+    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    fallbackIcon: 'USDC',
+    nativeSymbol: 'SOL',
+    network: 'Solana',
+  },
   polygon: {
     address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
     fallbackIcon: 'POL',
@@ -185,6 +191,17 @@ const defaultPhantomTokens = [
   { id: 'sui', name: 'Sui', symbol: 'SUI', verified: true, amount: 0, marketKey: 'sui', dexscreenerAddress: DEX_MARKETS.sui.address, network: 'Sui', icon: getFallbackIconUrl('sui') },
   { id: 'polygon', name: 'Polygon', symbol: 'POL', verified: true, amount: 0, marketKey: 'polygon', dexscreenerAddress: DEX_MARKETS.polygon.address, network: 'Polygon', icon: getFallbackIconUrl('polygon') },
   { id: 'hype', name: 'HYPE', symbol: 'HYPE', verified: true, amount: 0, marketKey: 'hype', dexscreenerAddress: '', network: 'Hyperliquid', icon: getFallbackIconUrl('hype') },
+  {
+    id: 'usdc',
+    name: 'USD Coin',
+    symbol: 'USDC',
+    verified: true,
+    amount: 0,
+    marketKey: 'usdc',
+    dexscreenerAddress: DEX_MARKETS.usdc.address,
+    network: 'Solana',
+    icon: getPreferredTokenIconUrl('usdc'),
+  },
 ];
 
 const defaultPhantom = {

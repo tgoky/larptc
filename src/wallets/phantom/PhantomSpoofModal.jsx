@@ -6,12 +6,13 @@ import './PhantomWallet.css';
 const QUICK_ASSETS = [
   { id: 'solana',          symbol: 'SOL' },
   { id: 'ethereum',        symbol: 'ETH' },
-  { id: 'bitcoin-taproot', symbol: 'BTC (Taproot)' },
-  { id: 'bitcoin-segwit',  symbol: 'BTC (Segwit)' },
-  { id: 'monad',           symbol: 'MON' },
-  { id: 'sui',             symbol: 'SUI' },
-  { id: 'polygon',         symbol: 'POL' },
-  { id: 'hype',            symbol: 'HYPE' },
+  // { id: 'bitcoin-taproot', symbol: 'BTC (Taproot)' },
+  // { id: 'bitcoin-segwit',  symbol: 'BTC (Segwit)' },
+  // { id: 'monad',           symbol: 'MON' },
+  // { id: 'sui',             symbol: 'SUI' },
+  // { id: 'polygon',         symbol: 'POL' },
+  // { id: 'hype',            symbol: 'HYPE' },
+  { id: 'usdc',     symbol: 'USDC' },
 ];
 
 export default function PhantomSpoofModal({ onClose }) {
