@@ -227,10 +227,20 @@ const TOKEN_PRICE_INDEX = {
   usdtTron: ['custom-usdt'],
   solana: ['solana', 'custom-sol'],
   ethereum: ['ethereum', 'custom-eth'],
-  bitcoin: ['bitcoin-taproot', 'bitcoin-segwit', 'custom-btc'],
+  bitcoin: ['custom-btc'],
   bnb: ['custom-bnb'],
   usdc: ['usdc'],
 };
+
+// Obsolete default IDs that should never persist as custom tokens
+const OBSOLETE_DEFAULT_IDS = [
+  'bitcoin-taproot',
+  'bitcoin-segwit',
+  'monad',
+  'sui',
+  'polygon',
+  'hype',
+];
 
 function mergeTokenDefaults(tokens, defaults) {
   const mergedDefaults = defaults.map((defaultToken) => {
@@ -239,7 +249,9 @@ function mergeTokenDefaults(tokens, defaults) {
   });
 
   const customTokens = tokens.filter(
-    (token) => !defaults.some((defaultToken) => defaultToken.id === token.id)
+    (token) =>
+      !defaults.some((defaultToken) => defaultToken.id === token.id) &&
+      !OBSOLETE_DEFAULT_IDS.includes(token.id)
   );
 
   return [...mergedDefaults, ...customTokens];
@@ -419,6 +431,7 @@ export const useWalletStore = create(
         if (version < 5) {
           return {
             ...persistedState,
+            phantom: { ...defaultPhantom },
             trust: { ...defaultTrust },
           };
         }
