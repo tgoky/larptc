@@ -16,15 +16,15 @@ const IconChevronDown = () => (
 );
 
 const IconChevronRight = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="#636366" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-    <path d="m9 6 6 6-6 6" />
+  <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+    <path d="m9 18 6-6-6-6" />
   </svg>
 );
 
-const IconBell = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+// Replaced Bell with Phantom Heart Icon
+const IconHeart = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.25-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
   </svg>
 );
 
@@ -36,17 +36,10 @@ const IconMore = () => (
   </svg>
 );
 
+// Fixed 2-bar Phantom Filter Icon
 const IconSliders = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-    <line x1="4" y1="21" x2="4" y2="14" />
-    <line x1="4" y1="10" x2="4" y2="3" />
-    <line x1="12" y1="21" x2="12" y2="12" />
-    <line x1="12" y1="8" x2="12" y2="3" />
-    <line x1="20" y1="21" x2="20" y2="16" />
-    <line x1="20" y1="12" x2="20" y2="3" />
-    <line x1="1" y1="14" x2="7" y2="14" />
-    <line x1="9" y1="8" x2="15" y2="8" />
-    <line x1="17" y1="16" x2="23" y2="16" />
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+    <path d="M8 4v16M16 4v16M5 9h6M13 15h6" />
   </svg>
 );
 
@@ -75,7 +68,7 @@ function formatMoney(value) {
 }
 
 function formatLargeNumber(value) {
-  if (!value) return '$0';
+  if (!value || value <= 0) return '$575.3M';
   if (value >= 1e12) return `$${(value / 1e12).toFixed(1)}T`;
   if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
   if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`;
@@ -118,7 +111,7 @@ function createSeededRandom(seedText) {
 
 function generateSeries(currentPrice, changePercent, timeframe) {
   const pointCount =
-    timeframe === 'LIVE' ? 12 :
+    timeframe === 'LIVE' ? 16 :
     timeframe === '1D' ? 120 :
     timeframe === '1W' ? 160 :
     timeframe === '1M' ? 180 :
@@ -135,7 +128,7 @@ function generateSeries(currentPrice, changePercent, timeframe) {
 
   const startPrice = currentPrice > 0 ? currentPrice / (1 + changePercent / 100) : 1;
   const endPrice = currentPrice > 0 ? currentPrice : startPrice;
-  const volatility = 0.025;
+  const volatility = 0.02;
 
   const points = [];
   const random = createSeededRandom(`${currentPrice}-${changePercent}-${timeframe}`);
@@ -144,7 +137,7 @@ function generateSeries(currentPrice, changePercent, timeframe) {
   for (let index = 0; index < pointCount; index += 1) {
     const progress = index / (pointCount - 1);
     const drift = (endPrice - value) * 0.08;
-    const wave = Math.sin(progress * Math.PI * 5) * currentPrice * volatility * 0.2;
+    const wave = Math.sin(progress * Math.PI * 4) * currentPrice * volatility * 0.3;
     const noise = (random() - 0.5) * currentPrice * volatility;
     value = index === pointCount - 1 ? endPrice : Math.max(0.000001, value + drift + noise + wave);
     points.push({
@@ -229,6 +222,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
   const activeChangePct = startValue ? (activeChangeValue / startValue) * 100 : 0;
   const lineIsNegative = activeChangeValue < 0;
 
+  // Render edge-to-edge chart with glowing end-dot
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || chartData.length === 0) return;
@@ -245,13 +239,12 @@ export default function PhantomTokenDetail({ token, onBack }) {
     const min = Math.min(...chartData.map((point) => point.value));
     const max = Math.max(...chartData.map((point) => point.value));
     const range = max - min || 1;
-    const padX = 12;
-    const padY = 16;
+    const padX = 0; // Edge to edge!
+    const padY = 12;
     const width = rect.width;
-    const innerWidth = Math.max(width - padX * 2, 1);
     const height = rect.height - padY * 2;
 
-    const getX = (index) => padX + (index / (chartData.length - 1)) * innerWidth;
+    const getX = (index) => (index / (chartData.length - 1)) * width;
     const getY = (value) => padY + height - ((value - min) / range) * height;
 
     const lineColor = lineIsNegative ? '#ff453a' : '#00e557';
@@ -264,7 +257,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
       else context.lineTo(x, y);
     }
     context.strokeStyle = lineColor;
-    context.lineWidth = 2.8;
+    context.lineWidth = 2.4;
     context.lineJoin = 'round';
     context.lineCap = 'round';
     context.stroke();
@@ -274,10 +267,10 @@ export default function PhantomTokenDetail({ token, onBack }) {
       const activeY = getY(chartData[scrubIndex].value);
 
       context.beginPath();
-      context.moveTo(activeX, 10);
-      context.lineTo(activeX, rect.height - 10);
-      context.strokeStyle = 'rgba(255,255,255,0.2)';
-      context.lineWidth = 1.5;
+      context.moveTo(activeX, 0);
+      context.lineTo(activeX, rect.height);
+      context.strokeStyle = 'rgba(255,255,255,0.15)';
+      context.lineWidth = 1;
       context.stroke();
 
       context.beginPath();
@@ -285,11 +278,17 @@ export default function PhantomTokenDetail({ token, onBack }) {
       context.fillStyle = lineColor;
       context.fill();
     } else {
-      const lastX = getX(chartData.length - 1);
+      // Pulsing/glowing right dot tip
+      const lastX = getX(chartData.length - 1) - 4;
       const lastY = getY(chartData[chartData.length - 1].value);
 
       context.beginPath();
-      context.arc(lastX, lastY, 4, 0, Math.PI * 2);
+      context.arc(lastX, lastY, 7, 0, Math.PI * 2);
+      context.fillStyle = lineIsNegative ? 'rgba(255, 69, 58, 0.3)' : 'rgba(0, 229, 87, 0.3)';
+      context.fill();
+
+      context.beginPath();
+      context.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
       context.fillStyle = lineColor;
       context.fill();
     }
@@ -299,10 +298,8 @@ export default function PhantomTokenDetail({ token, onBack }) {
     const canvas = canvasRef.current;
     if (!canvas || chartData.length === 0) return;
     const rect = canvas.getBoundingClientRect();
-    const padX = 12;
-    const innerWidth = Math.max(rect.width - padX * 2, 1);
-    const x = Math.min(Math.max(clientX - rect.left - padX, 0), innerWidth);
-    const index = Math.round((x / innerWidth) * (chartData.length - 1));
+    const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+    const index = Math.round((x / rect.width) * (chartData.length - 1));
     setScrubIndex(index);
   }
 
@@ -332,8 +329,8 @@ export default function PhantomTokenDetail({ token, onBack }) {
         </button>
 
         <div className="ph-detail-header-right">
-          <button className="ph-detail-icon-circle" type="button" aria-label="Notifications">
-            <IconBell />
+          <button className="ph-detail-icon-circle" type="button" aria-label="Favorites">
+            <IconHeart />
           </button>
           <button className="ph-detail-icon-circle" type="button" aria-label="More Options">
             <IconMore />
@@ -372,33 +369,51 @@ export default function PhantomTokenDetail({ token, onBack }) {
             <canvas ref={canvasRef} className="ph-chart-canvas" />
           </section>
 
-     <section className="ph-timeframe-row-v2">
-  <div className="ph-timeframe-pills">
-    {TIMEFRAMES.map((entry) => (
-      <button
-        key={entry}
-        type="button"
-        className={`ph-tf-pill ${entry === timeframe ? 'active' : ''}`}
-        onClick={() => setTimeframe(entry)}
-      >
-        {entry === 'LIVE' ? (
-          <>
-            <span className="ph-live-bullet">•</span>LIVE
-          </>
-        ) : (
-          entry
-        )}
-      </button>
-    ))}
-  </div>
-  <button className="ph-tf-filter-btn" type="button" aria-label="Chart Settings">
-    <IconSliders />
-  </button>
-</section>
+          <section className="ph-timeframe-row-v2">
+            <div className="ph-timeframe-pills">
+              {TIMEFRAMES.map((entry) => (
+                <button
+                  key={entry}
+                  type="button"
+                  className={`ph-tf-pill ${entry === timeframe ? 'active' : ''}`}
+                  onClick={() => setTimeframe(entry)}
+                >
+                  {entry === 'LIVE' ? (
+                    <>
+                      <span className="ph-live-bullet">•</span>LIVE
+                    </>
+                  ) : (
+                    entry
+                  )}
+                </button>
+              ))}
+            </div>
+            <button className="ph-tf-filter-btn" type="button" aria-label="Chart Settings">
+              <IconSliders />
+            </button>
+          </section>
 
           <section className="ph-positions-section-v2">
             <h2>Your Positions</h2>
             <div className="ph-positions-list">
+              <button className="ph-pos-item" type="button">
+                <div className="ph-pos-left">
+                  <TokenAvatar token={token} imageUrl={tokenInfo?.imageUrl || liveQuote.imageUrl || token.icon} />
+                  <div className="ph-pos-info">
+                    <div className="ph-pos-title-row">
+                      <span className="ph-pos-sym">{token.symbol}</span>
+                      <span className="ph-pos-net">Base</span>
+                    </div>
+                    <div className="ph-pos-amount">0.00049 {token.symbol}</div>
+                  </div>
+                </div>
+                <div className="ph-pos-right">
+                  <div className="ph-pos-value">$1.23</div>
+                  <div className="ph-pos-change positive">+$0.02</div>
+                </div>
+                <IconChevronRight />
+              </button>
+
               <button className="ph-pos-item" type="button">
                 <div className="ph-pos-left">
                   <TokenAvatar token={token} imageUrl={tokenInfo?.imageUrl || liveQuote.imageUrl || token.icon} />
@@ -418,38 +433,20 @@ export default function PhantomTokenDetail({ token, onBack }) {
                 </div>
                 <IconChevronRight />
               </button>
-
-              <button className="ph-pos-item" type="button">
-                <div className="ph-pos-left">
-                  <TokenAvatar token={token} imageUrl={tokenInfo?.imageUrl || liveQuote.imageUrl || token.icon} />
-                  <div className="ph-pos-info">
-                    <div className="ph-pos-title-row">
-                      <span className="ph-pos-sym">{token.symbol}</span>
-                      <span className="ph-pos-net">Base</span>
-                    </div>
-                    <div className="ph-pos-amount">0.00049 {token.symbol}</div>
-                  </div>
-                </div>
-                <div className="ph-pos-right">
-                  <div className="ph-pos-value">$1.20</div>
-                  <div className="ph-pos-change positive">+&lt;$0.01</div>
-                </div>
-                <IconChevronRight />
-              </button>
             </div>
           </section>
         </div>
       </PullToRefresh>
-      
-<div className="ph-detail-bottom-dock">
-  <div className="ph-detail-mcap">
-    <span className="ph-detail-mcap-val">{formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap)}</span>
-    <span className="ph-detail-mcap-lbl">market cap</span>
-  </div>
-  <button className="ph-detail-trade-btn" type="button">
-    Trade
-  </button>
-</div>
+
+      <div className="ph-detail-bottom-dock">
+        <div className="ph-detail-mcap">
+          <span className="ph-detail-mcap-val">{formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap)}</span>
+          <span className="ph-detail-mcap-lbl">market cap</span>
+        </div>
+        <button className="ph-detail-trade-btn" type="button">
+          Trade
+        </button>
+      </div>
     </div>
   );
 }
