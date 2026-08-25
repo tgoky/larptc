@@ -52,7 +52,7 @@ const IconSliders = () => (
   </svg>
 );
 
-const ETH_LOGO_URL = '/tokens-logos/ethereum_logo.webp';
+const ETH_LOGO_URL = '/token-logos/ethereum_logo.webp';
 
 function TokenAvatar({ token, imageUrl }) {
   const isEthereum = token?.symbol?.toUpperCase() === 'ETH' || token?.name?.toLowerCase() === 'ethereum';
