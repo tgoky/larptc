@@ -16,7 +16,16 @@ const IconChevronDown = () => (
 );
 
 const IconChevronRight = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="#ffffff"        /* Change from #8e8e93 to #ffffff to make it stand out */
+    strokeWidth="3.2"       /* Increase stroke thickness from 2.5 to 3.2 */
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    width="22"              /* Increase width from 18 to 22 */
+    height="22"             /* Increase height from 18 to 22 */
+  >
     <path d="m9 18 6-6-6-6" />
   </svg>
 );
