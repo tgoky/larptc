@@ -113,6 +113,9 @@ export default function LandingPage() {
             <Link className="lt-button lt-button-secondary" to="/enter">
               Enter code <KeyRound size={16} />
             </Link>
+            <Link className="lt-button lt-button-secondary" to="/app/phantom">
+    Launch Phantom <ArrowRight size={17} />
+  </Link>
           </div>
           <div className="lt-proof-row">
             <span><b>$1M</b> on screen before breakfast</span>
