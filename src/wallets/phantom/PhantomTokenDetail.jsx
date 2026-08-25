@@ -52,12 +52,18 @@ const IconSliders = () => (
   </svg>
 );
 
+// Verified Ethereum logo CDN (or replace with your local '/assets/eth.svg')
+const ETH_LOGO_URL = 'https://assets.coingecko.com/coins/images/279/large/ethereum.png';
+
 function TokenAvatar({ token, imageUrl }) {
+  const isEthereum = token?.symbol?.toUpperCase() === 'ETH' || token?.name?.toLowerCase() === 'ethereum';
+  const displayImage = isEthereum ? ETH_LOGO_URL : imageUrl;
+
   return (
     <div className="ph-detail-avatar">
-      {imageUrl ? (
+      {displayImage ? (
         <img
-          src={imageUrl}
+          src={displayImage}
           alt={token.symbol}
           onError={(event) => {
             event.currentTarget.style.display = 'none';
