@@ -188,7 +188,7 @@ const defaultPhantomTokens = [
   { id: 'solana', name: 'Solana', symbol: 'SOL', verified: true, amount: 0, marketKey: 'solana', dexscreenerAddress: DEX_MARKETS.solana.address, network: 'Solana', icon: getPreferredTokenIconUrl('solana') },
   {
     id: 'usdc',
-    name: 'USD Coin',
+    name: 'USDC',
     symbol: 'USDC',
     verified: true,
     amount: 0,
