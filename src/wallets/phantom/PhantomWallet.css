@@ -999,16 +999,14 @@ font-size: 32px;
 /* Bottom Trade Dock */
 .ph-detail-bottom-dock {
   position: fixed;
-  bottom: calc(18px + env(safe-area-inset-bottom));
-  left: 20px;
-  right: 20px;
-  height: 52px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow: none !important;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(72px + env(safe-area-inset-bottom));
+  padding: 10px 20px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, #000000 100%) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1018,25 +1016,41 @@ font-size: 32px;
 
 .ph-detail-mcap {
   display: flex;
-  align-items: baseline;
-  gap: 5px;
+  align-items: center;
+  gap: 6px;
 }
-
 
 .ph-detail-mcap-val {
   color: #ffffff;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   line-height: 1;
 }
 
 .ph-detail-mcap-lbl {
   color: #8e8e93;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1;
+}
+
+.ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn,
+.ph-detail-trade-btn {
+  height: 44px;
+  padding: 0 32px !important;
+  border-radius: 22px !important;
+  background: #c4b5fd !important;
+  color: #000000 !important;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Higher specificity to override iOS Safari button reset */
