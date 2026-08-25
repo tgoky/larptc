@@ -1023,7 +1023,7 @@ font-size: 32px;
   line-height: 1;
 }
 
-ph-detail-mcap-lbl {
+.ph-detail-mcap-lbl {
   color: #8e8e93;
   font-size: 22px;
   font-weight: 700;
@@ -1033,12 +1033,12 @@ ph-detail-mcap-lbl {
 
 /* Higher specificity to override iOS Safari button reset */
 .ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn {
-  height: 52px;
-  padding: 0 38px !important;
-  border-radius: 999px !important;
+  height: 44px; /* Slightly lower height */
+  padding: 0 28px !important;
+  border-radius: 22px !important;
   background: #b29afc !important;
   color: #000000 !important;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.01em;
   display: inline-flex;
