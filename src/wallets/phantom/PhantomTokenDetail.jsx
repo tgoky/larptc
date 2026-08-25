@@ -79,7 +79,7 @@ function formatLargeNumber(value) {
   if (value >= 1e12) return `$${(value / 1e12).toFixed(1)}T`;
   if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
   if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`;
-  if (value >= 1e3) return `$${(value / 1e3).toFixed(0)}K`;
+  if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`;
   return `$${value.toFixed(0)}`;
 }
 
@@ -440,16 +440,16 @@ export default function PhantomTokenDetail({ token, onBack }) {
           </section>
         </div>
       </PullToRefresh>
-
-      <div className="ph-detail-bottom-dock">
-        <div className="ph-detail-mcap">
-          <span className="ph-detail-mcap-val">{formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap)}</span>
-          <span className="ph-detail-mcap-lbl">market cap</span>
-        </div>
-        <button className="ph-detail-trade-btn" type="button">
-          Trade
-        </button>
-      </div>
+      
+<div className="ph-detail-bottom-dock">
+  <div className="ph-detail-mcap">
+    <span className="ph-detail-mcap-val">{formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap)}</span>
+    <span className="ph-detail-mcap-lbl">market cap</span>
+  </div>
+  <button className="ph-detail-trade-btn" type="button">
+    Trade
+  </button>
+</div>
     </div>
   );
 }
