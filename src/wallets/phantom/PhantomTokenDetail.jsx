@@ -19,12 +19,12 @@ const IconChevronRight = () => (
   <svg 
     viewBox="0 0 24 24" 
     fill="none" 
-    stroke="#ffffff"        /* Change from #8e8e93 to #ffffff to make it stand out */
-    strokeWidth="3.2"       /* Increase stroke thickness from 2.5 to 3.2 */
+    stroke="#a1a1a6" 
+    strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    width="22"              /* Increase width from 18 to 22 */
-    height="22"             /* Increase height from 18 to 22 */
+    width="20" 
+    height="20"
   >
     <path d="m9 18 6-6-6-6" />
   </svg>
