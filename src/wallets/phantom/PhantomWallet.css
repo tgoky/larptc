@@ -662,7 +662,6 @@
 }
 
 /* ================= REDESIGNED TOKEN DETAIL VIEW ================= */
-/* ================= REDESIGNED TOKEN DETAIL VIEW ================= */
 .ph-detail-v2 {
   width: 100%;
   height: 100%;
@@ -691,6 +690,7 @@
   color: inherit;
 }
 
+/* Sheet handle bar at top center */
 .ph-detail-sheet-handle {
   width: 38px;
   height: 5px;
@@ -731,6 +731,12 @@
   border-radius: 50%;
 }
 
+.ph-detail-avatar span {
+  color: #000000;
+  font-weight: 900;
+  font-size: 16px;
+}
+
 .ph-detail-header-right {
   display: flex;
   align-items: center;
@@ -747,8 +753,9 @@
   place-items: center;
 }
 
+/* Hero Section */
 .ph-detail-hero-v2 {
-  padding: 0 16px 8px;
+  padding: 0 16px 12px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -764,7 +771,7 @@
 }
 
 .ph-detail-price-v2 {
-  font-size: 34px;
+font-size: 32px;
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -773,9 +780,15 @@
 }
 
 .ph-detail-change-v2 {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
   margin-top: 6px;
+}
+
+.ph-detail-change-v2 {
+ font-size: 14px;
+  font-weight: 800;
+  margin-top: 8px;
 }
 
 .ph-detail-change-v2.positive {
@@ -786,13 +799,13 @@
   color: #ff453a;
 }
 
-/* Edge-to-edge chart height */
+/* Chart */
 .ph-detail-chart-v2 {
   width: 100%;
-  height: 180px;
+  height: 210px;
   touch-action: none;
   position: relative;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .ph-chart-canvas {
@@ -813,20 +826,22 @@
 }
 
 /* Timeframes Row */
+/* CSS Fixes */
 .ph-timeframe-row-v2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px 24px;
+  padding: 8px 20px 24px;
   width: 100%;
 }
+
 
 .ph-timeframe-pills {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Spreads items evenly */
   flex: 1;
-  margin-right: 20px;
+  margin-right: 24px;
 }
 
 .ph-tf-pill {
@@ -835,7 +850,7 @@
   border-radius: 0;
   background: transparent;
   color: #8e8e93;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   border: 0;
   cursor: pointer;
@@ -845,14 +860,8 @@
   background: #ffffff !important;
   color: #000000 !important;
   font-weight: 800;
-  padding: 6px 14px;
+  padding: 6px 14px; /* White pill encapsulation */
   border-radius: 20px;
-}
-
-.ph-live-bullet {
-  color: #636366;
-  margin-right: 3px;
-  font-size: 14px;
 }
 
 .ph-tf-filter-btn {
@@ -874,17 +883,31 @@
   width: 100%;
 }
 
+
+.ph-tf-filter-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+}
+
+
+.ph-live-bullet {
+  color: #636366; /* Subdued bullet inside white pill */
+  margin-right: 2px;
+  font-size: 14px;
+}
+
 .ph-positions-section-v2 h2 {
   font-size: 22px;
   font-weight: 900;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   color: #ffffff;
 }
 
 .ph-positions-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px; /* Spacing between position rows */
   width: 100%;
 }
 
@@ -906,7 +929,7 @@
 .ph-pos-info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start; /* Aligns all text directly to the left edge */
   text-align: left;
   gap: 2px;
 }
@@ -924,21 +947,21 @@
 }
 
 .ph-pos-net {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
-  color: #8e8e93;
+  color: #8e8e93; /* Muted gray for Ethereum / Base */
 }
 
 .ph-pos-amount {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: #8e8e93;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .ph-pos-right {
   margin-left: auto;
-  margin-right: 12px;
+  margin-right: 8px;
   text-align: right;
   display: flex;
   flex-direction: column;
@@ -952,9 +975,9 @@
 }
 
 .ph-pos-change {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .ph-pos-change.positive {
@@ -971,8 +994,9 @@
   bottom: calc(18px + env(safe-area-inset-bottom));
   left: 20px;
   right: 20px;
-  height: 48px;
+  height: 52px;
   padding: 0;
+  border-radius: 0;
   background: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -983,15 +1007,17 @@
   z-index: 60;
 }
 
+
 .ph-detail-mcap {
   display: flex;
   align-items: baseline;
   gap: 5px;
 }
 
+
 .ph-detail-mcap-val {
   color: #ffffff;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -999,19 +1025,20 @@
 
 .ph-detail-mcap-lbl {
   color: #8e8e93;
-  font-size: 21px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
 }
 
+/* Higher specificity to override iOS Safari button reset */
 .ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn {
-  height: 48px;
-  padding: 0 34px !important;
-  border-radius: 24px !important;
+  height: 44px; /* Slightly lower height */
+  padding: 0 28px !important;
+  border-radius: 22px !important;
   background: #b29afc !important;
   color: #000000 !important;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.01em;
   display: inline-flex;
@@ -1020,7 +1047,6 @@
   white-space: nowrap;
   border: 0;
 }
-
 
 .ph-detail-trade-btn {
   height: 42px;
