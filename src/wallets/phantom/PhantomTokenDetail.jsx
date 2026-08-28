@@ -355,10 +355,11 @@ export default function PhantomTokenDetail({ token, onBack }) {
       <PullToRefresh className="ph-detail-scroll" onRefresh={refreshDetail}>
         <div>
           <section className="ph-detail-hero-v2">
-            <button className="ph-detail-name-btn" type="button">
-              <span>{token.name}</span>
-              <IconChevronDown />
-            </button>
+         <button className="ph-detail-name-btn" type="button">
+  <span>{token.name}</span>
+  <span className="ph-detail-ticker">{token.symbol}</span>
+  <IconChevronDown />
+</button>
             <div className="ph-detail-price-v2">{formatMoney(activePrice)}</div>
             <div className={`ph-detail-change-v2 ${lineIsNegative ? 'negative' : 'positive'}`}>
               {activeChangeValue >= 0 ? '+' : '-'}{formatMoney(Math.abs(activeChangeValue))} ({activeChangePct >= 0 ? '+' : ''}{activeChangePct.toFixed(2)}%)
