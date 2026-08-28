@@ -41,7 +41,7 @@ body.app-shell-trust #root {
   min-height: -webkit-fill-available;
 }
 body.app-shell-phantom {
-  background: #111111;
+background: #000000;
 }
 body.app-shell-trust {
   background: #1b1b1c;
