@@ -137,7 +137,7 @@
   border: 0;
   font-family: var(--ph-font-stack);
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
   cursor: pointer;
@@ -147,7 +147,7 @@
 .ph-top-pill.active {
   background: var(--ph-purple);
   color: #000000;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 /* ================= SCROLL CONTAINER ================= */
@@ -175,7 +175,7 @@
   color: #a1a1a6;
   font-family: var(--ph-font-stack);
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -208,7 +208,7 @@
 .ph-hero-change-value {
   font-family: var(--ph-font-stack);
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   color: var(--ph-green);
 }
@@ -219,7 +219,7 @@
   padding: 0 7px;
   border-radius: 6px;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 22px;
   text-align: center;
@@ -257,7 +257,7 @@
   color: #ffffff;
   font-family: var(--ph-font-stack);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 
@@ -271,7 +271,7 @@
 .ph-cash-value {
   font-family: var(--ph-font-stack);
   font-size: 18px;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1;
   color: #ffffff;
   letter-spacing: -0.01em;
@@ -405,7 +405,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #ffffff;
-  font-weight: 740;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
@@ -428,7 +428,7 @@
 .ph-token-fiat {
   font-family: var(--ph-font-stack);
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.1;
   color: #ffffff;
   letter-spacing: -0.01em;
@@ -462,7 +462,7 @@
 }
 
 .phantom-app main {
-  padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
 }
 
 .ph-perps-row::-webkit-scrollbar {
@@ -498,8 +498,8 @@
 
 /* ================= FLOATING BOTTOM DOCK ================= */
 .ph-floating-dock {
-  position: fixed;
-  bottom: calc(20px + env(safe-area-inset-bottom));
+  position: absolute;
+  bottom: calc(12px + env(safe-area-inset-bottom));
   left: 16px;
   right: 16px;
   display: flex;
@@ -813,7 +813,7 @@
 
 .ph-detail-price-v2 {
   font-size: 28px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin-top: 4px;
@@ -884,7 +884,7 @@
   background: transparent;
   color: #8e8e93;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   border: 0;
   cursor: pointer;
 }
@@ -892,7 +892,7 @@
 .ph-tf-pill.active {
   background: #ffffff !important;
   color: #000000 !important;
-  font-weight: 800;
+  font-weight: 700;
   padding: 6px 14px;
   border-radius: 20px;
 }
@@ -997,7 +997,7 @@
 
 .ph-pos-sym {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
 }
 
@@ -1025,7 +1025,7 @@
 
 .ph-pos-value {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
 }
 
@@ -1053,7 +1053,7 @@
 .ph-detail-mcap-val {
   color: #ffffff;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1;
 }
