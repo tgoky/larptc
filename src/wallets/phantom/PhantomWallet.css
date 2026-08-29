@@ -710,13 +710,13 @@
 }
 
 /* Sheet handle bar at top center */
-.ph-detail-sheet-handle {
-  width: 38px;
-  height: 5px;
-  border-radius: 999px;
-  background: #3a3a3c;
-  margin: 8px auto 0;
+.ph-detail-header-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 12px;
   flex-shrink: 0;
+  width: 100%;
 }
 
 .ph-detail-header-v2 {
@@ -734,8 +734,8 @@
 }
 
 .ph-detail-avatar {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   overflow: hidden;
   background: #c4b5fd;
@@ -763,8 +763,8 @@
 }
 
 .ph-detail-icon-circle {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #1c1c1e !important;
   color: #ffffff !important;
@@ -781,12 +781,17 @@
 }
 
 .ph-detail-name-btn {
-  font-size: 28px;
+  font-size: 30px;              /* was 28 */
   font-weight: 800;
   color: #ffffff !important;
-  gap: 6px;
+  gap: 7px;
   background: transparent;
   padding: 0;
+}
+
+.ph-detail-name-btn svg {
+  color: #8e8e93;
+  flex-shrink: 0;
 }
 
 .ph-detail-price-v2 {
@@ -799,10 +804,11 @@
 }
 
 .ph-detail-change-v2 {
-  font-size: 14px;
+  font-size: 16px;              /* was 14 */
   font-weight: 800;
-  margin-top: 6px;
+  margin-top: 8px;
 }
+
 
 .ph-detail-change-v2.positive {
   color: #00e557;
@@ -815,7 +821,7 @@
 /* Chart */
 .ph-detail-chart-v2 {
   width: 100%;
-  height: 210px;
+  height: 230px;                /* was 210 — Phantom's chart is taller */
   touch-action: none;
   position: relative;
   margin-top: 8px;
@@ -843,7 +849,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px 24px;
+  padding: 8px 20px 28px;       /* a touch more room before "Your Positions" */
   width: 100%;
 }
 
@@ -907,7 +913,7 @@ padding: 0 16px 20px;
 }
 
 .ph-detail-scroll > div {
-  padding-bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+  padding-bottom: calc(130px + env(safe-area-inset-bottom)) !important;
 }
 
 /* Force pull-to-refresh viewport to expand vertically */
@@ -929,14 +935,14 @@ padding: 0 16px 20px;
 .ph-positions-section-v2 h2 {
   font-size: 22px;
   font-weight: 900;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   color: #ffffff;
 }
 
 .ph-positions-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 26px;                    /* was 20 */
   width: 100%;
 }
 
@@ -1031,8 +1037,8 @@ padding: 0 16px 20px;
   bottom: 0;
   left: 0;
   right: 0;
-  height: calc(72px + env(safe-area-inset-bottom));
-  padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+  height: calc(92px + env(safe-area-inset-bottom));
+  padding: 0 16px calc(20px + env(safe-area-inset-bottom));
   background: rgba(0, 0, 0, 0.75) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
@@ -1066,13 +1072,13 @@ padding: 0 16px 20px;
 
 .ph-detail-trade-btn,
 .ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn {
-  height: 44px;
-  padding: 0 28px !important;
-  border-radius: 22px !important;
+  height: 46px;
+  padding: 0 30px !important;
+  border-radius: 23px !important;
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.01em;
   display: inline-flex;

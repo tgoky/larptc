@@ -9,6 +9,18 @@ import PullToRefresh from '../../components/PullToRefresh';
 
 const TIMEFRAMES = ['LIVE', '1D', '1W', '1M', '1Y', 'ALL'];
 
+const CHART_PRESETS = {
+  LIVE: { pointCount: 96,  durationMs: 30 * 60 * 1000,                 volatility: 0.011, spikeChance: 0.08, spikeScale: 2.6 },
+  '1D': { pointCount: 150, durationMs: 24 * 60 * 60 * 1000,            volatility: 0.008, spikeChance: 0.05, spikeScale: 2.2 },
+  '1W': { pointCount: 170, durationMs: 7 * 24 * 60 * 60 * 1000,        volatility: 0.009, spikeChance: 0.05, spikeScale: 2.2 },
+  '1M': { pointCount: 190, durationMs: 30 * 24 * 60 * 60 * 1000,       volatility: 0.010, spikeChance: 0.05, spikeScale: 2.2 },
+  '1Y': { pointCount: 230, durationMs: 365 * 24 * 60 * 60 * 1000,      volatility: 0.014, spikeChance: 0.04, spikeScale: 2.0 },
+  ALL:  { pointCount: 260, durationMs: 2 * 365 * 24 * 60 * 60 * 1000,  volatility: 0.020, spikeChance: 0.04, spikeScale: 2.0 },
+};
+
+// Phantom's LIVE chart leaves empty space on the right where "now" keeps drawing
+const LIVE_RIGHT_GAP_RATIO = 0.13;
+
 const IconChevronDown = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
     <path d="m6 9 6 6 6-6" />
@@ -16,21 +28,11 @@ const IconChevronDown = () => (
 );
 
 const IconChevronRight = () => (
-  <svg 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="#a1a1a6" 
-    strokeWidth="1.8" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    width="20" 
-    height="20"
-  >
+  <svg viewBox="0 0 24 24" fill="none" stroke="#a1a1a6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
     <path d="m9 18 6-6-6-6" />
   </svg>
 );
 
-// Replaced Bell with Phantom Heart Icon
 const IconHeart = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.25-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -45,7 +47,6 @@ const IconMore = () => (
   </svg>
 );
 
-// Fixed 2-bar Phantom Filter Icon
 const IconSliders = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
     <path d="M8 4v16M16 4v16M5 9h6M13 15h6" />
@@ -82,7 +83,7 @@ function formatMoney(value) {
 }
 
 function formatLargeNumber(value) {
-  if (!value || value <= 0) return '$575.3M';
+  if (!value || value <= 0) return '--';
   if (value >= 1e12) return `$${(value / 1e12).toFixed(1)}T`;
   if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
   if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`;
@@ -106,10 +107,7 @@ function formatTokenAmount(value, symbol) {
 }
 
 function formatTime(date) {
-  return date.toLocaleTimeString([], {
-    hour: 'numeric',
-    minute: '2-digit',
-  }).replace(' ', '');
+  return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).replace(' ', '');
 }
 
 function createSeededRandom(seedText) {
@@ -123,43 +121,71 @@ function createSeededRandom(seedText) {
   };
 }
 
-function generateSeries(currentPrice, changePercent, timeframe) {
-  const pointCount =
-    timeframe === 'LIVE' ? 16 :
-    timeframe === '1D' ? 120 :
-    timeframe === '1W' ? 160 :
-    timeframe === '1M' ? 180 :
-    timeframe === '1Y' ? 240 :
-    300;
-  const now = Date.now();
-  const durationMs =
-    timeframe === 'LIVE' ? 60 * 60 * 1000 :
-    timeframe === '1D' ? 24 * 60 * 60 * 1000 :
-    timeframe === '1W' ? 7 * 24 * 60 * 60 * 1000 :
-    timeframe === '1M' ? 30 * 24 * 60 * 60 * 1000 :
-    timeframe === '1Y' ? 365 * 24 * 60 * 60 * 1000 :
-    365 * 2 * 24 * 60 * 60 * 1000;
+/**
+ * Fake "Base" dust position: amount is seeded per token (stable across price
+ * refreshes), sized so the fiat value lands in a believable range.
+ */
+function deriveBaseAmount(tokenId, price) {
+  const rand = createSeededRandom(`${tokenId}|base-pos`);
+  const targetFiat = 0.5 + rand() * 3; // $0.50 – $3.50
+  const rough = targetFiat / Math.max(price, 0.01);
+  const magnitude = Math.pow(10, Math.floor(Math.log10(rough)));
+  return Number(((1 + rand() * 8.9) * magnitude).toPrecision(2));
+}
 
-  const startPrice = currentPrice > 0 ? currentPrice / (1 + changePercent / 100) : 1;
-  const endPrice = currentPrice > 0 ? currentPrice : startPrice;
-  const volatility = 0.02;
+/**
+ * Fake network dust balance for when the real amount is 0
+ * (matches the reference's 0.00003 ETH / $0.07 row).
+ */
+function deriveDustAmount(tokenId, price) {
+  const rand = createSeededRandom(`${tokenId}|dust-pos`);
+  const targetFiat = 0.02 + rand() * 0.13; // $0.02 – $0.15
+  const rough = targetFiat / Math.max(price, 0.01);
+  const magnitude = Math.pow(10, Math.floor(Math.log10(rough)));
+  return Number(((1 + rand() * 8.9) * magnitude).toPrecision(2));
+}
+
+/** Deterministic fallback market cap when Dexscreener has no data. */
+function deriveFallbackMcap(tokenId) {
+  const rand = createSeededRandom(`${tokenId}|mcap`);
+  const magnitude = Math.pow(10, 6 + Math.floor(rand() * 3)); // $1M – $999M
+  return Math.round((1 + rand() * 9.4) * magnitude);
+}
+
+/**
+ * Jagged random walk pinned to the real start/end prices.
+ * Seed is keyed on token + timeframe (NOT price), so when the live price
+ * updates only the endpoint moves — the chart keeps its shape like a live feed.
+ */
+function generateSeries(currentPrice, changePercent, timeframe, seedKey) {
+  const preset = CHART_PRESETS[timeframe] || CHART_PRESETS.LIVE;
+  const now = Date.now();
+  const price = currentPrice > 0 ? currentPrice : 1;
+  const safeChange = Math.min(Math.max(Number.isFinite(changePercent) ? changePercent : 0, -95), 95);
+
+  const endLog = Math.log(price);
+  const startLog = endLog - Math.log(1 + safeChange / 100);
+  const steps = preset.pointCount - 1;
+  const random = createSeededRandom(`${seedKey || 'token'}|${timeframe}`);
+
+  const walk = new Array(preset.pointCount);
+  walk[0] = 0;
+  for (let i = 1; i <= steps; i += 1) {
+    let step = random() * 2 - 1;
+    if (random() < preset.spikeChance) step *= preset.spikeScale; // occasional violent spike
+    walk[i] = walk[i - 1] + step;
+  }
+  const netDrift = walk[steps];
 
   const points = [];
-  const random = createSeededRandom(`${currentPrice}-${changePercent}-${timeframe}`);
-  let value = startPrice;
-
-  for (let index = 0; index < pointCount; index += 1) {
-    const progress = index / (pointCount - 1);
-    const drift = (endPrice - value) * 0.08;
-    const wave = Math.sin(progress * Math.PI * 4) * currentPrice * volatility * 0.3;
-    const noise = (random() - 0.5) * currentPrice * volatility;
-    value = index === pointCount - 1 ? endPrice : Math.max(0.000001, value + drift + noise + wave);
+  for (let i = 0; i <= steps; i += 1) {
+    const t = i / steps;
+    const detrended = walk[i] - netDrift * t; // pins first & last points exactly
     points.push({
-      time: new Date(now - durationMs + progress * durationMs),
-      value,
+      time: new Date(now - preset.durationMs + t * preset.durationMs),
+      value: Math.exp(startLog + (endLog - startLog) * t + detrended * preset.volatility),
     });
   }
-
   return points;
 }
 
@@ -172,15 +198,44 @@ export default function PhantomTokenDetail({ token, onBack }) {
   const [tokenInfo, setTokenInfo] = useState(null);
 
   const liveQuote = useMemo(() => getTokenQuote(token, phantom.prices), [token, phantom.prices]);
+
   const chartData = useMemo(
-    () => generateSeries(liveQuote.usd || 1, liveQuote.change || 0, timeframe),
-    [liveQuote.change, liveQuote.usd, timeframe],
+    () => generateSeries(liveQuote.usd || 1, liveQuote.change || 0, timeframe, token.id),
+    [liveQuote.change, liveQuote.usd, timeframe, token.id],
   );
+
+  // Stable-per-token fake amounts: derived once per token, then reused.
+  // Re-derived only if the first derivation happened before prices loaded.
+  const spoofRef = useRef(null);
+  const priceNow = liveQuote.usd > 0 ? liveQuote.usd : 0;
+  if (
+    !spoofRef.current ||
+    spoofRef.current.tokenId !== token.id ||
+    (priceNow > 0 && spoofRef.current.derivedWithoutPrice)
+  ) {
+    const price = priceNow || 1;
+    spoofRef.current = {
+      tokenId: token.id,
+      derivedWithoutPrice: priceNow === 0,
+      baseAmount: deriveBaseAmount(token.id, price),
+      dustAmount: deriveDustAmount(token.id, price),
+      fallbackMcap: deriveFallbackMcap(token.id),
+    };
+  }
+  const { baseAmount, dustAmount, fallbackMcap } = spoofRef.current;
+
   const amount = token.amount || 0;
-  const totalValue = amount * liveQuote.usd;
-  const return24h = amount > 0 && liveQuote.change !== 0
-    ? totalValue - (liveQuote.usd / (1 + liveQuote.change / 100)) * amount
-    : 0;
+  const networkAmount = amount > 0 ? amount : dustAmount;
+
+  const prevPrice = liveQuote.change !== 0
+    ? liveQuote.usd / (1 + liveQuote.change / 100)
+    : liveQuote.usd;
+
+  const baseValue = baseAmount * liveQuote.usd;
+  const basePnl = (liveQuote.usd - prevPrice) * baseAmount;
+
+  const networkValue = networkAmount * liveQuote.usd;
+  const networkPnl = (liveQuote.usd - prevPrice) * networkAmount;
 
   const loadTokenInfo = useCallback(async () => {
     const pair = token.dexscreenerAddress ? await fetchDexscreenerToken(token.dexscreenerAddress) : null;
@@ -230,44 +285,48 @@ export default function PhantomTokenDetail({ token, onBack }) {
   const activeIndex = scrubIndex === null ? (chartData.length - 1) : Math.min(scrubIndex, chartData.length - 1);
   const activePoint = chartData[activeIndex] || null;
   const activeProgress = chartData.length > 1 ? activeIndex / (chartData.length - 1) : 1;
+  const plotRatio = timeframe === 'LIVE' ? 1 - LIVE_RIGHT_GAP_RATIO : 1;
   const activePrice = activePoint?.value ?? liveQuote.usd;
   const startValue = chartData[0]?.value || activePrice || 1;
   const activeChangeValue = activePrice - startValue;
   const activeChangePct = startValue ? (activeChangeValue / startValue) * 100 : 0;
   const lineIsNegative = activeChangeValue < 0;
 
-  // Render edge-to-edge chart with glowing end-dot
-  useEffect(() => {
+  const drawChart = useCallback((phase = 0) => {
     const canvas = canvasRef.current;
     if (!canvas || chartData.length === 0) return;
 
     const context = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    if (rect.width === 0 || rect.height === 0) return;
 
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+    const dpr = window.devicePixelRatio || 1;
+    const targetWidth = Math.round(rect.width * dpr);
+    const targetHeight = Math.round(rect.height * dpr);
+    if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+    }
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.clearRect(0, 0, rect.width, rect.height);
 
-    const min = Math.min(...chartData.map((point) => point.value));
-    const max = Math.max(...chartData.map((point) => point.value));
+    const min = Math.min(...chartData.map((p) => p.value));
+    const max = Math.max(...chartData.map((p) => p.value));
     const range = max - min || 1;
-    const padX = 0; // Edge to edge!
-    const padY = 12;
-    const width = rect.width;
+    const padY = 14;
+    const rightGap = timeframe === 'LIVE' ? Math.round(rect.width * LIVE_RIGHT_GAP_RATIO) : 0;
+    const width = rect.width - rightGap;
     const height = rect.height - padY * 2;
 
-    const getX = (index) => (index / (chartData.length - 1)) * width;
-    const getY = (value) => padY + height - ((value - min) / range) * height;
-
+    const getX = (i) => (i / (chartData.length - 1)) * width;
+    const getY = (v) => padY + height - ((v - min) / range) * height;
     const lineColor = lineIsNegative ? '#ff453a' : '#00e557';
 
     context.beginPath();
-    for (let index = 0; index < chartData.length; index += 1) {
-      const x = getX(index);
-      const y = getY(chartData[index].value);
-      if (index === 0) context.moveTo(x, y);
+    for (let i = 0; i < chartData.length; i += 1) {
+      const x = getX(i);
+      const y = getY(chartData[i].value);
+      if (i === 0) context.moveTo(x, y);
       else context.lineTo(x, y);
     }
     context.strokeStyle = lineColor;
@@ -276,45 +335,62 @@ export default function PhantomTokenDetail({ token, onBack }) {
     context.lineCap = 'round';
     context.stroke();
 
+    const lastIndex = chartData.length - 1;
     if (scrubIndex !== null) {
-      const activeX = getX(scrubIndex);
-      const activeY = getY(chartData[scrubIndex].value);
+      const clamped = Math.min(scrubIndex, lastIndex);
+      const sx = getX(clamped);
+      const sy = getY(chartData[clamped].value);
 
       context.beginPath();
-      context.moveTo(activeX, 0);
-      context.lineTo(activeX, rect.height);
-      context.strokeStyle = 'rgba(255,255,255,0.15)';
+      context.moveTo(sx, 0);
+      context.lineTo(sx, rect.height);
+      context.strokeStyle = 'rgba(255,255,255,0.14)';
       context.lineWidth = 1;
       context.stroke();
 
       context.beginPath();
-      context.arc(activeX, activeY, 5, 0, Math.PI * 2);
+      context.arc(sx, sy, 5, 0, Math.PI * 2);
       context.fillStyle = lineColor;
       context.fill();
     } else {
-      // Pulsing/glowing right dot tip
-      const lastX = getX(chartData.length - 1) - 4;
-      const lastY = getY(chartData[chartData.length - 1].value);
+      // Pulsing dot at the tip of the line (in the right gap for LIVE)
+      const lx = getX(lastIndex);
+      const ly = getY(chartData[lastIndex].value);
+      const pulse = 0.5 + 0.5 * Math.sin(phase / 320);
 
       context.beginPath();
-      context.arc(lastX, lastY, 7, 0, Math.PI * 2);
-      context.fillStyle = lineIsNegative ? 'rgba(255, 69, 58, 0.3)' : 'rgba(0, 229, 87, 0.3)';
+      context.arc(lx, ly, 6 + pulse * 4, 0, Math.PI * 2);
+      context.fillStyle = lineIsNegative
+        ? `rgba(255, 69, 58, ${0.16 + pulse * 0.16})`
+        : `rgba(0, 229, 87, ${0.16 + pulse * 0.16})`;
       context.fill();
 
       context.beginPath();
-      context.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+      context.arc(lx, ly, 3.6, 0, Math.PI * 2);
       context.fillStyle = lineColor;
       context.fill();
     }
-  }, [activeChangeValue, chartData, lineIsNegative, scrubIndex]);
+  }, [chartData, lineIsNegative, scrubIndex, timeframe]);
+
+  useEffect(() => {
+    drawChart(0);
+    if (scrubIndex !== null) return undefined;
+
+    let rafId = requestAnimationFrame(function loop(now) {
+      drawChart(now);
+      rafId = requestAnimationFrame(loop);
+    });
+    return () => cancelAnimationFrame(rafId);
+  }, [drawChart, scrubIndex]);
 
   function updateScrub(clientX) {
     const canvas = canvasRef.current;
     if (!canvas || chartData.length === 0) return;
     const rect = canvas.getBoundingClientRect();
-    const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
-    const index = Math.round((x / rect.width) * (chartData.length - 1));
-    setScrubIndex(index);
+    const rightGap = timeframe === 'LIVE' ? Math.round(rect.width * LIVE_RIGHT_GAP_RATIO) : 0;
+    const plotWidth = Math.max(rect.width - rightGap, 1);
+    const x = Math.min(Math.max(clientX - rect.left, 0), plotWidth);
+    setScrubIndex(Math.round((x / plotWidth) * (chartData.length - 1)));
   }
 
   function handlePointerDown(event) {
@@ -355,11 +431,11 @@ export default function PhantomTokenDetail({ token, onBack }) {
       <PullToRefresh className="ph-detail-scroll" onRefresh={refreshDetail}>
         <div>
           <section className="ph-detail-hero-v2">
-         <button className="ph-detail-name-btn" type="button">
-  <span>{token.name}</span>
-  <span className="ph-detail-ticker">{token.symbol}</span>
-  <IconChevronDown />
-</button>
+            <button className="ph-detail-name-btn" type="button">
+              <span>{token.name}</span>
+              <span className="ph-detail-ticker">{token.symbol}</span>
+              <IconChevronDown />
+            </button>
             <div className="ph-detail-price-v2">{formatMoney(activePrice)}</div>
             <div className={`ph-detail-change-v2 ${lineIsNegative ? 'negative' : 'positive'}`}>
               {activeChangeValue >= 0 ? '+' : '-'}{formatMoney(Math.abs(activeChangeValue))} ({activeChangePct >= 0 ? '+' : ''}{activeChangePct.toFixed(2)}%)
@@ -377,7 +453,10 @@ export default function PhantomTokenDetail({ token, onBack }) {
             }}
           >
             {scrubIndex !== null && activePoint ? (
-              <div className="ph-chart-scrub-label" style={{ left: `${activeProgress * 100}%` }}>
+              <div
+                className="ph-chart-scrub-label"
+                style={{ left: `${activeProgress * plotRatio * 100}%` }}
+              >
                 {formatTime(activePoint.time)}
               </div>
             ) : null}
@@ -419,12 +498,14 @@ export default function PhantomTokenDetail({ token, onBack }) {
                       <span className="ph-pos-sym">{token.symbol}</span>
                       <span className="ph-pos-net">Base</span>
                     </div>
-                    <div className="ph-pos-amount">0.00049 {token.symbol}</div>
+                    <div className="ph-pos-amount">{formatTokenAmount(baseAmount, token.symbol)}</div>
                   </div>
                 </div>
                 <div className="ph-pos-right">
-                  <div className="ph-pos-value">$1.23</div>
-                  <div className="ph-pos-change positive">+$0.02</div>
+                  <div className="ph-pos-value">{formatMoney(baseValue)}</div>
+                  <div className={`ph-pos-change ${basePnl >= 0 ? 'positive' : 'negative'}`}>
+                    {basePnl >= 0 ? '+' : '-'}{formatMoney(Math.abs(basePnl))}
+                  </div>
                 </div>
                 <IconChevronRight />
               </button>
@@ -437,13 +518,13 @@ export default function PhantomTokenDetail({ token, onBack }) {
                       <span className="ph-pos-sym">{token.symbol}</span>
                       <span className="ph-pos-net">{token.network || token.name}</span>
                     </div>
-                    <div className="ph-pos-amount">{formatTokenAmount(amount, token.symbol)}</div>
+                    <div className="ph-pos-amount">{formatTokenAmount(networkAmount, token.symbol)}</div>
                   </div>
                 </div>
                 <div className="ph-pos-right">
-                  <div className="ph-pos-value">{formatMoney(totalValue)}</div>
-                  <div className={`ph-pos-change ${return24h >= 0 ? 'positive' : 'negative'}`}>
-                    {return24h >= 0 ? '+' : '-'}{formatMoney(Math.abs(return24h))}
+                  <div className="ph-pos-value">{formatMoney(networkValue)}</div>
+                  <div className={`ph-pos-change ${networkPnl >= 0 ? 'positive' : 'negative'}`}>
+                    {networkPnl >= 0 ? '+' : '-'}{formatMoney(Math.abs(networkPnl))}
                   </div>
                 </div>
                 <IconChevronRight />
@@ -455,7 +536,9 @@ export default function PhantomTokenDetail({ token, onBack }) {
 
       <div className="ph-detail-bottom-dock">
         <div className="ph-detail-mcap">
-          <span className="ph-detail-mcap-val">{formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap)}</span>
+          <span className="ph-detail-mcap-val">
+            {formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap || fallbackMcap)}
+          </span>
           <span className="ph-detail-mcap-lbl">market cap</span>
         </div>
         <button className="ph-detail-trade-btn" type="button">
