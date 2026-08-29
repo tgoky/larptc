@@ -913,7 +913,7 @@ padding: 0 16px 20px;
 }
 
 .ph-detail-scroll > div {
-  padding-bottom: calc(130px + env(safe-area-inset-bottom)) !important;
+  padding-bottom: calc(120px + env(safe-area-inset-bottom)) !important;
 }
 
 /* Force pull-to-refresh viewport to expand vertically */
@@ -1037,9 +1037,9 @@ padding: 0 16px 20px;
   bottom: 0;
   left: 0;
   right: 0;
-  height: calc(92px + env(safe-area-inset-bottom));
-  padding: 0 16px calc(20px + env(safe-area-inset-bottom));
-  background: rgba(0, 0, 0, 0.75) !important;
+  /* no fixed height — padding drives it, content hugs the bottom */
+  padding: 12px 16px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   display: flex;
