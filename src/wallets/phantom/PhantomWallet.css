@@ -798,8 +798,8 @@
 }
 
 .ph-detail-name-btn {
-  font-size: 30px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 700;
   color: #ffffff !important;
   gap: 7px;
   background: transparent;
@@ -812,8 +812,8 @@
 }
 
 .ph-detail-price-v2 {
-  font-size: 32px;
-  font-weight: 900;
+  font-size: 28px;
+  font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin-top: 4px;
@@ -821,8 +821,8 @@
 }
 
 .ph-detail-change-v2 {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   margin-top: 8px;
 }
 
@@ -945,8 +945,8 @@
 }
 
 .ph-positions-section-v2 h2 {
-  font-size: 22px;
-  font-weight: 900;
+  font-size: 19px;
+  font-weight: 700;
   margin: 0 0 22px;
   color: #ffffff;
 }
@@ -996,19 +996,19 @@
 }
 
 .ph-pos-sym {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   color: #ffffff;
 }
 
 .ph-pos-net {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
   color: #8e8e93;
 }
 
 .ph-pos-amount {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   color: #8e8e93;
   margin-top: 3px;
@@ -1024,14 +1024,14 @@
 }
 
 .ph-pos-value {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   color: #ffffff;
 }
 
 .ph-pos-change {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   margin-top: 3px;
 }
 
@@ -1052,15 +1052,15 @@
 
 .ph-detail-mcap-val {
   color: #ffffff;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1;
 }
 
 .ph-detail-mcap-lbl {
   color: #8e8e93;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -1074,8 +1074,8 @@
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack);
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   display: inline-flex;
   align-items: center;
