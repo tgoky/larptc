@@ -1,6 +1,6 @@
 /* SHELL — exactly one viewport tall, nothing more */
 .ph-detail-v2 {
-  height: 100dvh;
+  height: var(--app-vh, 100dvh);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -74,8 +74,8 @@
 .phantom-app, 
 .ph-detail-v2 {
   width: 100%;
-  height: 100dvh;
-  min-height: 100dvh;
+  height: var(--app-vh, 100dvh);
+  min-height: var(--app-vh, 100dvh);
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -712,7 +712,10 @@
 /* ================= REDESIGNED TOKEN DETAIL VIEW ================= */
 .ph-detail-v2 {
   width: 100%;
-  height: 100dvh;
+  /* var(--app-vh) is set from window.innerHeight in main.jsx — iOS standalone
+     under-reports 100dvh/100svh by the home indicator's safe-area height, so
+     this is the real fix; 100dvh is only the fallback before JS runs. */
+  height: var(--app-vh, 100dvh);
   display: flex;
   flex-direction: column;
   background: #000000;
