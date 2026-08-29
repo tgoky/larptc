@@ -1,3 +1,33 @@
+/* SHELL — exactly one viewport tall, nothing more */
+.ph-detail-v2 {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background: #000000;
+  color: #ffffff;
+}
+
+/* SCROLL AREA — the only thing that scrolls */
+.ph-detail-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* DOCK — in normal flow, last flex child. Pinned by structure, not position. */
+.ph-detail-bottom-dock {
+  flex-shrink: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 :root {
   --ph-bg: #000000;
   --ph-surface: #1a1a1c;
@@ -231,7 +261,7 @@
   color: #ffffff;
   font-family: var(--ph-font-stack);
   font-size: 18px;
- font-weight: 600;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
@@ -433,7 +463,6 @@
   gap: 12px;
   overflow-x: auto;
   scrollbar-width: none;
-  /* padding-bottom: 140px; */
 }
 
 .phantom-app main {
@@ -714,15 +743,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px 12px;
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.ph-detail-header-v2 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
   flex-shrink: 0;
   width: 100%;
@@ -781,7 +801,7 @@
 }
 
 .ph-detail-name-btn {
-  font-size: 30px;              /* was 28 */
+  font-size: 30px;
   font-weight: 800;
   color: #ffffff !important;
   gap: 7px;
@@ -804,11 +824,10 @@
 }
 
 .ph-detail-change-v2 {
-  font-size: 16px;              /* was 14 */
+  font-size: 16px;
   font-weight: 800;
   margin-top: 8px;
 }
-
 
 .ph-detail-change-v2.positive {
   color: #00e557;
@@ -821,7 +840,7 @@
 /* Chart */
 .ph-detail-chart-v2 {
   width: 100%;
-  height: 230px;                /* was 210 — Phantom's chart is taller */
+  height: 230px;
   touch-action: none;
   position: relative;
   margin-top: 8px;
@@ -849,7 +868,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px 28px;       /* a touch more room before "Your Positions" */
+  padding: 8px 20px 28px;
   width: 100%;
 }
 
@@ -908,12 +927,8 @@
 
 /* Positions Section */
 .ph-positions-section-v2 {
-padding: 0 16px 20px;
+  padding: 0 16px 20px;
   width: 100%;
-}
-
-.ph-detail-scroll > div {
-  padding-bottom: calc(120px + env(safe-area-inset-bottom)) !important;
 }
 
 /* Force pull-to-refresh viewport to expand vertically */
@@ -942,7 +957,7 @@ padding: 0 16px 20px;
 .ph-positions-list {
   display: flex;
   flex-direction: column;
-  gap: 26px;                    /* was 20 */
+  gap: 26px;
   width: 100%;
 }
 
@@ -1032,22 +1047,6 @@ padding: 0 16px 20px;
 }
 
 /* ================= BOTTOM TRADE DOCK ================= */
-.ph-detail-bottom-dock {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  /* no fixed height — padding drives it, content hugs the bottom */
-  padding: 12px 16px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(0, 0, 0, 0.8) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 100;
-}
-
 .ph-detail-mcap {
   display: flex;
   align-items: center;
