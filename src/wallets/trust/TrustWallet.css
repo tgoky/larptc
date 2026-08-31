@@ -1,12 +1,12 @@
 :root {
-  --tw-bg: #0a0a0f;
-  --tw-surface: #1e1e28;
-  --tw-surface-soft: #1c1c25;
-  --tw-nav-bg: #15151e;
-  --tw-nav-active: #25252f;
-  --tw-text: #f5f5f7;
-  --tw-text-dim: #8b8b94;
-  --tw-border: rgba(255, 255, 255, 0.08);
+  --tw-bg: #0d0e1b;
+  --tw-surface: #232742;
+  --tw-surface-soft: #1d1f33;
+  --tw-nav-bg: #191b2f;
+  --tw-nav-active: #272b4a;
+  --tw-text: #f5f6fa;
+  --tw-text-dim: #8a8fa3;
+  --tw-border: rgba(255, 255, 255, 0.07);
   --tw-border-strong: rgba(255, 255, 255, 0.12);
   --tw-red-dot: #ff5b61;
   --tw-green: #42f782;
@@ -64,7 +64,7 @@
 }
 
 .tw-shell {
-  padding: 6px 17px calc(130px + env(safe-area-inset-bottom, 0px));
+  padding: 6px 17px calc(120px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ---------------- header ---------------- */
@@ -80,23 +80,23 @@
 .tw-wallet-pill {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
-  height: 48px;
-  padding: 0 20px 0 5px;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px 0 5px;
   border: 0;
   border-radius: 999px;
   background: var(--tw-surface-soft);
   color: var(--tw-text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.01em;
   cursor: pointer;
 }
 
 .tw-wallet-avatar {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: linear-gradient(180deg, #5d5df8 0%, #3e3eea 100%);
   display: grid;
@@ -108,16 +108,16 @@
 .tw-header-actions {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
 }
 
 .tw-circle-btn {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
   background: var(--tw-surface-soft);
-  color: #ececf1;
+  color: #e8eaf2;
   display: grid;
   place-items: center;
   padding: 0;
@@ -127,27 +127,27 @@
 /* ---------------- swap-fee banner ---------------- */
 
 .tw-banner {
-  margin-top: 22px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
-  gap: 13px;
-  padding: 11px 14px 11px 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.025);
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .tw-banner-info {
-  color: #70707a;
+  color: #6f7288;
   display: grid;
   place-items: center;
   flex-shrink: 0;
 }
 
 .tw-banner-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 13px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   background: rgba(48, 209, 88, 0.16);
   color: var(--tw-pos);
   display: grid;
@@ -163,7 +163,7 @@
 }
 
 .tw-banner-title {
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1.15;
@@ -171,7 +171,7 @@
 }
 
 .tw-banner-sub {
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--tw-text-dim);
   letter-spacing: -0.01em;
@@ -181,8 +181,8 @@
 /* ---------------- hero ---------------- */
 
 .tw-hero-title {
-  margin: 28px 0 0;
-  font-size: clamp(15px, 4.7vw, 18px);
+  margin: 26px 0 0;
+  font-size: clamp(14px, 4.5vw, 17px);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.15;
@@ -193,7 +193,7 @@
 /* ---------------- get-started cards ---------------- */
 
 .tw-start-grid {
-  margin-top: 30px;
+  margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
@@ -209,7 +209,7 @@
   width: 100%;
   height: 66px;
   border: 0;
-  border-radius: 19px;
+  border-radius: 21px;
   background: var(--tw-surface);
   color: #fff;
   display: grid;
@@ -236,19 +236,19 @@
 }
 
 .tw-applepay svg {
-  width: 16px;
-  height: 20px;
+  width: 15px;
+  height: 19px;
 }
 
 .tw-applepay span {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1;
 }
 
 .tw-start-labels {
-  margin-top: 13px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -256,7 +256,7 @@
 }
 
 .tw-start-labels span {
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1.3;
@@ -266,7 +266,7 @@
 /* ---------------- sections ---------------- */
 
 .tw-section-head {
-  margin: 36px 0 12px;
+  margin: 34px 0 12px;
 }
 
 .tw-section-link {
@@ -278,10 +278,15 @@
   padding: 0;
   color: var(--tw-text);
   font-family: inherit;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.02em;
   cursor: pointer;
+}
+
+.tw-section-link svg {
+  width: 15px;
+  height: 15px;
 }
 
 /* ---------------- explore tokens ---------------- */
@@ -296,7 +301,7 @@
   align-items: center;
   gap: 15px;
   width: 100%;
-  padding: 8px 0;
+  padding: 10px 0;
   border: 0;
   background: transparent;
   color: inherit;
@@ -323,9 +328,9 @@
 }
 
 .tw-mkt-fallback {
-  background: #2a2a34;
+  background: #2b2f4e;
   color: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -336,7 +341,7 @@
 .tw-mkt-name {
   flex: 1;
   min-width: 0;
-  font-size: 16px;
+  font-size: 14.5px;
   font-weight: 600;
   letter-spacing: -0.02em;
   white-space: nowrap;
@@ -353,14 +358,14 @@
 }
 
 .tw-mkt-price {
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
 }
 
 .tw-mkt-change {
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -372,21 +377,26 @@
 /* ---------------- view all ---------------- */
 
 .tw-view-all {
-  margin-top: 24px;
+  margin-top: 22px;
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  height: 46px;
-  padding: 0 20px 0 22px;
+  height: 44px;
+  padding: 0 18px 0 20px;
   border: 0;
   border-radius: 999px;
   background: var(--tw-surface);
   color: var(--tw-text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
   cursor: pointer;
+}
+
+.tw-view-all svg {
+  width: 14px;
+  height: 14px;
 }
 
 .tw-view-all-chevron {
@@ -415,13 +425,13 @@
 }
 
 .tw-perp-card {
-  flex: 0 0 152px;
-  height: 118px;
+  flex: 0 0 150px;
+  height: 116px;
   border: 0;
-  border-radius: 19px;
+  border-radius: 21px;
   background: var(--tw-surface);
   color: var(--tw-text);
-  padding: 15px 15px 13px;
+  padding: 14px 14px 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -437,21 +447,21 @@
 }
 
 .tw-perp-symbol {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 .tw-perp-lev {
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 600;
   color: var(--tw-text-dim);
 }
 
 .tw-perp-price {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: #b9b9c1;
+  color: #b6bac9;
   letter-spacing: -0.01em;
 }
 
@@ -471,7 +481,7 @@
 
 .tw-nav-pill {
   flex: 1;
-  height: 72px;
+  height: 62px;
   border-radius: 999px;
   background: var(--tw-nav-bg);
   border: 1px solid rgba(255, 255, 255, 0.055);
@@ -484,12 +494,12 @@
 }
 
 .tw-nav-item {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: #8e8e98;
+  color: #8b8fa5;
   display: grid;
   place-items: center;
   padding: 0;
@@ -502,12 +512,12 @@
 }
 
 .tw-nav-search {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.055);
   background: var(--tw-nav-bg);
-  color: #8e8e98;
+  color: #8b8fa5;
   display: grid;
   place-items: center;
   padding: 0;
@@ -531,7 +541,7 @@
 
 .tw-modal-content {
   width: min(100%, 430px);
-  background: #202022;
+  background: #1c1e33;
   border-radius: 28px 28px 0 0;
   padding: 22px 20px 26px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -545,7 +555,7 @@
 }
 
 .tw-modal-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.03em;
 }
@@ -553,8 +563,8 @@
 .tw-modal-close {
   border: 0;
   background: transparent;
-  color: #b8b8bc;
-  font-size: 22px;
+  color: #b4b7c9;
+  font-size: 20px;
   line-height: 1;
 }
 
@@ -564,7 +574,7 @@
   gap: 6px;
   padding: 4px;
   border-radius: 16px;
-  background: #171719;
+  background: #14162a;
   margin-bottom: 18px;
 }
 
@@ -573,19 +583,19 @@
   border: 0;
   border-radius: 12px;
   background: transparent;
-  color: #909096;
-  font-size: 12px;
+  color: #8b8fa5;
+  font-size: 11.5px;
   font-weight: 600;
 }
 
 .tw-modal-tab.active {
-  background: #2b2b2f;
+  background: #272b4a;
   color: #fff;
 }
 
 .tw-modal-note {
-  color: #a4a4aa;
-  font-size: 12px;
+  color: #a5a9bc;
+  font-size: 11.5px;
   line-height: 1.45;
   margin-bottom: 14px;
 }
@@ -597,8 +607,8 @@
 .tw-form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #a7a7ac;
-  font-size: 12px;
+  color: #a5a9bc;
+  font-size: 11.5px;
 }
 
 .tw-input {
@@ -606,10 +616,10 @@
   height: 48px;
   border-radius: 14px;
   border: 1px solid var(--tw-border);
-  background: #161618;
+  background: #121421;
   color: #fff;
   padding: 0 14px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-family: var(--tw-font-medium);
 }
 
@@ -620,7 +630,7 @@
 
 .tw-error-text {
   color: #ff6d73;
-  font-size: 12px;
+  font-size: 11.5px;
   margin-bottom: 12px;
 }
 
@@ -635,9 +645,9 @@
   height: 42px;
   border-radius: 14px;
   border: 1px solid var(--tw-border);
-  background: #171719;
+  background: #14162a;
   color: #fff;
-  font-size: 12px;
+  font-size: 11.5px;
   font-family: var(--tw-font-semibold);
 }
 
@@ -653,7 +663,7 @@
   height: 46px;
   border-radius: 14px;
   border: 0;
-  font-size: 13px;
+  font-size: 12.5px;
   font-family: var(--tw-font-semibold);
 }
 
@@ -664,8 +674,8 @@
 
 .tw-btn-secondary {
   margin-top: 12px;
-  background: #2c2c31;
-  color: #f0f1f3;
+  background: #2b2f4a;
+  color: #f0f1f5;
 }
 
 .tw-btn-secondary-danger {
