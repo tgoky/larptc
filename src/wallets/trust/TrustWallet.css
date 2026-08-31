@@ -1,9 +1,9 @@
 :root {
-  --tw-bg: #0d0e1b;
+--tw-bg: #0a0b14; 
   --tw-surface: #232742;
   --tw-surface-soft: #1d1f33;
-  --tw-nav-bg: #191b2f;
-  --tw-nav-active: #272b4a;
+   --tw-nav-bg: #111220; 
+   --tw-nav-active: #1e2036;
   --tw-text: #f5f6fa;
   --tw-text-dim: #8a8fa3;
   --tw-border: rgba(255, 255, 255, 0.07);
@@ -484,8 +484,8 @@
   height: 62px;
   border-radius: 999px;
   background: var(--tw-nav-bg);
-  border: 1px solid rgba(255, 255, 255, 0.055);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);  /* was 0.055 */
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
@@ -499,7 +499,7 @@
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: #8b8fa5;
+  color: #d6d8e4;   /* was #8b8fa5 — much brighter, like the target */
   display: grid;
   place-items: center;
   padding: 0;
@@ -515,14 +515,14 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.09);  /* was 0.055 */
   background: var(--tw-nav-bg);
-  color: #8b8fa5;
+  color: #d6d8e4;   /* was #8b8fa5 */
   display: grid;
   place-items: center;
   padding: 0;
   flex-shrink: 0;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   cursor: pointer;
 }
 
