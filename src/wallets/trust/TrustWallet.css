@@ -1,11 +1,11 @@
 :root {
-  --tw-bg: #0d0e1b;
-  --tw-surface: #232742;
-  --tw-surface-soft: #1d1f33;
-  --tw-nav-bg: #191b2f;
-  --tw-nav-active: #272b4a;
+  --tw-bg: #090b15;              /* Darker, cooler background tone */
+  --tw-surface: #191c2e;         /* Muted dark-slate for cards and buttons */
+  --tw-surface-soft: #191c2e;    /* Standardized surface color for header pills */
+  --tw-nav-bg: #121424;          /* Darker bottom navigation bar */
+  --tw-nav-active: #252946;      /* Active state background inside bottom nav */
   --tw-text: #f5f6fa;
-  --tw-text-dim: #8a8fa3;
+  --tw-text-dim: #797e93;        /* Slightly dimmer secondary text */
   --tw-border: rgba(255, 255, 255, 0.07);
   --tw-border-strong: rgba(255, 255, 255, 0.12);
   --tw-red-dot: #ff5b61;
@@ -16,9 +16,6 @@
   --tw-btc: #f7931a;
   --tw-eth: #627eea;
   --tw-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-  --tw-font-regular: "Inter Regular", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --tw-font-medium: "Inter Medium", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --tw-font-semibold: "Inter SemiBold", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .trust-app {
@@ -132,9 +129,10 @@
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
+
 }
 
 .tw-banner-info {
@@ -336,7 +334,10 @@
 
 .tw-mkt-btc { background: var(--tw-btc); color: #fff; }
 .tw-mkt-eth { background: var(--tw-eth); color: #fff; }
-.tw-mkt-bnb { background: #000; color: var(--tw-bnb); }
+.tw-mkt-bnb { 
+  background: var(--tw-bnb); 
+  color: #0d0e1b; 
+}
 
 .tw-mkt-name {
   flex: 1;
