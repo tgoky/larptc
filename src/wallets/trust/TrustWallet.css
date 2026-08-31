@@ -2,8 +2,8 @@
 --tw-bg: #0e111a;            /* Darker, cooler background tone */
 --tw-surface: #1d2031;       /* Muted dark-slate for cards and buttons */
 --tw-surface-soft: #20222f;   /* Standardized surface color for header pills */
---tw-nav-bg: #161826;         /* Darker bottom navigation bar */
---tw-nav-active: #242738;     /* Active state background inside bottom nav */
+--tw-nav-bg: #0e1017;         /* Darker bottom navigation bar */
+--tw-nav-active: #1e2130;    /* Active state background inside bottom nav */
 --tw-text: #f5f6fa;
 --tw-text-dim: #797e93;       /* Slightly dimmer secondary text */
   --tw-border: rgba(255, 255, 255, 0.07);
@@ -490,15 +490,14 @@ background: #1e2132;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
-  justify-items: center;
-  padding: 0 10px;
+  padding: 5px;
 }
 
 .tw-nav-item {
-  width: 44px;
-  height: 44px;
+  width: 100%;
+  height: 52px;
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
   background: transparent;
   color: #8b8fa5;
   display: grid;
@@ -513,8 +512,8 @@ background: #1e2132;
 }
 
 .tw-nav-search {
-  width: 52px;
-  height: 52px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.055);
   background: var(--tw-nav-bg);
