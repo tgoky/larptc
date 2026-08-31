@@ -19,7 +19,7 @@
 /* DOCK — in normal flow, last flex child. Pinned by structure, not position. */
 .ph-detail-bottom-dock {
   flex-shrink: 0;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  padding: 12px 28px calc(12px + env(safe-area-inset-bottom)); /* Changed horizontal padding from 16px to 28px */
   background: transparent;
   display: flex;
   align-items: center;
@@ -1068,13 +1068,13 @@
 
 .ph-detail-trade-btn,
 .ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn {
-  height: 46px;
-  padding: 0 30px !important;
-  border-radius: 23px !important;
+  height: 52px;
+  padding: 0 32px !important;
+  border-radius: 26px !important;
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.01em;
   display: inline-flex;
