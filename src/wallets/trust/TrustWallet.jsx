@@ -337,10 +337,15 @@ export default function TrustWallet() {
   const canToggleTokenRows = marketRows.length > 3;
 
   /* Detail replaces the whole screen — same proven pattern as PhantomWallet */
-  if (selectedToken) {
-    return <TrustTokenDetail token={selectedToken} onBack={() => setSelectedTokenId(null)} />;
-  }
-
+if (selectedToken) {
+  return (
+    <div className="trust-app">
+      <div className="tw-device-shell">
+        <TrustTokenDetail token={selectedToken} onBack={() => setSelectedTokenId(null)} />
+      </div>
+    </div>
+  );
+}
   return (
     <div className="trust-app">
       <div className="tw-device-shell">
