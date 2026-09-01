@@ -137,7 +137,7 @@
   border: 0;
   font-family: var(--ph-font-stack);
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 400;  
   white-space: nowrap;
   flex-shrink: 0;
   cursor: pointer;
@@ -147,7 +147,7 @@
 .ph-top-pill.active {
   background: var(--ph-purple);
   color: #000000;
-  font-weight: 700;
+  font-weight: 600; 
 }
 
 /* ================= SCROLL CONTAINER ================= */

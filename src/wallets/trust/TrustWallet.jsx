@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   fetchBasePrices,
   getTokenQuote,
+  getFallbackIconUrl,
   useWalletStore,
 } from '../../store/useWalletStore';
 import PullToRefresh from '../../components/PullToRefresh';
 import TrustSpoofModal from './TrustSpoofModal';
+import TrustTokenDetail from './TrustTokenDetail';
 import './TrustWallet.css';
 
 /* ---------------------------------- icons --------------------------------- */
@@ -155,6 +157,12 @@ const IconSearch = () => (
 const SYMBOL_NAMES = { BTC: 'Bitcoin', ETH: 'Ethereum', BNB: 'BNB Smart Chain' };
 const SYMBOL_ORDER = { BTC: 0, ETH: 1, BNB: 2 };
 
+const DEFAULT_TOKEN_META = {
+  BTC: { marketKey: 'bitcoin', network: 'Bitcoin', dexscreenerAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599' },
+  ETH: { marketKey: 'ethereum', network: 'Ethereum', dexscreenerAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' },
+  BNB: { marketKey: 'bnb', network: 'BNB Smart Chain', dexscreenerAddress: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c' },
+};
+
 const START_ACTIONS = [
   { key: 'receive', lines: ['Receive', 'crypto'], icon: <IconQr /> },
   { key: 'deposit', lines: ['Deposit from', 'Binance'], icon: <span className="tw-bnb-glyph"><IconBnb size={34} /></span> },
@@ -196,9 +204,10 @@ function MarketIcon({ symbol, imageUrl }) {
 /* -------------------------------- component ------------------------------- */
 
 export default function TrustWallet() {
-  const { trust, setPhantomPrices } = useWalletStore();
+  const { trust, setPhantomPrices, addTrustToken } = useWalletStore();
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [showAllTokens, setShowAllTokens] = useState(false);
+  const [selectedTokenId, setSelectedTokenId] = useState(null);
   const [deferredInstallPrompt, setDeferredInstallPrompt] = useState(null);
   const [isStandalone, setIsStandalone] = useState(
     () => window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true
@@ -259,6 +268,7 @@ export default function TrustWallet() {
         price: quote?.usd ?? 0,
         change: Number(quote?.change ?? 0),
         imageUrl: quote?.imageUrl || token.icon || '',
+        token,
       };
     });
 
@@ -270,6 +280,7 @@ export default function TrustWallet() {
         price: 0,
         change: 0,
         imageUrl: '',
+        token: null,
       }));
     }
 
@@ -277,6 +288,41 @@ export default function TrustWallet() {
       (a, b) => (SYMBOL_ORDER[a.symbol] ?? 99) - (SYMBOL_ORDER[b.symbol] ?? 99)
     );
   }, [trust.tokens, trust.prices]);
+
+  const selectedToken = useMemo(
+    () => (trust.tokens || []).find((t) => t.id === selectedTokenId) || null,
+    [trust.tokens, selectedTokenId]
+  );
+
+  const openToken = useCallback((row) => {
+    if (row.token) {
+      setSelectedTokenId(row.token.id);
+      return;
+    }
+    // Fallback row (empty wallet): create the store token on first open
+    const existing = (trust.tokens || []).find((t) => t.symbol === row.symbol);
+    if (existing) {
+      setSelectedTokenId(existing.id);
+      return;
+    }
+    const meta = DEFAULT_TOKEN_META[row.symbol];
+    if (!meta) return;
+    const id = `tw-default-${row.symbol.toLowerCase()}`;
+    addTrustToken({
+      id,
+      name: row.name,
+      symbol: row.symbol,
+      amount: 0,
+      icon: getFallbackIconUrl(meta.marketKey),
+      currentPrice: row.price,
+      priceChange24h: row.change,
+      label: meta.network,
+      network: meta.network,
+      networkMarketKey: meta.marketKey,
+      dexscreenerAddress: meta.dexscreenerAddress,
+    });
+    setSelectedTokenId(id);
+  }, [trust.tokens, addTrustToken]);
 
   const visibleRows = showAllTokens ? marketRows : marketRows.slice(0, 3);
   const canToggleTokenRows = marketRows.length > 3;
@@ -337,7 +383,7 @@ export default function TrustWallet() {
               {visibleRows.map((row) => {
                 const negative = row.change < 0;
                 return (
-                  <button className="tw-market-row" type="button" key={row.key}>
+                  <button className="tw-market-row" type="button" key={row.key} onClick={() => openToken(row)}>
                     <MarketIcon symbol={row.symbol} imageUrl={row.imageUrl} />
                     <span className="tw-mkt-name">{row.name}</span>
                     <span className="tw-mkt-right">
@@ -371,7 +417,12 @@ export default function TrustWallet() {
               {PERPS.map((perp) => {
                 const match = marketRows.find((row) => row.symbol === perp.symbol);
                 return (
-                  <button className="tw-perp-card" type="button" key={perp.symbol}>
+                  <button
+                    className="tw-perp-card"
+                    type="button"
+                    key={perp.symbol}
+                    onClick={() => { if (match) openToken(match); }}
+                  >
                     <span className="tw-perp-top">
                       <span className="tw-perp-symbol">{perp.symbol}</span>
                       <span className="tw-perp-lev">{perp.lev}</span>
@@ -393,6 +444,10 @@ export default function TrustWallet() {
           </div>
           <button className="tw-nav-search" type="button" aria-label="Search"><IconSearch /></button>
         </nav>
+
+        {selectedToken ? (
+          <TrustTokenDetail token={selectedToken} onBack={() => setSelectedTokenId(null)} />
+        ) : null}
       </div>
 
       {showSetupModal ? (
