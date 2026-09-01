@@ -207,7 +207,7 @@ export default function TrustWallet() {
   const { trust, setPhantomPrices, addTrustToken } = useWalletStore();
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [showAllTokens, setShowAllTokens] = useState(false);
-  const [selectedTokenId, setSelectedTokenId] = useState(null);
+  const [selectedToken, setSelectedToken] = useState(null);
   const [deferredInstallPrompt, setDeferredInstallPrompt] = useState(null);
   const [isStandalone, setIsStandalone] = useState(
     () => window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true
@@ -289,28 +289,22 @@ export default function TrustWallet() {
     );
   }, [trust.tokens, trust.prices]);
 
-  const selectedToken = useMemo(
-    () => (trust.tokens || []).find((t) => t.id === selectedTokenId) || null,
-    [trust.tokens, selectedTokenId]
-  );
-
   const openToken = useCallback((row) => {
     const list = trust.tokens || [];
-
-    // Already in the store? Open it.
     const existing =
       list.find((t) => row.token && t.id === row.token.id) ||
       list.find((t) => t.symbol === row.symbol);
+
     if (existing) {
-      setSelectedTokenId(existing.id);
+      setSelectedToken(existing);
       return;
     }
 
-    // Known default (BTC/ETH/BNB)? Create it, then read it back.
     const meta = DEFAULT_TOKEN_META[row.symbol];
     if (!meta) return;
+
     const id = `tw-default-${row.symbol.toLowerCase()}`;
-    addTrustToken({
+    const newToken = {
       id,
       name: row.name,
       symbol: row.symbol,
@@ -322,30 +316,25 @@ export default function TrustWallet() {
       network: meta.network,
       networkMarketKey: meta.marketKey,
       dexscreenerAddress: meta.dexscreenerAddress,
-    });
+    };
 
-    // Zustand updates are synchronous — read the fresh state so we
-    // select whatever id the store actually assigned.
-    const latest = useWalletStore.getState().trust?.tokens || [];
-    const created =
-      latest.find((t) => t.id === id) ||
-      latest.find((t) => t.symbol === row.symbol);
-    setSelectedTokenId(created ? created.id : id);
+    addTrustToken(newToken);
+    setSelectedToken(newToken);
   }, [trust.tokens, addTrustToken]);
 
   const visibleRows = showAllTokens ? marketRows : marketRows.slice(0, 3);
   const canToggleTokenRows = marketRows.length > 3;
 
-  /* Detail replaces the whole screen — same proven pattern as PhantomWallet */
-if (selectedToken) {
-  return (
-    <div className="trust-app">
-      <div className="tw-device-shell">
-        <TrustTokenDetail token={selectedToken} onBack={() => setSelectedTokenId(null)} />
+  if (selectedToken) {
+    return (
+      <div className="trust-app">
+        <div className="tw-device-shell">
+          <TrustTokenDetail token={selectedToken} onBack={() => setSelectedToken(null)} />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+
   return (
     <div className="trust-app">
       <div className="tw-device-shell">
