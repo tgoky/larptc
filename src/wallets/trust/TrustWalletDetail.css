@@ -1,5 +1,4 @@
 /* ================= TRUST TOKEN DETAIL ================= */
-
 .twd-screen {
   position: relative;
   width: 100%;
@@ -17,6 +16,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 /* ---- header ---- */
 .twd-header {
   display: flex;
@@ -145,8 +145,7 @@
   display: block;
 }
 
-.twd-end-dot,
-.twd-scrub-dot {
+.twd-end-dot, .twd-scrub-dot {
   position: absolute;
   width: 11px;
   height: 11px;
