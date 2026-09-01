@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { getTokenQuote } from '../../store/useWalletStore';
+import { getTokenQuote, useWalletStore } from '../../store/useWalletStore';
 import './TrustWalletDetail.css';
 
 /* ---------------------------------- icons --------------------------------- */
