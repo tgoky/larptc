@@ -23,8 +23,8 @@
 }
 
 .twd-circle-btn {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
   background: #1d2031;
@@ -54,8 +54,8 @@
 }
 
 .twd-token-icon {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   overflow: hidden;
   display: grid;
@@ -63,7 +63,7 @@
   flex-shrink: 0;
   background: #2b2f4e;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .twd-token-sym {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -92,7 +92,7 @@
 }
 
 .twd-token-name {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--tw-text-dim);
   line-height: 1.1;
@@ -110,15 +110,15 @@
 }
 
 .twd-token-price {
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
 }
 
 .twd-token-change {
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1;
 }
 
@@ -211,7 +211,7 @@
   background: transparent;
   color: #8b8fa5;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.01em;
   padding: 8px 10px;
@@ -241,7 +241,7 @@
 }
 
 .twd-balance-label {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -285,13 +285,13 @@
 }
 
 .twd-action-btn {
-  height: 56px;
+  height: 48px;
   border: 0;
   border-radius: 999px;
   background: #1d2031;
   color: #ffffff;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.01em;
   display: flex;
@@ -312,7 +312,7 @@
   gap: 9px;
   margin-top: 22px;
   color: #5f6478;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.02em;
   flex-shrink: 0;
@@ -321,13 +321,13 @@
 /* ---- trade button ---- */
 .twd-trade {
   margin-top: 14px;
-  height: 58px;
+  height: 52px;
   border: 0;
   border-radius: 999px;
   background: #4b4df2;
   color: #ffffff;
   font-family: inherit;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.01em;
   display: flex;
