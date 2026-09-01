@@ -242,10 +242,11 @@
 
 .twd-balance-label {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600; /* reduced from 700 to match precise semibold */
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
+
 
 .twd-balance-right {
   display: flex;
@@ -305,15 +306,14 @@
   opacity: 0.75;
 }
 
-/* ---- ai summary ---- */
 .twd-ai {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 16px;
-  color: #696e85;
+  color: #8b8fa5; /* lightened color to match dim/subtle tone in photo 2 */
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600; /* reduced from 700 */
   letter-spacing: -0.01em;
   flex-shrink: 0;
 }
@@ -327,7 +327,7 @@
   color: #ffffff;
   font-family: inherit;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600; /* reduced from 700 to soften text inside button */
   letter-spacing: -0.01em;
   display: flex;
   align-items: center;
