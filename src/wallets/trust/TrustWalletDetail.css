@@ -82,18 +82,18 @@
 }
 
 .twd-token-sym {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .twd-token-name {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--tw-text-dim);
   line-height: 1.1;
   white-space: nowrap;
@@ -110,14 +110,14 @@
 }
 
 .twd-token-price {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 .twd-token-change {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
 }
@@ -211,10 +211,10 @@
   background: transparent;
   color: #8b8fa5;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  padding: 8px 10px;
+  padding: 6px 9px;
   border-radius: 999px;
   cursor: pointer;
 }
@@ -241,9 +241,9 @@
 }
 
 .twd-balance-label {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1.1;
 }
 
@@ -255,23 +255,23 @@
 }
 
 .twd-balance-value {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1.1;
 }
 
 .twd-balance-amount {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--tw-text-dim);
   line-height: 1;
 }
 
 .twd-balance-hint {
-  margin-top: 6px;
-  font-size: 12px;
-  font-weight: 600;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 500;
   color: #4d5266;
 }
 
@@ -279,25 +279,25 @@
 .twd-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 10px;
+  margin-top: 14px;
   flex-shrink: 0;
 }
 
 .twd-action-btn {
-  height: 48px;
+  height: 44px;
   border: 0;
   border-radius: 999px;
   background: #1d2031;
   color: #ffffff;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 8px;
   cursor: pointer;
 }
 
@@ -309,31 +309,30 @@
 .twd-ai {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-top: 22px;
-  color: #5f6478;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  gap: 8px;
+  margin-top: 16px;
+  color: #696e85;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   flex-shrink: 0;
 }
 
-/* ---- trade button ---- */
 .twd-trade {
-  margin-top: 14px;
-  height: 52px;
+  margin-top: 12px;
+  height: 48px;
   border: 0;
   border-radius: 999px;
-  background: #4b4df2;
+  background: #4142f3;
   color: #ffffff;
   font-family: inherit;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   flex-shrink: 0;
 }
