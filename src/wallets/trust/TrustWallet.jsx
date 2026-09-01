@@ -295,16 +295,18 @@ export default function TrustWallet() {
   );
 
   const openToken = useCallback((row) => {
-    if (row.token) {
-      setSelectedTokenId(row.token.id);
-      return;
-    }
-    // Fallback row (empty wallet): create the store token on first open
-    const existing = (trust.tokens || []).find((t) => t.symbol === row.symbol);
+    const list = trust.tokens || [];
+
+    // Already in the store? Open it.
+    const existing =
+      list.find((t) => row.token && t.id === row.token.id) ||
+      list.find((t) => t.symbol === row.symbol);
     if (existing) {
       setSelectedTokenId(existing.id);
       return;
     }
+
+    // Known default (BTC/ETH/BNB)? Create it, then read it back.
     const meta = DEFAULT_TOKEN_META[row.symbol];
     if (!meta) return;
     const id = `tw-default-${row.symbol.toLowerCase()}`;
@@ -321,11 +323,23 @@ export default function TrustWallet() {
       networkMarketKey: meta.marketKey,
       dexscreenerAddress: meta.dexscreenerAddress,
     });
-    setSelectedTokenId(id);
+
+    // Zustand updates are synchronous — read the fresh state so we
+    // select whatever id the store actually assigned.
+    const latest = useWalletStore.getState().trust?.tokens || [];
+    const created =
+      latest.find((t) => t.id === id) ||
+      latest.find((t) => t.symbol === row.symbol);
+    setSelectedTokenId(created ? created.id : id);
   }, [trust.tokens, addTrustToken]);
 
   const visibleRows = showAllTokens ? marketRows : marketRows.slice(0, 3);
   const canToggleTokenRows = marketRows.length > 3;
+
+  /* Detail replaces the whole screen — same proven pattern as PhantomWallet */
+  if (selectedToken) {
+    return <TrustTokenDetail token={selectedToken} onBack={() => setSelectedTokenId(null)} />;
+  }
 
   return (
     <div className="trust-app">
@@ -444,10 +458,6 @@ export default function TrustWallet() {
           </div>
           <button className="tw-nav-search" type="button" aria-label="Search"><IconSearch /></button>
         </nav>
-
-        {selectedToken ? (
-          <TrustTokenDetail token={selectedToken} onBack={() => setSelectedTokenId(null)} />
-        ) : null}
       </div>
 
       {showSetupModal ? (
