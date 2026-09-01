@@ -10,8 +10,20 @@ const IconChevronLeft = () => (
   </svg>
 );
 
+const IconEth = () => (
+  <svg width="44" height="44" viewBox="0 0 32 32" fill="none">
+    <circle cx="16" cy="16" r="16" fill="#627EEA" />
+    <path d="M16 4v8.87l7.48 3.35z" fill="#FFFFFF" fillOpacity="0.6" />
+    <path d="M16 4L8.52 16.22l7.48-3.35z" fill="#FFFFFF" />
+    <path d="M16 21.96v6.04l7.5-10.32z" fill="#FFFFFF" fillOpacity="0.6" />
+    <path d="M16 28v-6.04L8.52 17.68z" fill="#FFFFFF" />
+    <path d="M16 20.57l7.48-4.35L16 12.87z" fill="#FFFFFF" fillOpacity="0.2" />
+    <path d="M8.52 16.22l7.48 4.35v-7.7z" fill="#FFFFFF" fillOpacity="0.6" />
+  </svg>
+);
+
 const IconStar = ({ filled }) => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? '#5d85f7' : 'none'} stroke={filled ? '#5d85f7' : '#8b8fa5'} strokeWidth="1.8" strokeLinejoin="round">
     <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.3-5.7-3.1-5.7 3.1 1.2-6.3L2.8 9.5l6.4-.8L12 2.8z" />
   </svg>
 );
@@ -244,7 +256,9 @@ export default function TrustTokenDetail({ token, onBack }) {
       {/* token row */}
       <div className="twd-token-row">
         <span className="twd-token-icon">
-          {quote.imageUrl || token.icon ? (
+          {token.symbol === 'ETH' ? (
+            <IconEth />
+          ) : quote.imageUrl || token.icon ? (
             <img
               src={quote.imageUrl || token.icon}
               alt={token.symbol}
