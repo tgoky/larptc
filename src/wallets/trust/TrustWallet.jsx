@@ -88,22 +88,37 @@ const IconBnb = ({ size = 32 }) => (
   </svg>
 );
 
-const IconBtc = () => (
-  <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.873 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z" />
+/* Full Badge SVGs for Token List */
+const IconBtcCircle = () => (
+  <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <circle cx="16" cy="16" r="16" fill="#F7931A" />
+    <path
+      d="M22.3 13.1c.3-2.1-1.3-3.2-3.5-4l.7-2.8-1.7-.4-.7 2.7c-.5-.1-.9-.2-1.4-.3l.7-2.8-1.7-.4-.7 2.8c-.4-.1-.7-.2-1.1-.3l-2.4-.6-.5 1.8s1.3.3 1.3.3c.7.2.8.6.8 1l-.8 3.2c.1 0 .1 0 .2.1l-.2 0-1.1 4.5c-.1.2-.3.5-.8.4 0 0-1.3-.3-1.3-.3l-.9 2 2.3.6c.4.1.8.2 1.2.3l-.7 2.9 1.7.4.7-2.8c.5.1.9.2 1.4.3l-.7 2.8 1.7.4.7-2.9c3 .6 5.2.3 6.1-2.3.7-2.1 0-3.4-1.6-4.2 1.2-.3 2-1 2.2-2.5zm-4 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.8c1.2.3 4.9.9 4.4 3.1zm.6-5.5c-.5 2-3.5 1-4.5.7l.9-3.5c1 .2 4.1.7 3.6 2.8z"
+      fill="#FFFFFF"
+    />
   </svg>
 );
 
-const IconEth = () => (
-  <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <g fillRule="nonzero">
-      <path fillOpacity=".602" d="M12 2v7.37l6 2.68z" />
-      <path d="M12 2L6 12.05l6-2.68z" />
-      <path fillOpacity=".602" d="M12 16.24v4.9L18 13.2z" />
-      <path d="M12 21.14v-4.9L6 13.2z" />
-      <path fillOpacity=".2" d="M12 15.08l6-3.03-6-2.68z" />
-      <path fillOpacity=".602" d="M6 12.05l6 3.03v-5.71z" />
-    </g>
+const IconEthCircle = () => (
+  <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <circle cx="16" cy="16" r="16" fill="#627EEA" />
+    <path d="M16 4v8.87l7.48 3.35z" fill="#FFFFFF" fillOpacity="0.6" />
+    <path d="M16 4L8.52 16.22l7.48-3.35z" fill="#FFFFFF" />
+    <path d="M16 21.96v6.04l7.5-10.32z" fill="#FFFFFF" fillOpacity="0.6" />
+    <path d="M16 28v-6.04L8.52 17.68z" fill="#FFFFFF" />
+    <path d="M16 20.57l7.48-4.35L16 12.87z" fill="#FFFFFF" fillOpacity="0.2" />
+    <path d="M8.52 16.22l7.48 4.35v-7.7z" fill="#FFFFFF" fillOpacity="0.6" />
+  </svg>
+);
+
+const IconBnbCircle = () => (
+  <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <circle cx="16" cy="16" r="16" fill="#F3BA2F" />
+    <path d="M16 6.5L18.8 9.3L16 12.1L13.2 9.3Z" fill="#181A20" />
+    <path d="M9.3 13.2L12.1 16L9.3 18.8L6.5 16Z" fill="#181A20" />
+    <path d="M22.7 13.2L25.5 16L22.7 18.8L19.9 16Z" fill="#181A20" />
+    <path d="M16 13.2L18.8 16L16 18.8L13.2 16Z" fill="#181A20" />
+    <path d="M16 19.9L18.8 22.7L16 25.5L13.2 22.7Z" fill="#181A20" />
   </svg>
 );
 
@@ -188,9 +203,9 @@ function MarketIcon({ symbol, imageUrl }) {
     setHasError(false);
   }, [imageUrl]);
 
-  if (symbol === 'BTC') return <span className="tw-mkt-icon tw-mkt-btc"><IconBtc /></span>;
-  if (symbol === 'ETH') return <span className="tw-mkt-icon tw-mkt-eth"><IconEth /></span>;
-  if (symbol === 'BNB') return <span className="tw-mkt-icon tw-mkt-bnb"><IconBnb size={26} /></span>;
+  if (symbol === 'BTC') return <IconBtcCircle />;
+  if (symbol === 'ETH') return <IconEthCircle />;
+  if (symbol === 'BNB') return <IconBnbCircle />;
   if (imageUrl && !hasError) {
     return (
       <span className="tw-mkt-icon">
@@ -198,7 +213,11 @@ function MarketIcon({ symbol, imageUrl }) {
       </span>
     );
   }
-  return <span className="tw-mkt-icon tw-mkt-fallback"><span>{(symbol || '?').slice(0, 1)}</span></span>;
+  return (
+    <span className="tw-mkt-icon tw-mkt-fallback">
+      <span>{(symbol || '?').slice(0, 1)}</span>
+    </span>
+  );
 }
 
 /* -------------------------------- component ------------------------------- */

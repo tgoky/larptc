@@ -23,10 +23,17 @@ const IconEth = () => (
 );
 
 const IconStar = ({ filled }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? '#5d85f7' : 'none'} stroke={filled ? '#5d85f7' : '#8b8fa5'} strokeWidth="1.8" strokeLinejoin="round">
-    <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.3-5.7-3.1-5.7 3.1 1.2-6.3L2.8 9.5l6.4-.8L12 2.8z" />
+  <svg width="20" height="20" viewBox="0 0 24 24">
+    <path
+      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+      fill={filled ? "#5B83FC" : "none"}
+      stroke={filled ? "none" : "#8b8fa5"}
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
   </svg>
 );
+
 
 const IconSend = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
@@ -135,7 +142,7 @@ export default function TrustTokenDetail({ token, onBack }) {
   const { trust, updateTrustTokenAmount } = useWalletStore();
 
   const [timeframe, setTimeframe] = useState('1D');
-  const [starred, setStarred] = useState(false);
+const [starred, setStarred] = useState(true);
   const [scrubIndex, setScrubIndex] = useState(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [mode, setMode] = useState('add');
