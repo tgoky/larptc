@@ -18,12 +18,19 @@
 
 /* DOCK — in normal flow, last flex child. Pinned by structure, not position. */
 .ph-detail-bottom-dock {
-  flex-shrink: 0;
-  padding: 12px 28px calc(12px + env(safe-area-inset-bottom)); /* Changed horizontal padding from 16px to 28px */
-  background: transparent;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 20px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 50;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 :root {
@@ -1074,31 +1081,34 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 /* ================= BOTTOM TRADE DOCK ================= */
 .ph-detail-mcap {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 6px;
 }
 
+
 .ph-detail-mcap-val {
   color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1;
 }
+
 
 .ph-detail-mcap-lbl {
   color: #8e8e93;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1;
 }
 
+
 .ph-detail-trade-btn,
 .ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn {
-  height: 52px;
-  padding: 0 32px !important;
-  border-radius: 26px !important;
+  height: 50px;
+  padding: 0 34px !important;
+  border-radius: 25px !important;
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack);
@@ -1111,4 +1121,48 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   white-space: nowrap;
   border: 0;
   flex-shrink: 0;
+}
+
+.ph-detail-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: #3a3a3c;
+  margin: 8px auto 0;
+  flex-shrink: 0;
+}
+
+.ph-detail-scroll-content {
+  padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+}
+
+.ph-detail-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 8px 16px 20px;
+}
+
+.ph-detail-action-btn {
+  height: 52px;
+  border-radius: 26px;
+  background: #141416;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--ph-font-stack);
+  font-size: 16px;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ph-detail-action-btn:active {
+  background: #202024;
+}
+
+.ph-detail-action-btn svg {
+  color: #ffffff;
 }
