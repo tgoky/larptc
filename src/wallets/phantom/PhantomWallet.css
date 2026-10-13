@@ -477,7 +477,7 @@
 }
 
 .phantom-app main {
-  padding-bottom: 110px; /* Gives enough clearance so you can scroll the Perps cards completely past the dock */
+padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps cards completely past the dock */
 }
 
 .ph-perps-row::-webkit-scrollbar {
@@ -514,7 +514,7 @@
 /* ================= FLOATING BOTTOM DOCK ================= */
 .ph-floating-dock {
   position: fixed;
-  bottom: 14px; /* Fixes it directly above the home indicator */
+  bottom: 10px; /* Moves the dock down so it sits snugly above the home bar */
   left: 16px;
   right: 16px;
   display: flex;
