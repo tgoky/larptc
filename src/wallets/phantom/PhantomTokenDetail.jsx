@@ -6,6 +6,7 @@ import {
   useWalletStore,
 } from '../../store/useWalletStore';
 import PullToRefresh from '../../components/PullToRefresh';
+import './PhantomWallet.css';
 
 const TIMEFRAMES = ['LIVE', '1D', '1W', '1M', '1Y', 'ALL'];
 
@@ -18,7 +19,6 @@ const CHART_PRESETS = {
   ALL:  { pointCount: 260, durationMs: 2 * 365 * 24 * 60 * 60 * 1000,  volatility: 0.020, spikeChance: 0.04, spikeScale: 2.0 },
 };
 
-// Phantom's LIVE chart leaves empty space on the right where "now" keeps drawing
 const LIVE_RIGHT_GAP_RATIO = 0.13;
 
 const IconChevronDown = () => (
@@ -39,28 +39,27 @@ const IconHeart = () => (
   </svg>
 );
 
-const IconMore = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-    <circle cx="12" cy="12" r="1" />
-    <circle cx="19" cy="12" r="1" />
-    <circle cx="5" cy="12" r="1" />
+const IconShare = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+    <polyline points="16 6 12 2 8 6" />
+    <line x1="12" y1="2" x2="12" y2="15" />
   </svg>
 );
 
-// 1. Add Send & Receive icons near the other icon definitions:
 const IconSend = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="m22 2-7 20-4-9-9-4Z" />
     <path d="M22 2 11 13" />
   </svg>
 );
 
 const IconReceive = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <rect x="3" y="3" width="7" height="7" rx="2" />
-    <rect x="14" y="3" width="7" height="7" rx="2" />
-    <rect x="3" y="14" width="7" height="7" rx="2" />
-    <rect x="14" y="14" width="7" height="7" rx="2" />
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+    <circle cx="7" cy="7" r="2.8" />
+    <circle cx="17" cy="7" r="2.8" />
+    <circle cx="7" cy="17" r="2.8" />
+    <circle cx="17" cy="17" r="2.8" />
   </svg>
 );
 
@@ -138,42 +137,28 @@ function createSeededRandom(seedText) {
   };
 }
 
-/**
- * Fake "Base" dust position: amount is seeded per token (stable across price
- * refreshes), sized so the fiat value lands in a believable range.
- */
 function deriveBaseAmount(tokenId, price) {
   const rand = createSeededRandom(`${tokenId}|base-pos`);
-  const targetFiat = 0.5 + rand() * 3; // $0.50 – $3.50
+  const targetFiat = 0.5 + rand() * 3;
   const rough = targetFiat / Math.max(price, 0.01);
   const magnitude = Math.pow(10, Math.floor(Math.log10(rough)));
   return Number(((1 + rand() * 8.9) * magnitude).toPrecision(2));
 }
 
-/**
- * Fake network dust balance for when the real amount is 0
- * (matches the reference's 0.00003 ETH / $0.07 row).
- */
 function deriveDustAmount(tokenId, price) {
   const rand = createSeededRandom(`${tokenId}|dust-pos`);
-  const targetFiat = 0.02 + rand() * 0.13; // $0.02 – $0.15
+  const targetFiat = 0.02 + rand() * 0.13;
   const rough = targetFiat / Math.max(price, 0.01);
   const magnitude = Math.pow(10, Math.floor(Math.log10(rough)));
   return Number(((1 + rand() * 8.9) * magnitude).toPrecision(2));
 }
 
-/** Deterministic fallback market cap when Dexscreener has no data. */
 function deriveFallbackMcap(tokenId) {
   const rand = createSeededRandom(`${tokenId}|mcap`);
-  const magnitude = Math.pow(10, 6 + Math.floor(rand() * 3)); // $1M – $999M
+  const magnitude = Math.pow(10, 6 + Math.floor(rand() * 3));
   return Math.round((1 + rand() * 9.4) * magnitude);
 }
 
-/**
- * Jagged random walk pinned to the real start/end prices.
- * Seed is keyed on token + timeframe (NOT price), so when the live price
- * updates only the endpoint moves — the chart keeps its shape like a live feed.
- */
 function generateSeries(currentPrice, changePercent, timeframe, seedKey) {
   const preset = CHART_PRESETS[timeframe] || CHART_PRESETS.LIVE;
   const now = Date.now();
@@ -189,7 +174,7 @@ function generateSeries(currentPrice, changePercent, timeframe, seedKey) {
   walk[0] = 0;
   for (let i = 1; i <= steps; i += 1) {
     let step = random() * 2 - 1;
-    if (random() < preset.spikeChance) step *= preset.spikeScale; // occasional violent spike
+    if (random() < preset.spikeChance) step *= preset.spikeScale;
     walk[i] = walk[i - 1] + step;
   }
   const netDrift = walk[steps];
@@ -197,7 +182,7 @@ function generateSeries(currentPrice, changePercent, timeframe, seedKey) {
   const points = [];
   for (let i = 0; i <= steps; i += 1) {
     const t = i / steps;
-    const detrended = walk[i] - netDrift * t; // pins first & last points exactly
+    const detrended = walk[i] - netDrift * t;
     points.push({
       time: new Date(now - preset.durationMs + t * preset.durationMs),
       value: Math.exp(startLog + (endLog - startLog) * t + detrended * preset.volatility),
@@ -221,8 +206,6 @@ export default function PhantomTokenDetail({ token, onBack }) {
     [liveQuote.change, liveQuote.usd, timeframe, token.id],
   );
 
-  // Stable-per-token fake amounts: derived once per token, then reused.
-  // Re-derived only if the first derivation happened before prices loaded.
   const spoofRef = useRef(null);
   const priceNow = liveQuote.usd > 0 ? liveQuote.usd : 0;
   if (
@@ -370,7 +353,6 @@ export default function PhantomTokenDetail({ token, onBack }) {
       context.fillStyle = lineColor;
       context.fill();
     } else {
-      // Pulsing dot at the tip of the line (in the right gap for LIVE)
       const lx = getX(lastIndex);
       const ly = getY(chartData[lastIndex].value);
       const pulse = 0.5 + 0.5 * Math.sin(phase / 320);
@@ -439,14 +421,14 @@ export default function PhantomTokenDetail({ token, onBack }) {
           <button className="ph-detail-icon-circle" type="button" aria-label="Favorites">
             <IconHeart />
           </button>
-          <button className="ph-detail-icon-circle" type="button" aria-label="More Options">
-            <IconMore />
+          <button className="ph-detail-icon-circle" type="button" aria-label="Share">
+            <IconShare />
           </button>
         </div>
       </header>
 
       <PullToRefresh className="ph-detail-scroll" onRefresh={refreshDetail}>
-        <div>
+        <div className="ph-detail-scroll-content">
           <section className="ph-detail-hero-v2">
             <button className="ph-detail-name-btn" type="button">
               <span>{token.name}</span>
@@ -548,6 +530,17 @@ export default function PhantomTokenDetail({ token, onBack }) {
               </button>
             </div>
           </section>
+
+          <section className="ph-detail-actions-row">
+            <button className="ph-detail-action-btn" type="button">
+              <IconSend />
+              <span>Send</span>
+            </button>
+            <button className="ph-detail-action-btn" type="button">
+              <IconReceive />
+              <span>Receive</span>
+            </button>
+          </section>
         </div>
       </PullToRefresh>
 
@@ -556,7 +549,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
           <span className="ph-detail-mcap-val">
             {formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap || fallbackMcap)}
           </span>
-          <span className="ph-detail-mcap-lbl">market cap</span>
+          <span className="ph-detail-mcap-lbl">traded today</span>
         </div>
         <button className="ph-detail-trade-btn" type="button">
           Trade
