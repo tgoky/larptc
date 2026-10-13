@@ -28,9 +28,9 @@
 
 :root {
   --ph-bg: #000000;
-  --ph-surface: #1a1a1c;
-  --ph-surface-2: #242426;
-  --ph-surface-3: #2c2c2e;
+  --ph-surface: #121212;        /* was #1a1a1c */
+  --ph-surface-2: #1c1c1e;      /* was #242426 */
+  --ph-surface-3: #242426;      /* was #2c2c2e */
   --ph-text: #ffffff;
   --ph-text-muted: #8e8e93;
   --ph-text-dim: #636366;
@@ -256,7 +256,7 @@
 /* ================= CASH CARD V2 ================= */
 .ph-cash-card-v2 {
   margin: 0 16px 16px;
-  background: #1a1a1c;
+  background: #121212;          /* was #1a1a1c */
   border-radius: 20px;
   min-height: 62px;
   padding: 16px 18px;
@@ -332,7 +332,7 @@
 
 .ph-token-row {
   width: 100%;
-  background: #1a1a1c;
+  background: #121212;          /* was #1a1a1c */
   border: 0;
   border-radius: 20px;
   min-height: 72px;
@@ -347,7 +347,7 @@
 }
 
 .ph-token-row:active {
-  background: #202024;
+  background: #1c1c1e;          /* was #202024 */
 }
 
 .ph-token-avatar {
@@ -488,7 +488,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   min-width: 135px;
   width: 135px;
   height: 120px;
-  background: #161618;
+  background: #131313;          /* was #161618 (matches #121212 - #131313) */
   border-radius: 24px;
   border: 0;
   padding: 0;
@@ -501,7 +501,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 }
 
 .ph-perp-card:active {
-  background: #202024;
+  background: #1c1c1e;          /* was #202024 */
 }
 
 .ph-perp-icon {
@@ -535,7 +535,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   flex: 1;
   height: 52px;
   border-radius: 26px;
-  background: #1e1e22;
+  background: #151515;          /* was #1e1e22 */
   display: flex;
   align-items: center;
   gap: 12px;
