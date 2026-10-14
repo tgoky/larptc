@@ -777,9 +777,12 @@
 
 
 
+
+
 .ph-detail-capsule-item:active {
   opacity: 0.7;
 }
+
 
 /* Scroll area */
 .ph-detail-scroll {

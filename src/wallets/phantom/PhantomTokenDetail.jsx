@@ -41,18 +41,44 @@ const IconHeart = () => (
 
 /* Exact Apple SF Symbol: square.and.arrow.up.fill */
 const IconUploadSolid = () => (
-  <svg width="17" height="21" viewBox="0 0 17 21" fill="currentColor">
+  <svg width="17" height="21" viewBox="0 0 22 27" fill="currentColor">
     {/* Tall, prominent upward arrow */}
-    <path d="M8.5 0a1.1 1.1 0 0 1 .78.32l4.8 4.8a1.1 1.1 0 0 1-1.56 1.56L9.6 3.76v9.14a1.1 1.1 0 1 1-2.2 0V3.76L4.48 6.68a1.1 1.1 0 0 1-1.56-1.56l4.8-4.8A1.1 1.1 0 0 1 8.5 0z" />
-    {/* Short, squat tray with continuous squircle corners */}
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M3.2 8.5C1.43 8.5 0 9.93 0 11.7v5.6C0 19.07 1.43 20.5 3.2 20.5h10.6c1.77 0 3.2-1.43 3.2-3.2v-5.6c0-1.77-1.43-3.2-3.2-3.2h-3.3a.9.9 0 0 0-.9.9v4.5a1.1 1.1 0 1 1-2.2 0V9.4a.9.9 0 0 0-.9-.9H3.2z"
-    />
+    <path d="
+      M 11 0.6
+      C 11.4 0.6 11.7 0.9 11.9 1.1
+      L 18.5 7.6
+      C 18.9 8.0 18.7 8.7 18.1 8.7
+      L 12.5 8.7
+      L 12.5 16.5
+      C 12.5 17.3 11.8 18.0 11.0 18.0
+      C 10.2 18.0 9.5 17.3 9.5 16.5
+      L 9.5 8.7
+      L 3.9 8.7
+      C 3.3 8.7 3.1 8.0 3.5 7.6
+      L 10.1 1.1
+      C 10.3 0.9 10.6 0.6 11 0.6 Z
+    " />
+    {/* Smooth squircle tray with deep rounded U-notch */}
+    <path fillRule="evenodd" clipRule="evenodd" d="
+      M 4.6 11.0
+      C 2.2 11.0 0.5 12.7 0.5 15.1
+      L 0.5 21.6
+      C 0.5 24.5 2.5 26.5 5.4 26.5
+      L 16.6 26.5
+      C 19.5 26.5 21.5 24.5 21.5 21.6
+      L 21.5 15.1
+      C 21.5 12.7 19.8 11.0 17.4 11.0
+      L 14.3 11.0
+      C 13.9 11.0 13.6 11.3 13.6 11.7
+      L 13.6 16.6
+      C 13.6 18.0 12.4 19.2 11.0 19.2
+      C 9.6 19.2 8.4 18.0 8.4 16.6
+      L 8.4 11.7
+      C 8.4 11.3 8.1 11.0 7.7 11.0
+      Z
+    " />
   </svg>
 );
-
 
 const IconMoreDots = () => (
   <svg viewBox="0 0 20 8" fill="currentColor" width="18" height="8">
