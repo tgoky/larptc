@@ -891,42 +891,48 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px 28px;
+  padding: 8px 18px 24px;
   width: 100%;
 }
 
 .ph-timeframe-pills {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  margin-right: 24px;
+  gap: 14px;
 }
 
 .ph-tf-pill {
-  height: auto;
-  padding: 0;
-  border-radius: 0;
+  height: 26px;
+  padding: 0 4px;
+  border-radius: 9999px;
   background: transparent;
   color: #8e8e93;
-  font-size: 16px;
+  font-family: var(--ph-font-stack);
+  font-size: 14px;
   font-weight: 600;
   border: 0;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
 }
+
 
 .ph-tf-pill.active {
-  background: #ffffff !important;
-  color: #000000 !important;
+  background: #18181a !important;
+  color: #ffffff !important;
   font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 20px;
+  padding: 0 10px !important;
+  height: 26px !important;
+  border-radius: 9999px !important;
 }
 
+
+
 .ph-tf-filter-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
   background: transparent;
   color: #8e8e93;
   display: grid;
@@ -934,7 +940,9 @@
   flex-shrink: 0;
   border: 0;
   cursor: pointer;
+  padding: 0;
 }
+
 
 .ph-tf-filter-btn svg {
   width: 18px;
@@ -943,10 +951,13 @@
 }
 
 .ph-live-bullet {
-  color: #636366;
-  margin-right: 2px;
-  font-size: 14px;
+  color: #bebebe;
+  margin-right: 4px;
+  font-size: 13px;
+  line-height: 1;
 }
+
+
 
 /* Positions Section */
 .ph-positions-section-v2 {

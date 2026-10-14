@@ -108,9 +108,16 @@ const IconReceiveQr = () => (
   </svg>
 );
 
-const IconSliders = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-    <path d="M8 4v16M16 4v16M5 9h6M13 15h6" />
+/* Exact Phantom Candlestick Chart Toggle Glyph */
+const IconCandlesticks = () => (
+  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#8e8e93" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    {/* Left candle: wick through center with lower rounded hollow body */}
+    <line x1="5.5" y1="1.5" x2="5.5" y2="18.5" />
+    <rect x="2.5" y="7.5" width="6" height="7.5" rx="3" fill="#000000" stroke="#8e8e93" strokeWidth="1.8" />
+
+    {/* Right candle: wick through center with higher elongated rounded hollow body */}
+    <line x1="14.5" y1="1.5" x2="14.5" y2="18.5" />
+    <rect x="11.5" y="4.5" width="6" height="11.5" rx="3" fill="#000000" stroke="#8e8e93" strokeWidth="1.8" />
   </svg>
 );
 
@@ -548,7 +555,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
               ))}
             </div>
             <button className="ph-tf-filter-btn" type="button" aria-label="Chart Settings">
-              <IconSliders />
+              <IconCandlesticks />
             </button>
           </section>
 
