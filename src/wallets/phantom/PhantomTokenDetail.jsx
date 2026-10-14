@@ -34,39 +34,46 @@ const IconChevronRight = () => (
 );
 
 const IconHeart = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="19" height="19">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" width="19" height="19">
     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.25-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
   </svg>
 );
 
-const IconUpload = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-    <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
-    <polyline points="16 8 12 4 8 8" />
-    <line x1="12" y1="4" x2="12" y2="16" />
+/* Exact Apple SF Symbol: square.and.arrow.up.fill */
+const IconUploadSolid = () => (
+  <svg width="18" height="20" viewBox="0 0 24 26" fill="currentColor">
+    {/* Arrow */}
+    <path d="M11.15 1.4a1.2 1.2 0 0 1 1.7 0l4.6 4.6a1.2 1.2 0 0 1-1.7 1.7L13.2 5.1V13.5a1.2 1.2 0 1 1-2.4 0V5.1L8.25 7.7a1.2 1.2 0 1 1-1.7-1.7l4.6-4.6z" />
+    {/* Solid base tray with top cutout */}
+    <path fillRule="evenodd" clipRule="evenodd" d="M4 9a3.5 3.5 0 0 0-3.5 3.5v9A3.5 3.5 0 0 0 4 25h16a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 20 9h-4.6a1 1 0 0 0-1 1v6a2.4 2.4 0 1 1-4.8 0v-6a1 1 0 0 0-1-1H4z" />
   </svg>
 );
 
 const IconMoreDots = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-    <circle cx="5" cy="12" r="1.8" />
-    <circle cx="12" cy="12" r="1.8" />
-    <circle cx="19" cy="12" r="1.8" />
+    <circle cx="5" cy="12" r="2.1" />
+    <circle cx="12" cy="12" r="2.1" />
+    <circle cx="19" cy="12" r="2.1" />
   </svg>
 );
 
-const IconSend = () => (
+/* Exact 45° paper plane Send glyph */
+const IconSendDiagonal = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M3.4 20.4l17.45-7.6c.76-.33.76-1.4 0-1.73L3.4 3.47a1 1 0 0 0-1.37 1.15l1.6 6.38h8.87v2H3.63l-1.6 6.25a1 1 0 0 0 1.37 1.15z" />
+    <path d="M2.5 10.6c-.7-.4-.7-1.5 0-1.8L19.8 1.3c.8-.4 1.7.3 1.5 1.2l-3.8 17.5c-.2.8-1.2 1.1-1.8.5l-5.1-4.7-4.2 3.2c-.6.4-1.4 0-1.4-.7v-3.8l7.2-6.5-9.7 4.5z" />
   </svg>
 );
 
-const IconReceive = () => (
+/* Exact QR Module Receive glyph */
+const IconReceiveQr = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-    <circle cx="6.5" cy="6.5" r="2.3" />
-    <circle cx="17.5" cy="6.5" r="2.3" />
-    <circle cx="6.5" cy="17.5" r="2.3" />
-    <circle cx="17.5" cy="17.5" r="2.3" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M6 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M18 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M6 14a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" />
+    <rect x="15" y="14" width="2.6" height="2.6" rx="0.8" />
+    <rect x="19" y="14" width="3.2" height="2.4" rx="0.8" />
+    <path d="M19 18h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z" />
+    <circle cx="15.8" cy="20.5" r="1.3" />
   </svg>
 );
 
@@ -76,7 +83,6 @@ const IconSliders = () => (
   </svg>
 );
 
-// Prevent Dexscreener pair overrides for major tokens
 const CANONICAL_LOGOS = {
   USDC: '/token-logos/usdc.png',
   ETH: '/token-logos/ethereum_logo.webp',
@@ -434,7 +440,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
     <div className="ph-detail-v2">
       <div className="ph-detail-sheet-handle" />
 
-      {/* Header: Avatar Left, Heart Circle + Combined Pill for Upload & More on Right */}
+      {/* Header: Circle for Heart + One Solid Capsule for Upload & More Dots */}
       <header className="ph-detail-header-v2">
         <button className="ph-detail-top-avatar-btn" type="button" onClick={onBack} aria-label="Back">
           <TokenAvatar token={token} imageUrl={tokenImage} />
@@ -447,7 +453,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
           
           <div className="ph-detail-pill-capsule">
             <button className="ph-detail-capsule-item" type="button" aria-label="Share">
-              <IconUpload />
+              <IconUploadSolid />
             </button>
             <button className="ph-detail-capsule-item" type="button" aria-label="More Options">
               <IconMoreDots />
@@ -560,21 +566,21 @@ export default function PhantomTokenDetail({ token, onBack }) {
             </div>
           </section>
 
-          {/* Send and Receive button row */}
+          {/* Solid capsule Send & Receive buttons with genuine glyphs */}
           <section className="ph-detail-actions-row">
             <button className="ph-detail-action-btn" type="button">
-              <IconSend />
+              <IconSendDiagonal />
               <span>Send</span>
             </button>
             <button className="ph-detail-action-btn" type="button">
-              <IconReceive />
+              <IconReceiveQr />
               <span>Receive</span>
             </button>
           </section>
         </div>
       </PullToRefresh>
 
-      {/* Pinned bottom dock with wide Trade button */}
+      {/* Dock pinned to bottom with wide 42% Trade button */}
       <div className="ph-detail-bottom-dock">
         <div className="ph-detail-mcap">
           <span className="ph-detail-mcap-val">
