@@ -668,7 +668,7 @@
   color: var(--ph-text-muted);
 }
 
-/* ================= REDESIGNED TOKEN DETAIL VIEW ================= */
+/* ================= EXACT PHANTOM TOKEN DETAIL VIEW ================= */
 .ph-detail-v2 {
   position: fixed !important;
   inset: 0 !important;
@@ -683,36 +683,22 @@
   z-index: 50;
 }
 
-.ph-detail-v2 button {
-  appearance: none;
-  -webkit-appearance: none;
-  font-family: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  padding: 0;
-  background: transparent;
-  color: inherit;
-}
-
-/* Gray sheet handle at the top center */
+/* Top sheet handle */
 .ph-detail-sheet-handle {
   width: 36px;
   height: 4px;
   border-radius: 999px;
   background: #38383a;
-  margin: 8px auto 0;
+  margin: 6px auto 0;
   flex-shrink: 0;
 }
 
-/* Header container */
+/* Detail view header */
 .ph-detail-header-v2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 12px;
+  padding: calc(6px + env(safe-area-inset-top, 0px)) 16px 8px;
   flex-shrink: 0;
   width: 100%;
 }
@@ -725,11 +711,11 @@
 }
 
 .ph-detail-avatar {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   overflow: hidden;
-  background: #242426;
+  background: #18181a;
   display: grid;
   place-items: center;
 }
@@ -741,56 +727,52 @@
   border-radius: 50%;
 }
 
-.ph-detail-avatar span {
-  color: #000000;
-  font-weight: 900;
-  font-size: 16px;
-}
-
-/* Top Right Actions: Circle for Heart, Capsule Pill for Share + More */
 .ph-detail-header-right {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+/* Separate circle for Favorite (heart) */
 .ph-detail-icon-circle {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #1c1c1e !important;
+  background: #18181a !important;
   color: #ffffff !important;
   display: grid !important;
-  place-items: center;
-  border: 0;
-  cursor: pointer;
-}
-
-.ph-detail-pill-actions {
-  display: inline-flex;
-  align-items: center;
-  height: 42px;
-  padding: 0 4px;
-  border-radius: 21px;
-  background: #1c1c1e;
-  gap: 2px;
-}
-
-.ph-detail-pill-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: transparent;
-  color: #ffffff;
-  display: grid;
   place-items: center;
   border: 0;
   cursor: pointer;
   padding: 0;
 }
 
-.ph-detail-pill-btn:active {
-  background: rgba(255, 255, 255, 0.08);
+/* Single joint capsule for Upload and More Dots */
+.ph-detail-pill-capsule {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 4px;
+  border-radius: 20px;
+  background: #18181a;
+  gap: 2px;
+}
+
+.ph-detail-capsule-item {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ph-detail-capsule-item:active {
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Scroll area */
@@ -801,7 +783,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* Force pull-to-refresh viewport to expand vertically */
 .ph-detail-v2 .ptr-viewport {
   flex: 1 1 auto;
   min-height: 0;
@@ -809,9 +790,8 @@
   flex-direction: column;
 }
 
-/* Padding to let contents scroll cleanly past the dock */
 .ph-detail-scroll-content {
-  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }
 
 /* Hero Section */
@@ -829,6 +809,10 @@
   gap: 7px;
   background: transparent;
   padding: 0;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
 }
 
 .ph-detail-name-btn svg {
@@ -982,6 +966,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 0;
+  cursor: pointer;
 }
 
 .ph-pos-left {
@@ -1060,47 +1046,47 @@
   color: #ff453a;
 }
 
-/* Send & Receive pill buttons */
+/* ================= SOLID SEND & RECEIVE BUTTONS ================= */
 .ph-detail-actions-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 12px 16px 24px;
+  gap: 10px;
+  padding: 12px 16px 26px;
 }
 
 .ph-detail-action-btn {
   height: 48px;
   border-radius: 24px;
-  background: #141416;
-  color: #8e8e93;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #18181a !important; /* solid visible capsule matching screenshot */
+  color: #8e8e93 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   gap: 8px;
   font-family: var(--ph-font-stack);
   font-size: 15px;
   font-weight: 600;
-  border: 0;
+  border: 0 !important;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
 .ph-detail-action-btn:active {
-  background: #202024;
-  color: #ffffff;
+  background: #242428 !important;
+  color: #ffffff !important;
 }
 
 .ph-detail-action-btn svg {
-  color: #8e8e93;
+  color: #8e8e93 !important;
 }
 
-/* Bottom dock pinned right to bottom above safe area */
+/* ================= PINNED DOCK & WIDE TRADE BUTTON ================= */
 .ph-detail-bottom-dock {
   position: fixed !important;
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  padding: 10px 20px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 12px 18px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
   background: rgba(0, 0, 0, 0.85) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
@@ -1133,20 +1119,22 @@
   line-height: 1;
 }
 
-/* Trade button proportional to original app */
+/* Wide Trade button matching Phantom proportion */
 .ph-detail-trade-btn {
-  height: 46px !important;
-  padding: 0 32px !important;
-  border-radius: 23px !important;
+  height: 48px !important;
+  width: 42% !important;
+  min-width: 175px !important;
+  border-radius: 24px !important;
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack);
   font-size: 16px !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
   flex-shrink: 0;
+  cursor: pointer;
 }
