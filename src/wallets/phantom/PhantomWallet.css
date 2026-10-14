@@ -736,10 +736,10 @@
 
 /* Separate circle for Favorite (heart) */
 .ph-detail-icon-circle {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #1e1e20 !important;
+  background: #18181a !important;
   color: #ffffff !important;
   display: grid !important;
   place-items: center;
@@ -748,15 +748,16 @@
   padding: 0;
 }
 
+
 /* Single joint capsule for Upload and More Dots */
 .ph-detail-pill-capsule {
   display: inline-flex;
   align-items: center;
-  height: 40px;
-  padding: 0 4px;
-  border-radius: 20px;
-  background: #1e1e20;
-  gap: 2px;
+  height: 44px;
+  padding: 0 6px;
+  border-radius: 9999px; /* produces smooth, continuous pill curvature */
+  background: #18181a;
+  gap: 4px;
 }
 
 .ph-detail-capsule-item {
