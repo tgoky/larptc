@@ -14,6 +14,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 /* ---- header ---- */
 .twd-header {
   display: flex;
@@ -35,9 +36,10 @@
   cursor: pointer;
 }
 
+/* ---- Star button with solid white star ---- */
 .twd-circle-btn.star {
-  background: #20243a;
-  color: #7a81f8;
+  background: #1d2031;
+  color: #ffffff;
 }
 
 .twd-circle-btn.star.active {
@@ -50,6 +52,14 @@
   align-items: center;
   gap: 14px;
   margin-top: 20px;
+  flex-shrink: 0;
+}
+
+/* ---- Token icon container with network overlay badge ---- */
+.twd-token-icon-wrapper {
+  position: relative;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
 }
 
@@ -68,6 +78,26 @@
 }
 
 .twd-token-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.twd-token-badge {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  background: #14162a;
+  border: 1.5px solid var(--tw-bg);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.twd-token-badge img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -107,6 +137,13 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 3px;
+}
+
+/* ---- Price row with ⇄ toggle ---- */
+.twd-price-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .twd-token-price {
@@ -224,69 +261,55 @@
   color: #ffffff;
 }
 
-/* ---- balance ---- */
+/* ---- Left-aligned Balance Stack ---- */
 .twd-balance {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  margin-top: 14px;
+  margin-top: 18px;
   border: 0;
   background: transparent;
   padding: 0;
-  color: inherit;
-  font-family: inherit;
   text-align: left;
   cursor: pointer;
 }
 
 .twd-balance-label {
-  font-size: 14px;
-  font-weight: 600; /* reduced from 700 to match precise semibold */
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-}
-
-
-.twd-balance-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.twd-balance-value {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-}
-
-.twd-balance-amount {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--tw-text-dim);
+  color: #797e93;
   line-height: 1;
 }
 
-.twd-balance-hint {
-  margin-top: 4px;
-  font-size: 11px;
-  font-weight: 500;
-  color: #4d5266;
+.twd-balance-value {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-top: 6px;
 }
 
-/* ---- send / receive ---- */
+.twd-balance-amount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #797e93;
+  margin-top: 5px;
+  line-height: 1;
+}
+
+/* ---- 3 equal action buttons ---- */
 .twd-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 18px;
   flex-shrink: 0;
 }
 
 .twd-action-btn {
-  height: 44px;
+  height: 46px;
   border: 0;
   border-radius: 999px;
   background: #1d2031;
@@ -294,11 +317,10 @@
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
-  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
 }
 
@@ -306,38 +328,54 @@
   opacity: 0.75;
 }
 
-.twd-ai {
+/* ---- About Token Button Row ---- */
+.twd-about-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  padding: 0;
+  cursor: pointer;
+}
+
+.twd-about-left {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 16px;
-  color: #8b8fa5; /* lightened color to match dim/subtle tone in photo 2 */
-  font-size: 13px;
-  font-weight: 600; /* reduced from 700 */
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: -0.01em;
-  flex-shrink: 0;
 }
 
-.twd-trade {
-  margin-top: 12px;
-  height: 48px;
+.twd-about-btn svg {
+  color: #ffffff;
+}
+
+/* ---- Trust Green Buy Button ---- */
+.twd-buy-btn {
+  margin-top: 16px;
+  height: 52px;
+  width: 100%;
   border: 0;
   border-radius: 999px;
-  background: #4142f3;
+  background: #2fb472; /* exact Trust green from screenshot */
   color: #ffffff;
   font-family: inherit;
-  font-size: 15px;
-  font-weight: 600; /* reduced from 700 to soften text inside button */
+  font-size: 16px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   cursor: pointer;
   flex-shrink: 0;
 }
 
-.twd-trade:active {
+.twd-buy-btn:active {
   opacity: 0.85;
 }
 

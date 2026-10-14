@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { getTokenQuote, useWalletStore } from '../../store/useWalletStore';
+import { getTokenOverlayIcon, getTokenQuote, useWalletStore } from '../../store/useWalletStore';
 import './TrustWalletDetail.css';
 
 /* ---------------------------------- icons --------------------------------- */
@@ -22,18 +22,19 @@ const IconEth = () => (
   </svg>
 );
 
+// Original solid white star
 const IconStar = ({ filled }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24">
-    <path
-      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-      fill={filled ? "#5B83FC" : "none"}
-      stroke={filled ? "none" : "#8b8fa5"}
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? "#ffffff" : "none"} stroke="#ffffff" strokeWidth="2" strokeLinejoin="round">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 );
 
+// Currency toggle next to price
+const IconSwapHorizontal = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#58617d" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 7H4M16 3l4 4-4 4M4 17h16M8 21l-4-4 4-4" />
+  </svg>
+);
 
 const IconSend = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
@@ -76,19 +77,26 @@ const IconSwap = () => (
   </svg>
 );
 
+const IconChevronRight = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m9 18 6-6-6-6" />
+  </svg>
+);
+
 /* --------------------------------- helpers -------------------------------- */
 
-const TIMEFRAMES = ['1H', '1D', '1W', '1M', '1Y', 'YTD', 'ALL'];
+const TIMEFRAMES = ['15m', '1H', '4H', '1D', '1W', '1M', '1Y', 'YTD'];
 const QUICK_USD = [100, 500, 1000, 5000];
 
 const TF_SETTINGS = {
-  '1H': { points: 60, minChange: -0.02, maxChange: 0.02 },
-  '1D': { points: 78, minChange: -0.06, maxChange: 0.06 },
-  '1W': { points: 84, minChange: -0.14, maxChange: 0.16 },
-  '1M': { points: 90, minChange: -0.28, maxChange: 0.34 },
-  '1Y': { points: 104, minChange: -0.55, maxChange: 1.4 },
-  YTD: { points: 92, minChange: -0.5, maxChange: 1.1 },
-  ALL: { points: 120, minChange: -0.7, maxChange: 4 },
+  '15m': { points: 50, minChange: -0.01, maxChange: 0.01 },
+  '1H':  { points: 60, minChange: -0.02, maxChange: 0.02 },
+  '4H':  { points: 70, minChange: -0.04, maxChange: 0.04 },
+  '1D':  { points: 78, minChange: -0.06, maxChange: 0.06 },
+  '1W':  { points: 84, minChange: -0.14, maxChange: 0.16 },
+  '1M':  { points: 90, minChange: -0.28, maxChange: 0.34 },
+  '1Y':  { points: 104, minChange: -0.55, maxChange: 1.4 },
+  YTD:   { points: 92, minChange: -0.5, maxChange: 1.1 },
 };
 
 function hashSeed(text) {
@@ -142,7 +150,7 @@ export default function TrustTokenDetail({ token, onBack }) {
   const { trust, updateTrustTokenAmount } = useWalletStore();
 
   const [timeframe, setTimeframe] = useState('1D');
-const [starred, setStarred] = useState(true);
+  const [starred, setStarred] = useState(true);
   const [scrubIndex, setScrubIndex] = useState(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [mode, setMode] = useState('add');
@@ -154,6 +162,9 @@ const [starred, setStarred] = useState(true);
     () => getTokenQuote(token, trust.prices) || { usd: 0, change: 0, imageUrl: '' },
     [token, trust.prices]
   );
+
+  // Network overlay badge (e.g. BSC, Polygon) shown on the token avatar
+  const overlayBadge = useMemo(() => getTokenOverlayIcon(token), [token]);
 
   const price = Number(quote.usd) || 0;
   const change = Number(quote.change) || 0;
@@ -262,28 +273,42 @@ const [starred, setStarred] = useState(true);
 
       {/* token row */}
       <div className="twd-token-row">
-        <span className="twd-token-icon">
-          {token.symbol === 'ETH' ? (
-            <IconEth />
-          ) : quote.imageUrl || token.icon ? (
-            <img
-              src={quote.imageUrl || token.icon}
-              alt={token.symbol}
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
-          ) : (
-            (token.symbol || '?').slice(0, 1)
-          )}
-        </span>
+        {/* 2. Token avatar with network overlay badge */}
+        <div className="twd-token-icon-wrapper">
+          <span className="twd-token-icon">
+            {quote.imageUrl || token.icon ? (
+              <img
+                src={quote.imageUrl || token.icon}
+                alt={token.symbol}
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            ) : token.symbol === 'ETH' ? (
+              <IconEth />
+            ) : (
+              (token.symbol || '?').slice(0, 1)
+            )}
+          </span>
+          {overlayBadge ? (
+            <span className="twd-token-badge">
+              <img src={overlayBadge} alt="" />
+            </span>
+          ) : null}
+        </div>
+
         <div className="twd-token-id">
           <span className="twd-token-sym">{token.symbol}</span>
           <span className="twd-token-name">{token.name || token.symbol}</span>
         </div>
+
+        {/* 3. Price display with ⇄ toggle */}
         <div className="twd-token-side">
-          <span className="twd-token-price">{formatPrice(price)}</span>
+          <div className="twd-price-row">
+            <IconSwapHorizontal />
+            <span className="twd-token-price">{formatPrice(price)}</span>
+          </div>
           <span className={`twd-token-change ${change === 0 ? 'flat' : negative ? 'neg' : 'pos'}`}>
             {change !== 0
-              ? `${changeUsd >= 0 ? '+' : '-'}${formatPrice(Math.abs(changeUsd))} (${change >= 0 ? '+' : ''}${change.toFixed(2)}%)`
+              ? `${changeUsd >= 0 ? '+' : '-'}${formatPrice(Math.abs(changeUsd))} (${Math.abs(change).toFixed(2)}%)`
               : '0.00%'}
           </span>
         </div>
@@ -368,42 +393,41 @@ const [starred, setStarred] = useState(true);
         ))}
       </div>
 
-      {/* balance */}
+      {/* 4. Left-aligned Balance Stack */}
       <button className="twd-balance" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
-        <span className="twd-balance-label">Your balance</span>
-        <span className="twd-balance-right">
-          <span className="twd-balance-value">{formatMoney(balanceUsd)}</span>
-          <span className="twd-balance-amount">{formatAmount(amount)} {token.symbol}</span>
-          <span className="twd-balance-hint">Tap to add funds</span>
-        </span>
+        <span className="twd-balance-label">Balance</span>
+        <span className="twd-balance-value">{formatMoney(balanceUsd)}</span>
+        <span className="twd-balance-amount">{formatAmount(amount)} {token.symbol}</span>
       </button>
 
-      {/* send / receive */}
+      {/* 4. 3 Action Buttons */}
       <div className="twd-actions">
         <button className="twd-action-btn" type="button">
           <IconSend />
-          Send
+          <span>Send</span>
         </button>
-        <button
-          className="twd-action-btn"
-          type="button"
-          onClick={() => { setMode('add'); setSheetOpen(true); }}
-        >
+        <button className="twd-action-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
           <IconReceive />
-          Receive
+          <span>Receive</span>
+        </button>
+        <button className="twd-action-btn" type="button">
+          <IconSwap />
+          <span>Swap</span>
         </button>
       </div>
 
-      {/* ai summary */}
-      <div className="twd-ai">
-        <IconSparkle />
-        AI Summary
-      </div>
+      {/* 4. Dynamic About Token Row */}
+      <button className="twd-about-btn" type="button">
+        <div className="twd-about-left">
+          <IconSparkle />
+          <span>About {token.symbol || 'Crypto'}</span>
+        </div>
+        <IconChevronRight />
+      </button>
 
-      {/* trade */}
-      <button className="twd-trade" type="button">
-        <IconSwap />
-        Trade
+      {/* 4. Trust Green Buy Button */}
+      <button className="twd-buy-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
+        Buy
       </button>
 
       {/* receive / add funds sheet */}
