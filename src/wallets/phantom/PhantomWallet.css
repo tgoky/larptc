@@ -1,43 +1,8 @@
-/* SHELL — exactly one viewport tall, nothing more */
-.ph-detail-v2 {
-  height: var(--app-vh, 100dvh);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  background: #000000;
-  color: #ffffff;
-}
-
-/* SCROLL AREA — the only thing that scrolls */
-.ph-detail-scroll {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-/* DOCK — in normal flow, last flex child. Pinned by structure, not position. */
-.ph-detail-bottom-dock {
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  padding: 10px 20px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-  background: rgba(0, 0, 0, 0.92) !important;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  z-index: 60 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-}
-
 :root {
   --ph-bg: #000000;
-  --ph-surface: #121212;        /* was #1a1a1c */
-  --ph-surface-2: #1c1c1e;      /* was #242426 */
-  --ph-surface-3: #242426;      /* was #2c2c2e */
+  --ph-surface: #121212;
+  --ph-surface-2: #1c1c1e;
+  --ph-surface-3: #242426;
   --ph-text: #ffffff;
   --ph-text-muted: #8e8e93;
   --ph-text-dim: #636366;
@@ -57,39 +22,7 @@
   box-sizing: border-box;
 }
 
-
-.ph-detail,
-.ph-detail-v2 {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  background: #000000 !important;
-  color: #ffffff !important;
-  font-family: var(--ph-font-stack);
-  overflow: hidden !important;
-  z-index: 40;
-}
-
-
-
-.ph-detail-v2 {
-  width: 100%;
-  height: var(--app-vh, 100dvh);
-  min-height: var(--app-vh, 100dvh);
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  background: var(--ph-bg);
-  color: var(--ph-text);
-  font-family: var(--ph-font-stack);
-  overflow: hidden;
-  position: relative;
-}
-
+/* ================= MAIN APP SHELL ================= */
 .phantom-app {
   width: 100%;
   height: 100%;
@@ -174,15 +107,13 @@
 }
 
 /* ================= SCROLL CONTAINER ================= */
-.phantom-scroll,
-.ph-detail-scroll {
+.phantom-scroll {
   flex: 1;
   overflow-y: auto;
   scrollbar-width: none;
 }
 
-.phantom-scroll::-webkit-scrollbar,
-.ph-detail-scroll::-webkit-scrollbar {
+.phantom-scroll::-webkit-scrollbar {
   display: none;
 }
 
@@ -264,7 +195,7 @@
 /* ================= CASH CARD V2 ================= */
 .ph-cash-card-v2 {
   margin: 0 16px 16px;
-  background: #121212;          /* was #1a1a1c */
+  background: #121212;
   border-radius: 20px;
   min-height: 62px;
   padding: 16px 18px;
@@ -340,7 +271,7 @@
 
 .ph-token-row {
   width: 100%;
-  background: #121212;          /* was #1a1a1c */
+  background: #121212;
   border: 0;
   border-radius: 20px;
   min-height: 72px;
@@ -355,7 +286,7 @@
 }
 
 .ph-token-row:active {
-  background: #1c1c1e;          /* was #202024 */
+  background: #1c1c1e;
 }
 
 .ph-token-avatar {
@@ -485,7 +416,7 @@
 }
 
 .phantom-app main {
-padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps cards completely past the dock */
+  padding-bottom: 96px;
 }
 
 .ph-perps-row::-webkit-scrollbar {
@@ -496,7 +427,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   min-width: 135px;
   width: 135px;
   height: 120px;
-  background: #131313;          /* was #161618 (matches #121212 - #131313) */
+  background: #131313;
   border-radius: 24px;
   border: 0;
   padding: 0;
@@ -509,7 +440,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 }
 
 .ph-perp-card:active {
-  background: #1c1c1e;          /* was #202024 */
+  background: #1c1c1e;
 }
 
 .ph-perp-icon {
@@ -522,7 +453,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 /* ================= FLOATING BOTTOM DOCK ================= */
 .ph-floating-dock {
   position: fixed;
-  bottom: 10px; /* Moves the dock down so it sits snugly above the home bar */
+  bottom: 10px;
   left: 16px;
   right: 16px;
   display: flex;
@@ -534,7 +465,6 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .ph-floating-dock {
-    /* If the device has a home bar, keep it snug above the bar (max 20px) */
     bottom: max(14px, calc(env(safe-area-inset-bottom) - 14px));
   }
 }
@@ -543,7 +473,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   flex: 1;
   height: 52px;
   border-radius: 26px;
-  background: #151515;          /* was #1e1e22 */
+  background: #151515;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -554,6 +484,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   font-weight: 400;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75);
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .ph-dock-search svg {
@@ -574,15 +505,11 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75);
   cursor: pointer;
   flex-shrink: 0;
+  pointer-events: auto;
 }
 
 .ph-dock-add-btn svg {
   stroke-width: 2;
-}
-
-.ph-dock-search,
-.ph-dock-add-btn {
-  pointer-events: auto; /* 2. Re-enables clicks for the actual buttons */
 }
 
 /* ================= SPOOF MODAL ================= */
@@ -743,18 +670,17 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 
 /* ================= REDESIGNED TOKEN DETAIL VIEW ================= */
 .ph-detail-v2 {
-  width: 100%;
-  /* var(--app-vh) is set from window.innerHeight in main.jsx — iOS standalone
-     under-reports 100dvh/100svh by the home indicator's safe-area height, so
-     this is the real fix; 100dvh is only the fallback before JS runs. */
-  height: var(--app-vh, 100dvh);
-  display: flex;
-  flex-direction: column;
-  background: #000000;
-  color: #ffffff;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #000000 !important;
+  color: #ffffff !important;
   font-family: var(--ph-font-stack);
-  overflow: hidden;
-  position: relative;
+  overflow: hidden !important;
+  z-index: 50;
 }
 
 .ph-detail-v2 button {
@@ -771,12 +697,22 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   color: inherit;
 }
 
-/* Sheet handle bar at top center */
+/* Gray sheet handle at the top center */
+.ph-detail-sheet-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: #38383a;
+  margin: 8px auto 0;
+  flex-shrink: 0;
+}
+
+/* Header container */
 .ph-detail-header-v2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 12px;
   flex-shrink: 0;
   width: 100%;
 }
@@ -784,14 +720,16 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 .ph-detail-top-avatar-btn {
   background: transparent;
   padding: 0;
+  border: 0;
+  cursor: pointer;
 }
 
 .ph-detail-avatar {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   overflow: hidden;
-  background: #c4b5fd;
+  background: #242426;
   display: grid;
   place-items: center;
 }
@@ -809,6 +747,7 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   font-size: 16px;
 }
 
+/* Top Right Actions: Circle for Heart, Capsule Pill for Share + More */
 .ph-detail-header-right {
   display: flex;
   align-items: center;
@@ -816,13 +755,63 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 }
 
 .ph-detail-icon-circle {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: #1c1c1e !important;
   color: #ffffff !important;
   display: grid !important;
   place-items: center;
+  border: 0;
+  cursor: pointer;
+}
+
+.ph-detail-pill-actions {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 4px;
+  border-radius: 21px;
+  background: #1c1c1e;
+  gap: 2px;
+}
+
+.ph-detail-pill-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: transparent;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ph-detail-pill-btn:active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Scroll area */
+.ph-detail-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Force pull-to-refresh viewport to expand vertically */
+.ph-detail-v2 .ptr-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Padding to let contents scroll cleanly past the dock */
+.ph-detail-scroll-content {
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
 }
 
 /* Hero Section */
@@ -845,6 +834,14 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 .ph-detail-name-btn svg {
   color: #8e8e93;
   flex-shrink: 0;
+}
+
+.ph-detail-ticker {
+  font-size: 16px;
+  font-weight: 500;
+  color: #8e8e93;
+  margin-left: 6px;
+  margin-right: 2px;
 }
 
 .ph-detail-price-v2 {
@@ -964,22 +961,6 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   width: 100%;
 }
 
-/* Force pull-to-refresh viewport to expand vertically */
-.ph-detail-v2 .ptr-viewport {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.ph-detail-ticker {
-  font-size: 16px;
-  font-weight: 500;
-  color: #8e8e93;
-  margin-left: 6px;
-  margin-right: 2px;
-}
-
 .ph-positions-section-v2 h2 {
   font-size: 19px;
   font-weight: 700;
@@ -1079,7 +1060,57 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   color: #ff453a;
 }
 
-/* ================= BOTTOM TRADE DOCK ================= */
+/* Send & Receive pill buttons */
+.ph-detail-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 12px 16px 24px;
+}
+
+.ph-detail-action-btn {
+  height: 48px;
+  border-radius: 24px;
+  background: #141416;
+  color: #8e8e93;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--ph-font-stack);
+  font-size: 15px;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ph-detail-action-btn:active {
+  background: #202024;
+  color: #ffffff;
+}
+
+.ph-detail-action-btn svg {
+  color: #8e8e93;
+}
+
+/* Bottom dock pinned right to bottom above safe area */
+.ph-detail-bottom-dock {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  padding: 10px 20px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  z-index: 60 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
 .ph-detail-mcap {
   display: flex;
   align-items: baseline;
@@ -1088,8 +1119,9 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
 
 .ph-detail-mcap-val {
   color: #ffffff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1;
 }
 
@@ -1097,71 +1129,24 @@ padding-bottom: 96px; /* Gives enough clearance so you can scroll the Perps card
   color: #8e8e93;
   font-size: 13px;
   font-weight: 500;
+  letter-spacing: -0.01em;
   line-height: 1;
 }
 
-
-.ph-detail-trade-btn,
-.ph-detail-v2 .ph-detail-bottom-dock .ph-detail-trade-btn {
-  height: 52px;
-  padding: 0 34px !important;
-  border-radius: 26px !important;
+/* Trade button proportional to original app */
+.ph-detail-trade-btn {
+  height: 46px !important;
+  padding: 0 32px !important;
+  border-radius: 23px !important;
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack);
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 0;
   flex-shrink: 0;
-}
-
-.ph-detail-sheet-handle {
-  width: 36px;
-  height: 4px;
-  border-radius: 999px;
-  background: #38383a;
-  margin: 6px auto 0;
-  flex-shrink: 0;
-}
-
-.ph-detail-scroll-content {
-  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
-}
-
-
-.ph-detail-actions-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 10px 16px 20px;
-}
-
-
-.ph-detail-action-btn {
-  height: 52px;
-  border-radius: 26px;
-  background: #141416;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-family: var(--ph-font-stack);
-  font-size: 16px;
-  font-weight: 600;
-  border: 0;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-
-.ph-detail-action-btn:active {
-  background: #202024;
-}
-
-.ph-detail-action-btn svg {
-  color: #ffffff;
 }

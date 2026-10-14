@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   fetchBasePrices,
   fetchDexscreenerToken,
+  getTokenLogoIconUrl,
   getTokenQuote,
   useWalletStore,
 } from '../../store/useWalletStore';
@@ -39,27 +40,34 @@ const IconHeart = () => (
   </svg>
 );
 
-const IconShare = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-    <polyline points="16 6 12 2 8 6" />
-    <line x1="12" y1="2" x2="12" y2="15" />
+const IconUpload = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+    <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+    <polyline points="16 8 12 4 8 8" />
+    <line x1="12" y1="4" x2="12" y2="16" />
+  </svg>
+);
+
+const IconMoreDots = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+    <circle cx="5" cy="12" r="1.8" />
+    <circle cx="12" cy="12" r="1.8" />
+    <circle cx="19" cy="12" r="1.8" />
   </svg>
 );
 
 const IconSend = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m22 2-7 20-4-9-9-4Z" />
-    <path d="M22 2 11 13" />
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3.4 20.4l17.45-7.6c.76-.33.76-1.4 0-1.73L3.4 3.47a1 1 0 0 0-1.37 1.15l1.6 6.38h8.87v2H3.63l-1.6 6.25a1 1 0 0 0 1.37 1.15z" />
   </svg>
 );
 
 const IconReceive = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-    <circle cx="7" cy="7" r="2.8" />
-    <circle cx="17" cy="7" r="2.8" />
-    <circle cx="7" cy="17" r="2.8" />
-    <circle cx="17" cy="17" r="2.8" />
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="7" cy="7" r="2.5" />
+    <circle cx="17" cy="7" r="2.5" />
+    <circle cx="7" cy="17" r="2.5" />
+    <circle cx="17" cy="17" r="2.5" />
   </svg>
 );
 
@@ -69,11 +77,26 @@ const IconSliders = () => (
   </svg>
 );
 
-const ETH_LOGO_URL = '/token-logos/ethereum_logo.webp';
+// Fallback images for major coins so Dexscreener meme pairs never override them
+const CANONICAL_LOGOS = {
+  USDC: '/token-logos/usdc.png',
+  ETH: '/token-logos/ethereum_logo.webp',
+  SOL: '/token-logos/solana_logo.png',
+  BTC: '/token-logos/btc.png',
+};
+
+function resolveTokenLogo(token, fallbackUrl) {
+  const sym = token?.symbol?.toUpperCase();
+  if (sym && CANONICAL_LOGOS[sym]) return CANONICAL_LOGOS[sym];
+  if (token?.marketKey) {
+    const known = getTokenLogoIconUrl(token.marketKey);
+    if (known) return known;
+  }
+  return token?.icon || fallbackUrl || '';
+}
 
 function TokenAvatar({ token, imageUrl }) {
-  const isEthereum = token?.symbol?.toUpperCase() === 'ETH' || token?.name?.toLowerCase() === 'ethereum';
-  const displayImage = isEthereum ? ETH_LOGO_URL : imageUrl;
+  const displayImage = resolveTokenLogo(token, imageUrl);
 
   return (
     <div className="ph-detail-avatar">
@@ -86,7 +109,9 @@ function TokenAvatar({ token, imageUrl }) {
           }}
         />
       ) : (
-        <span style={{ color: '#000', fontSize: '18px', fontWeight: '900' }}>Ξ</span>
+        <span style={{ color: '#000', fontSize: '18px', fontWeight: '900' }}>
+          {token?.symbol?.slice(0, 1) || '?'}
+        </span>
       )}
     </div>
   );
@@ -155,8 +180,8 @@ function deriveDustAmount(tokenId, price) {
 
 function deriveFallbackMcap(tokenId) {
   const rand = createSeededRandom(`${tokenId}|mcap`);
-  const magnitude = Math.pow(10, 6 + Math.floor(rand() * 3));
-  return Math.round((1 + rand() * 9.4) * magnitude);
+  const magnitude = Math.pow(10, 9 + Math.floor(rand() * 2));
+  return Math.round((1 + rand() * 4) * magnitude);
 }
 
 function generateSeries(currentPrice, changePercent, timeframe, seedKey) {
@@ -242,7 +267,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
     if (!pair) return;
 
     setTokenInfo({
-      imageUrl: pair.info?.imageUrl || token.icon || '',
+      imageUrl: resolveTokenLogo(token, pair.info?.imageUrl || token.icon || ''),
       marketCap: Number.parseFloat(pair.marketCap || pair.fdv) || 0,
       network: token.network || pair.chainId || token.name,
     });
@@ -269,7 +294,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
       if (isCancelled || !pair) return;
 
       setTokenInfo({
-        imageUrl: pair.info?.imageUrl || token.icon || '',
+        imageUrl: resolveTokenLogo(token, pair.info?.imageUrl || token.icon || ''),
         marketCap: Number.parseFloat(pair.marketCap || pair.fdv) || 0,
         network: token.network || pair.chainId || token.name,
       });
@@ -408,22 +433,31 @@ export default function PhantomTokenDetail({ token, onBack }) {
     event.currentTarget.releasePointerCapture?.(event.pointerId);
   }
 
+  const tokenImage = resolveTokenLogo(token, tokenInfo?.imageUrl || liveQuote.imageUrl);
+
   return (
     <div className="ph-detail-v2">
       <div className="ph-detail-sheet-handle" />
 
+      {/* Header with circular Favorite button and shared capsule for Upload + More */}
       <header className="ph-detail-header-v2">
         <button className="ph-detail-top-avatar-btn" type="button" onClick={onBack} aria-label="Back">
-          <TokenAvatar token={token} imageUrl={tokenInfo?.imageUrl || liveQuote.imageUrl || token.icon} />
+          <TokenAvatar token={token} imageUrl={tokenImage} />
         </button>
 
         <div className="ph-detail-header-right">
           <button className="ph-detail-icon-circle" type="button" aria-label="Favorites">
             <IconHeart />
           </button>
-          <button className="ph-detail-icon-circle" type="button" aria-label="Share">
-            <IconShare />
-          </button>
+          
+          <div className="ph-detail-pill-actions">
+            <button className="ph-detail-pill-btn" type="button" aria-label="Share">
+              <IconUpload />
+            </button>
+            <button className="ph-detail-pill-btn" type="button" aria-label="More Options">
+              <IconMoreDots />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -491,7 +525,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
             <div className="ph-positions-list">
               <button className="ph-pos-item" type="button">
                 <div className="ph-pos-left">
-                  <TokenAvatar token={token} imageUrl={tokenInfo?.imageUrl || liveQuote.imageUrl || token.icon} />
+                  <TokenAvatar token={token} imageUrl={tokenImage} />
                   <div className="ph-pos-info">
                     <div className="ph-pos-title-row">
                       <span className="ph-pos-sym">{token.symbol}</span>
@@ -511,7 +545,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
 
               <button className="ph-pos-item" type="button">
                 <div className="ph-pos-left">
-                  <TokenAvatar token={token} imageUrl={tokenInfo?.imageUrl || liveQuote.imageUrl || token.icon} />
+                  <TokenAvatar token={token} imageUrl={tokenImage} />
                   <div className="ph-pos-info">
                     <div className="ph-pos-title-row">
                       <span className="ph-pos-sym">{token.symbol}</span>
@@ -531,6 +565,7 @@ export default function PhantomTokenDetail({ token, onBack }) {
             </div>
           </section>
 
+          {/* Send and Receive buttons with subtle phantom dark styling */}
           <section className="ph-detail-actions-row">
             <button className="ph-detail-action-btn" type="button">
               <IconSend />
@@ -544,12 +579,13 @@ export default function PhantomTokenDetail({ token, onBack }) {
         </div>
       </PullToRefresh>
 
+      {/* Sleek bottom dock pinned to bottom */}
       <div className="ph-detail-bottom-dock">
         <div className="ph-detail-mcap">
           <span className="ph-detail-mcap-val">
             {formatLargeNumber(tokenInfo?.marketCap || liveQuote.marketCap || fallbackMcap)}
           </span>
-          <span className="ph-detail-mcap-lbl">traded today</span>
+          <span className="ph-detail-mcap-lbl">market cap</span>
         </div>
         <button className="ph-detail-trade-btn" type="button">
           Trade
