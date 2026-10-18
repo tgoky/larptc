@@ -1106,11 +1106,7 @@
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  /* 1. Extended top padding for smooth glass breathing room */
-  /* 2. Tuned bottom padding to sit ~20px above home bar */
-  padding: 16px 16px max(18px, calc(env(safe-area-inset-bottom, 0px) - 14px)) !important;
-  
-  /* Modern progressive glass: soft fade at top, no harsh cut */
+  padding: 14px 20px max(18px, calc(env(safe-area-inset-bottom, 0px) - 14px)) !important;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.65) 0%,
@@ -1122,10 +1118,10 @@
   
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
+  /* Switch from space-between to flex-end so elements stay snug together on the right */
+  justify-content: flex-end !important;
+  gap: 18px !important; /* The exact tight spacing from the real app */
   z-index: 60 !important;
-  
-  /* REMOVE THE BORDER LINE COMPLETELY */
   border-top: none !important;
 }
 
@@ -1133,7 +1129,9 @@
   display: flex !important;
   align-items: center !important;
   gap: 5px !important;
-  line-height: 1 !important;
+  white-space: nowrap !important;
+  /* Pushes any extra room to the left side of the screen */
+  margin-left: auto !important;
 }
 
 .ph-detail-mcap-val {
@@ -1151,15 +1149,15 @@
   letter-spacing: -0.01em !important;
   line-height: 1 !important;
   position: relative !important;
-  top: 0.5px !important; /* Micro optical alignment to number baseline */
+  top: 0.5px !important;
 }
 
 /* Trade button widened to 42% proportion */
 .ph-detail-trade-btn {
-  height: 52px !important;
-  width: 44% !important;
-  min-width: 170px !important;
-  border-radius: 26px !important;
+  height: 50px !important;
+  width: 158px !important; /* Locks width to ~40% so it doesn't crowd out the text */
+  min-width: 158px !important;
+  border-radius: 25px !important;
   background: #c4b5fd !important;
   color: #000000 !important;
   font-family: var(--ph-font-stack) !important;
