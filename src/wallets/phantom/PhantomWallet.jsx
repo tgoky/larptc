@@ -186,9 +186,13 @@ export default function PhantomWallet() {
   const balanceText = formatMoney(totalBalance);
   const visibleTokens = showAllTokens ? tokensWithQuotes : tokensWithQuotes.slice(0, 3);
 
- if (selectedToken) {
-  return <PhantomTokenDetail token={selectedToken} onBack={() => setSelectedToken(null)} />;
-}
+if (selectedToken) {
+    return (
+      <div className="phantom-app">
+        <PhantomTokenDetail token={selectedToken} onBack={() => setSelectedToken(null)} />
+      </div>
+    );
+  }
 
   return (
     <div className="phantom-app">
