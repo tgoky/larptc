@@ -19,14 +19,14 @@
 }
 
 .trust-app {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--tw-bg);
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: var(--tw-bg) !important;
   color: var(--tw-text);
   font-family: var(--tw-font);
-  overflow: hidden;
+  overflow: hidden !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -34,15 +34,15 @@
 }
 
 .tw-device-shell {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  max-width: 430px;
-  margin: 0 auto;
-  background: var(--tw-bg);
-  overflow: hidden;
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 430px !important;
+  margin: 0 auto !important;
+  background: var(--tw-bg) !important;
+  overflow: hidden !important;
 }
 
 .tw-scroll {
@@ -60,7 +60,7 @@
 }
 
 .tw-shell {
-  padding: 6px 17px calc(120px + env(safe-area-inset-bottom, 0px));
+  padding: 6px 17px calc(90px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 /* ---------------- header ---------------- */
@@ -468,16 +468,17 @@ background: #1e2132;
 /* ---------------- bottom nav ---------------- */
 
 .tw-bottom-nav {
-  position: fixed;
-  left: 50%;
-  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-  transform: translateX(-50%);
-  width: min(100% - 30px, 400px);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 30;
+  position: fixed !important;
+  left: 50% !important;
+  bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) - 10px)) !important;
+  transform: translateX(-50%) !important;
+  width: min(100% - 32px, 400px) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  z-index: 50 !important;
 }
+
 
 .tw-nav-pill {
   flex: 1;
