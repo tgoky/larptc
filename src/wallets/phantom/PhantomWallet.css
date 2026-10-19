@@ -1106,24 +1106,36 @@
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  padding: 14px 20px max(18px, calc(env(safe-area-inset-bottom, 0px) - 14px)) !important;
+  
+  /* 1. Extended top padding creates the fade runway above the Trade button */
+  padding: 36px 20px max(18px, calc(env(safe-area-inset-bottom, 0px) - 14px)) !important;
+  
+  /* 2. Gradient starts at 100% transparent (0 opacity) so there is zero color jump */
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.65) 0%,
-    rgba(0, 0, 0, 0.92) 28%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.55) 24px,
+    rgba(0, 0, 0, 0.95) 48px,
     #000000 100%
   ) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
+  
+  /* 3. Smooth frosted glass */
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  
+  /* 4. Feather mask: dissolves the top edge of the blur so WebKit cannot render a sharp box line */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 32px, black 100%) !important;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 32px, black 100%) !important;
   
   display: flex !important;
   align-items: center !important;
-  /* Switch from space-between to flex-end so elements stay snug together on the right */
   justify-content: flex-end !important;
-  gap: 18px !important; /* The exact tight spacing from the real app */
+  gap: 18px !important;
   z-index: 60 !important;
   border-top: none !important;
+  pointer-events: auto !important;
 }
+
 
 .ph-detail-mcap {
   display: flex !important;
