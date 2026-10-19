@@ -40,12 +40,47 @@ const IconHeart = () => (
 );
 
 /* Exact Apple SF Symbol: square.and.arrow.up.fill */
+/* Exact SF Symbol: square.and.arrow.up with calibrated spacing, squircle curvature, and true center alignment */
 const IconUploadSolid = () => (
-  <svg width="16" height="19" viewBox="0 0 24 28" fill="currentColor">
-    {/* Slender arrow with authentic downward barb fins */}
-    <path d="M12 0.8c.4 0 .8.2 1.1.5l5.8 5.8c.6.6.3 1.6-.5 1.7-.5.1-.9-.1-1.2-.4L13.6 5v10.5c0 .9-.7 1.6-1.6 1.6s-1.6-.7-1.6-1.6V5L6.8 8.4c-.3.3-.7.5-1.2.4-.8-.1-1.1-1.1-.5-1.7l5.8-5.8c.3-.3.7-.5 1.1-.5z" />
-    {/* Tray with wider U-notch and balanced shoulders */}
-    <path fillRule="evenodd" clipRule="evenodd" d="M4.8 9.5C2.2 9.5.5 11.2.5 13.8v8.6c0 3 2.1 5.1 5.1 5.1h12.8c3 0 5.1-2.1 5.1-5.1v-8.6c0-2.6-1.7-4.3-4.3-4.3h-2.2c-.6 0-1 .4-1 1v4.8c0 1.9-1.5 3.4-3.4 3.4s-3.4-1.5-3.4-3.4v-4.8c0-.6-.4-1-1-1H4.8z" />
+  <svg width="15" height="18" viewBox="0 0 24 28" fill="currentColor">
+    {/* 1. Perfectly centered arrow with downward barb fins (centered at x = 12) */}
+    <path d="
+      M 12 0.8
+      C 11.5 0.8 11.1 1.0 10.7 1.4
+      L 5.0 7.3
+      C 4.4 7.9 4.7 8.9 5.5 9.0
+      C 6.0 9.1 6.5 8.9 6.8 8.5
+      L 10.4 4.8
+      V 15.6
+      C 10.4 16.5 11.1 17.2 12.0 17.2
+      C 12.9 17.2 13.6 16.5 13.6 15.6
+      V 4.8
+      L 17.2 8.5
+      C 17.5 8.9 18.0 9.1 18.5 9.0
+      C 19.3 8.9 19.6 7.9 19.0 7.3
+      L 13.3 1.4
+      C 12.9 1.0 12.5 0.8 12 0.8 Z
+    " />
+    
+    {/* 2. Shorter, compact squircle tray with generous top air-gap and symmetrical shoulders */}
+    <path fillRule="evenodd" clipRule="evenodd" d="
+      M 4.6 12.2
+      C 2.0 12.2 0.6 13.8 0.6 16.2
+      V 21.4
+      C 0.6 24.8 2.6 26.8 6.0 26.8
+      H 18.0
+      C 21.4 26.8 23.4 24.8 23.4 21.4
+      V 16.2
+      C 23.4 13.8 22.0 12.2 19.4 12.2
+      H 16.8
+      C 16.1 12.2 15.6 12.7 15.6 13.4
+      V 15.0
+      C 15.6 17.0 14.0 18.6 12.0 18.6
+      C 10.0 18.6 8.4 17.0 8.4 15.0
+      V 13.4
+      C 8.4 12.7 7.9 12.2 7.2 12.2
+      H 4.6 Z
+    " />
   </svg>
 );
 
