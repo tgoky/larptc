@@ -41,42 +41,11 @@ const IconHeart = () => (
 
 /* Exact Apple SF Symbol: square.and.arrow.up.fill */
 const IconUploadSolid = () => (
-  <svg width="17" height="21" viewBox="0 0 22 27" fill="currentColor">
-    {/* Tall, prominent upward arrow */}
-    <path d="
-      M 11 0.6
-      C 11.4 0.6 11.7 0.9 11.9 1.1
-      L 18.5 7.6
-      C 18.9 8.0 18.7 8.7 18.1 8.7
-      L 12.5 8.7
-      L 12.5 16.5
-      C 12.5 17.3 11.8 18.0 11.0 18.0
-      C 10.2 18.0 9.5 17.3 9.5 16.5
-      L 9.5 8.7
-      L 3.9 8.7
-      C 3.3 8.7 3.1 8.0 3.5 7.6
-      L 10.1 1.1
-      C 10.3 0.9 10.6 0.6 11 0.6 Z
-    " />
-    {/* Smooth squircle tray with deep rounded U-notch */}
-    <path fillRule="evenodd" clipRule="evenodd" d="
-      M 4.6 11.0
-      C 2.2 11.0 0.5 12.7 0.5 15.1
-      L 0.5 21.6
-      C 0.5 24.5 2.5 26.5 5.4 26.5
-      L 16.6 26.5
-      C 19.5 26.5 21.5 24.5 21.5 21.6
-      L 21.5 15.1
-      C 21.5 12.7 19.8 11.0 17.4 11.0
-      L 14.3 11.0
-      C 13.9 11.0 13.6 11.3 13.6 11.7
-      L 13.6 16.6
-      C 13.6 18.0 12.4 19.2 11.0 19.2
-      C 9.6 19.2 8.4 18.0 8.4 16.6
-      L 8.4 11.7
-      C 8.4 11.3 8.1 11.0 7.7 11.0
-      Z
-    " />
+  <svg width="16" height="19" viewBox="0 0 24 28" fill="currentColor">
+    {/* Slender arrow with authentic downward barb fins */}
+    <path d="M12 0.8c.4 0 .8.2 1.1.5l5.8 5.8c.6.6.3 1.6-.5 1.7-.5.1-.9-.1-1.2-.4L13.6 5v10.5c0 .9-.7 1.6-1.6 1.6s-1.6-.7-1.6-1.6V5L6.8 8.4c-.3.3-.7.5-1.2.4-.8-.1-1.1-1.1-.5-1.7l5.8-5.8c.3-.3.7-.5 1.1-.5z" />
+    {/* Tray with wider U-notch and balanced shoulders */}
+    <path fillRule="evenodd" clipRule="evenodd" d="M4.8 9.5C2.2 9.5.5 11.2.5 13.8v8.6c0 3 2.1 5.1 5.1 5.1h12.8c3 0 5.1-2.1 5.1-5.1v-8.6c0-2.6-1.7-4.3-4.3-4.3h-2.2c-.6 0-1 .4-1 1v4.8c0 1.9-1.5 3.4-3.4 3.4s-3.4-1.5-3.4-3.4v-4.8c0-.6-.4-1-1-1H4.8z" />
   </svg>
 );
 
