@@ -55,8 +55,9 @@ body.app-shell-phantom {
   background: #000000;
   color-scheme: dark;
 }
+
 body.app-shell-trust {
-  background: #0a0a0f; /* must match --tw-bg in TrustWallet.css exactly */
+  background: #0e111a; /* Must match --tw-bg in TrustWallet.css */
   color-scheme: dark;
 }
 
