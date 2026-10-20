@@ -19,12 +19,12 @@ const TOOL_APPS = {
     statusBarStyle: 'black-translucent',
     bodyClass: 'app-shell-phantom',
   },
-  trust: {
+ trust: {
     title: 'Trust Wallet',
     manifest: '/manifests/trust.webmanifest',
     icon: '/tool-icons/trust.png',
-    themeColor: '#0e111a',             /* Fix: match Trust's dark slate background */
-    statusBarStyle: 'black-translucent', /* Fix: enables edge-to-edge canvas across the home indicator */
+    themeColor: '#0e111a',             // <-- Change from #ffffff to #0e111a
+    statusBarStyle: 'black-translucent', // <-- Change from 'default' to 'black-translucent'
     bodyClass: 'app-shell-trust',
   },
 };
