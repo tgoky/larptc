@@ -23,8 +23,8 @@ const TOOL_APPS = {
     title: 'Trust Wallet',
     manifest: '/manifests/trust.webmanifest',
     icon: '/tool-icons/trust.png',
-    themeColor: '#ffffff',
-    statusBarStyle: 'default',
+    themeColor: '#0e111a',             /* Fix: match Trust's dark slate background */
+    statusBarStyle: 'black-translucent', /* Fix: enables edge-to-edge canvas across the home indicator */
     bodyClass: 'app-shell-trust',
   },
 };

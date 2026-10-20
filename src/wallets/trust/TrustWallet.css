@@ -22,7 +22,7 @@
   position: fixed !important;
   inset: 0 !important;
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important; /* Change from 100% to auto so top:0 and bottom:0 stretch edge-to-edge */
   background: var(--tw-bg) !important;
   color: var(--tw-text);
   font-family: var(--tw-font);
@@ -60,7 +60,7 @@
 }
 
 .tw-shell {
-  padding: 6px 17px calc(90px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 6px 17px calc(110px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 /* ---------------- header ---------------- */
@@ -470,13 +470,14 @@ background: #1e2132;
 .tw-bottom-nav {
   position: fixed !important;
   left: 50% !important;
-  bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) - 10px)) !important;
+  bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) - 6px)) !important;
   transform: translateX(-50%) !important;
   width: min(100% - 32px, 400px) !important;
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
   z-index: 50 !important;
+  pointer-events: auto !important;
 }
 
 
