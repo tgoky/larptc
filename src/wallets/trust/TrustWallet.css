@@ -60,9 +60,8 @@
 }
 
 .tw-shell {
-  padding: 6px 17px calc(95px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 6px 17px calc(140px + env(safe-area-inset-bottom, 0px)) !important;
 }
-
 
 /* ---------------- header ---------------- */
 
@@ -470,11 +469,11 @@ background: #1e2132;
 .tw-bottom-nav {
   position: fixed !important;
   left: 50% !important;
-  /* Brings the dock down so it sits exactly 14px-16px above the home indicator */
-  bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) - 18px)) !important;
+  /* Locks the pill exactly 14px above the white iOS home indicator */
+  bottom: 22px !important;
   transform: translateX(-50%) !important;
   width: calc(100% - 32px) !important;
-  max-width: 398px !important;
+  max-width: 396px !important;
   margin: 0 !important;
   display: flex !important;
   align-items: center !important;
@@ -487,9 +486,10 @@ background: #1e2132;
   pointer-events: none !important;
 }
 
+
 .tw-nav-pill {
   flex: 1;
-  height: 58px;
+  height: 56px;
   border-radius: 999px;
   background: #141722;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -505,7 +505,7 @@ background: #1e2132;
 .tw-nav-item {
   position: relative;
   width: 100%;
-  height: 50px;
+  height: 48px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -524,8 +524,8 @@ background: #1e2132;
 }
 
 .tw-nav-search {
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: #141722;
@@ -538,7 +538,6 @@ background: #1e2132;
   cursor: pointer;
   pointer-events: auto !important;
 }
-
 
 /* ---------------- modal (kept for TrustSpoofModal) ---------------- */
 
