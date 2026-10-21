@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   fetchBasePrices,
+  getTokenLogoIconUrl,
   getTokenQuote,
   getFallbackIconUrl,
   useWalletStore,
@@ -12,7 +13,6 @@ import './TrustWallet.css';
 
 /* ---------------------------------- icons --------------------------------- */
 
-// Genuine yellow/orange gradient avatar matching IMG_4914 2
 const IconWalletAvatar = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M7 6.5V5.5A2.5 2.5 0 0 1 9.5 3h5A2.5 2.5 0 0 1 17 5.5v1" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" />
@@ -128,7 +128,6 @@ const IconApplePay = () => (
   </span>
 );
 
-// Exact Trust Wallet 1:1 home icon glyph (house with bottom line slot)
 const IconHomeTrust = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
@@ -313,7 +312,7 @@ export default function TrustWallet() {
       name: row.name,
       symbol: row.symbol,
       amount: 0,
-      icon: getFallbackIconUrl(meta.marketKey),
+      icon: getTokenLogoIconUrl(meta.marketKey) || getFallbackIconUrl(meta.marketKey),
       currentPrice: row.price,
       priceChange24h: row.change,
       label: meta.network,
@@ -356,7 +355,7 @@ export default function TrustWallet() {
               </div>
             </header>
 
-            {/* Hyperliquid banner matching IMG_4914 2 */}
+            {/* Hyperliquid banner */}
             <section className="tw-banner">
               <span className="tw-banner-info">i</span>
               <span className="tw-banner-hl-icon"><IconHyperliquid /></span>
@@ -422,7 +421,7 @@ export default function TrustWallet() {
               </button>
             ) : null}
 
-            {/* Predictions section matching IMG_4914 2 */}
+            {/* Predictions section */}
             <section className="tw-section-head">
               <button className="tw-section-link" type="button">
                 Predictions
@@ -430,7 +429,6 @@ export default function TrustWallet() {
               </button>
             </section>
 
-            {/* Card with illustrated mascot character peeking behind dock */}
             <div className="tw-predictions-card">
               <div className="tw-pred-left">
                 <span className="tw-pred-tag">TRENDING</span>
@@ -439,13 +437,10 @@ export default function TrustWallet() {
               </div>
               <div className="tw-pred-mascot" aria-hidden="true">
                 <svg width="68" height="68" viewBox="0 0 100 100" fill="none">
-                  {/* Outer body dome */}
                   <rect x="20" y="24" width="60" height="62" rx="30" fill="#7582b5" />
                   <rect x="25" y="28" width="50" height="52" rx="25" fill="#919ecc" />
-                  {/* Visor */}
                   <rect x="28" y="38" width="44" height="26" rx="13" fill="#1b2034" />
                   <rect x="33" y="42" width="16" height="5" rx="2.5" fill="rgba(255,255,255,0.45)" />
-                  {/* Feet/Boots */}
                   <rect x="26" y="80" width="18" height="12" rx="6" fill="#4349e5" />
                   <rect x="56" y="80" width="18" height="12" rx="6" fill="#4349e5" />
                 </svg>
@@ -454,7 +449,7 @@ export default function TrustWallet() {
           </div>
         </PullToRefresh>
 
-        {/* Floating dock matching IMG_4914 2 */}
+        {/* Floating dock */}
         <nav className="tw-bottom-nav">
           <div className="tw-nav-pill">
             <button className="tw-nav-item active" type="button" aria-label="Home">
@@ -485,5 +480,3 @@ export default function TrustWallet() {
     </div>
   );
 }
-
-//hbbjb
