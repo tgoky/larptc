@@ -22,14 +22,12 @@ const IconEth = () => (
   </svg>
 );
 
-// Original solid white star
 const IconStar = ({ filled }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? "#ffffff" : "none"} stroke="#ffffff" strokeWidth="2" strokeLinejoin="round">
     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 );
 
-// Currency toggle next to price
 const IconSwapHorizontal = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#58617d" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 7H4M16 3l4 4-4 4M4 17h16M8 21l-4-4 4-4" />
@@ -79,13 +77,13 @@ const IconSwap = () => (
 
 const IconChevronRight = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m9 18 6-6-6-6" />
+    <path d="m9 5 7 7-7 7" />
   </svg>
 );
 
 /* --------------------------------- helpers -------------------------------- */
 
-const TIMEFRAMES = ['15m', '1H', '4H', '1D', '1W', '1M', '1Y', 'YTD'];
+const TIMEFRAMES = ['1H', '1D', '1W', '1M', '1Y', 'YTD', 'ALL'];
 const QUICK_USD = [100, 500, 1000, 5000];
 
 const TF_SETTINGS = {
@@ -97,6 +95,7 @@ const TF_SETTINGS = {
   '1M':  { points: 90, minChange: -0.28, maxChange: 0.34 },
   '1Y':  { points: 104, minChange: -0.55, maxChange: 1.4 },
   YTD:   { points: 92, minChange: -0.5, maxChange: 1.1 },
+  ALL:   { points: 120, minChange: -0.6, maxChange: 1.5 },
 };
 
 function hashSeed(text) {
@@ -163,8 +162,12 @@ export default function TrustTokenDetail({ token, onBack }) {
     [token, trust.prices]
   );
 
-  // Network overlay badge (e.g. BSC, Polygon) shown on the token avatar
-  const overlayBadge = useMemo(() => getTokenOverlayIcon(token), [token]);
+  const overlayBadge = useMemo(() => {
+    if (token.symbol === 'BTC' || token.id === 'custom-btc') {
+      return null;
+    }
+    return getTokenOverlayIcon(token);
+  }, [token]);
 
   const price = Number(quote.usd) || 0;
   const change = Number(quote.change) || 0;
@@ -173,9 +176,8 @@ export default function TrustTokenDetail({ token, onBack }) {
   const negative = change < 0;
   const changeUsd = change !== 0 ? price - price / (1 + change / 100) : 0;
 
-  /* -------- chart series (stable per token + timeframe) -------- */
   const chart = useMemo(() => {
-    const cfg = TF_SETTINGS[timeframe];
+    const cfg = TF_SETTINGS[timeframe] || TF_SETTINGS['1D'];
     const rng = mulberry32(hashSeed(`${token.id || token.symbol}|${timeframe}`));
     const end = price || 1;
 
@@ -223,7 +225,6 @@ export default function TrustTokenDetail({ token, onBack }) {
   const lastIndex = chart.prices.length - 1;
   const topPct = (p) => (chart.yFor(p) / chart.H) * 100;
 
-  /* -------- scrubbing -------- */
   const handleScrubMove = (event) => {
     const rect = chartRef.current?.getBoundingClientRect();
     if (!rect || rect.width === 0) return;
@@ -231,7 +232,6 @@ export default function TrustTokenDetail({ token, onBack }) {
     setScrubIndex(Math.round(fraction * lastIndex));
   };
 
-  /* -------- balance editing -------- */
   const parsedInput = parseFloat(amountInput);
   const inputValid = Number.isFinite(parsedInput) && parsedInput >= 0;
   const usdPreview = inputValid ? parsedInput * price : 0;
@@ -256,181 +256,174 @@ export default function TrustTokenDetail({ token, onBack }) {
 
   return (
     <div className="twd-screen">
-      {/* header */}
-      <header className="twd-header">
-        <button className="twd-circle-btn" type="button" onClick={onBack} aria-label="Back">
-          <IconChevronLeft />
-        </button>
-        <button
-          className={`twd-circle-btn star ${starred ? 'active' : ''}`}
-          type="button"
-          onClick={() => setStarred((s) => !s)}
-          aria-label="Favorite"
-        >
-          <IconStar filled={starred} />
-        </button>
-      </header>
-
-      {/* token row */}
-      <div className="twd-token-row">
-        {/* 2. Token avatar with network overlay badge */}
-        <div className="twd-token-icon-wrapper">
-          <span className="twd-token-icon">
-            {quote.imageUrl || token.icon ? (
-              <img
-                src={quote.imageUrl || token.icon}
-                alt={token.symbol}
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-              />
-            ) : token.symbol === 'ETH' ? (
-              <IconEth />
-            ) : (
-              (token.symbol || '?').slice(0, 1)
-            )}
-          </span>
-          {overlayBadge ? (
-            <span className="twd-token-badge">
-              <img src={overlayBadge} alt="" />
-            </span>
-          ) : null}
-        </div>
-
-        <div className="twd-token-id">
-          <span className="twd-token-sym">{token.symbol}</span>
-          <span className="twd-token-name">{token.name || token.symbol}</span>
-        </div>
-
-        {/* 3. Price display with ⇄ toggle */}
-        <div className="twd-token-side">
-          <div className="twd-price-row">
-            <IconSwapHorizontal />
-            <span className="twd-token-price">{formatPrice(price)}</span>
-          </div>
-          <span className={`twd-token-change ${change === 0 ? 'flat' : negative ? 'neg' : 'pos'}`}>
-            {change !== 0
-              ? `${changeUsd >= 0 ? '+' : '-'}${formatPrice(Math.abs(changeUsd))} (${Math.abs(change).toFixed(2)}%)`
-              : '0.00%'}
-          </span>
-        </div>
-      </div>
-
-      {/* chart */}
-      <div
-        className="twd-chart"
-        ref={chartRef}
-        onPointerDown={(e) => {
-          e.currentTarget.setPointerCapture?.(e.pointerId);
-          handleScrubMove(e);
-        }}
-        onPointerMove={(e) => {
-          if (scrubIndex !== null) handleScrubMove(e);
-        }}
-        onPointerUp={() => setScrubIndex(null)}
-        onPointerCancel={() => setScrubIndex(null)}
-        onPointerLeave={() => setScrubIndex(null)}
-      >
-        <svg viewBox="0 0 390 260" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={lineColor} stopOpacity="0.26" />
-              <stop offset="100%" stopColor={lineColor} stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path d={chart.areaD} fill={`url(#${gradientId})`} />
-          <path
-            d={chart.lineD}
-            fill="none"
-            stroke={lineColor}
-            strokeWidth="2.4"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-
-        {scrubIndex === null ? (
-          <span className="twd-end-dot" style={{ top: `${topPct(chart.prices[lastIndex])}%` }} />
-        ) : (
-          <>
-            <div
-              className="twd-scrub-label"
-              style={{ left: `${Math.min(Math.max((scrubIndex / lastIndex) * 100, 10), 90)}%` }}
-            >
-              {formatPrice(chart.prices[scrubIndex])}
-            </div>
-            <div
-              className="twd-scrub-line"
-              style={{ left: `${(scrubIndex / lastIndex) * 100}%` }}
-            />
-            <div
-              className="twd-scrub-dot"
-              style={{
-                left: `${(scrubIndex / lastIndex) * 100}%`,
-                top: `${topPct(chart.prices[scrubIndex])}%`,
-              }}
-            />
-          </>
-        )}
-      </div>
-
-      {/* timeframes */}
-      <div className="twd-timeframes">
-        <button className="twd-tf-settings" type="button" aria-label="Chart settings">
-          <IconCandles />
-        </button>
-        {TIMEFRAMES.map((tf) => (
-          <button
-            key={tf}
-            className={`twd-tf ${timeframe === tf ? 'active' : ''}`}
-            type="button"
-            onClick={() => {
-              setTimeframe(tf);
-              setScrubIndex(null);
-            }}
-          >
-            {tf}
+      <div className="twd-scroll-content">
+        <header className="twd-header">
+          <button className="twd-circle-btn" type="button" onClick={onBack} aria-label="Back">
+            <IconChevronLeft />
           </button>
-        ))}
-      </div>
+          <button
+            className={`twd-circle-btn star ${starred ? 'active' : ''}`}
+            type="button"
+            onClick={() => setStarred((s) => !s)}
+            aria-label="Favorite"
+          >
+            <IconStar filled={starred} />
+          </button>
+        </header>
 
-      {/* 4. Left-aligned Balance Stack */}
-      <button className="twd-balance" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
-        <span className="twd-balance-label">Balance</span>
-        <span className="twd-balance-value">{formatMoney(balanceUsd)}</span>
-        <span className="twd-balance-amount">{formatAmount(amount)} {token.symbol}</span>
-      </button>
+        <div className="twd-token-row">
+          <div className="twd-token-icon-wrapper">
+            <span className="twd-token-icon">
+              {quote.imageUrl || token.icon ? (
+                <img
+                  src={quote.imageUrl || token.icon}
+                  alt={token.symbol}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+              ) : token.symbol === 'ETH' ? (
+                <IconEth />
+              ) : (
+                (token.symbol || '?').slice(0, 1)
+              )}
+            </span>
+            {overlayBadge ? (
+              <span className="twd-token-badge">
+                <img src={overlayBadge} alt="" />
+              </span>
+            ) : null}
+          </div>
 
-      {/* 4. 3 Action Buttons */}
-      <div className="twd-actions">
-        <button className="twd-action-btn" type="button">
-          <IconSend />
-          <span>Send</span>
-        </button>
-        <button className="twd-action-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
-          <IconReceive />
-          <span>Receive</span>
-        </button>
-        <button className="twd-action-btn" type="button">
-          <IconSwap />
-          <span>Swap</span>
-        </button>
-      </div>
+          <div className="twd-token-id">
+            <span className="twd-token-sym">{token.symbol}</span>
+            <span className="twd-token-name">{token.name || token.symbol}</span>
+          </div>
 
-      {/* 4. Dynamic About Token Row */}
-      <button className="twd-about-btn" type="button">
-        <div className="twd-about-left">
-          <IconSparkle />
-          <span>About {token.symbol || 'Crypto'}</span>
+          <div className="twd-token-side">
+            <div className="twd-price-row">
+              <IconSwapHorizontal />
+              <span className="twd-token-price">{formatPrice(price)}</span>
+            </div>
+            <span className={`twd-token-change ${change === 0 ? 'flat' : negative ? 'neg' : 'pos'}`}>
+              {change !== 0
+                ? `${changeUsd >= 0 ? '+' : '-'}${formatPrice(Math.abs(changeUsd))} (${Math.abs(change).toFixed(2)}%)`
+                : '0.00%'}
+            </span>
+          </div>
         </div>
-        <IconChevronRight />
-      </button>
 
-      {/* 4. Trust Green Buy Button */}
+        <div
+          className="twd-chart"
+          ref={chartRef}
+          onPointerDown={(e) => {
+            e.currentTarget.setPointerCapture?.(e.pointerId);
+            handleScrubMove(e);
+          }}
+          onPointerMove={(e) => {
+            if (scrubIndex !== null) handleScrubMove(e);
+          }}
+          onPointerUp={() => setScrubIndex(null)}
+          onPointerCancel={() => setScrubIndex(null)}
+          onPointerLeave={() => setScrubIndex(null)}
+        >
+          <svg viewBox="0 0 390 260" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={lineColor} stopOpacity="0.26" />
+                <stop offset="100%" stopColor={lineColor} stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d={chart.areaD} fill={`url(#${gradientId})`} />
+            <path
+              d={chart.lineD}
+              fill="none"
+              stroke={lineColor}
+              strokeWidth="2.4"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
+          {scrubIndex === null ? (
+            <span className="twd-end-dot" style={{ top: `${topPct(chart.prices[lastIndex])}%` }} />
+          ) : (
+            <>
+              <div
+                className="twd-scrub-label"
+                style={{ left: `${Math.min(Math.max((scrubIndex / lastIndex) * 100, 10), 90)}%` }}
+              >
+                {formatPrice(chart.prices[scrubIndex])}
+              </div>
+              <div
+                className="twd-scrub-line"
+                style={{ left: `${(scrubIndex / lastIndex) * 100}%` }}
+              />
+              <div
+                className="twd-scrub-dot"
+                style={{
+                  left: `${(scrubIndex / lastIndex) * 100}%`,
+                  top: `${topPct(chart.prices[scrubIndex])}%`,
+                }}
+              />
+            </>
+          )}
+        </div>
+
+        <div className="twd-timeframes">
+          <button className="twd-tf-settings" type="button" aria-label="Chart settings">
+            <IconCandles />
+          </button>
+          {TIMEFRAMES.map((tf) => (
+            <button
+              key={tf}
+              className={`twd-tf ${timeframe === tf ? 'active' : ''}`}
+              type="button"
+              onClick={() => {
+                setTimeframe(tf);
+                setScrubIndex(null);
+              }}
+            >
+              {tf}
+            </button>
+          ))}
+        </div>
+
+        <button className="twd-balance" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
+          <span className="twd-balance-label">Balance</span>
+          <span className="twd-balance-value">{formatMoney(balanceUsd)}</span>
+          <span className="twd-balance-amount">{formatAmount(amount)} {token.symbol}</span>
+        </button>
+
+        <div className="twd-actions">
+          <button className="twd-action-btn" type="button">
+            <IconSend />
+            <span>Send</span>
+          </button>
+          <button className="twd-action-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
+            <IconReceive />
+            <span>Receive</span>
+          </button>
+          <button className="twd-action-btn" type="button">
+            <IconSwap />
+            <span>Swap</span>
+          </button>
+        </div>
+
+        <button className="twd-about-btn" type="button">
+          <div className="twd-about-left">
+            <IconSparkle />
+            <span>About {token.symbol || 'Crypto'}</span>
+            <IconChevronRight />
+          </div>
+        </button>
+
+        <div className="twd-scroll-spacer" />
+      </div>
+
       <button className="twd-buy-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
         Buy
       </button>
 
-      {/* receive / add funds sheet */}
       {sheetOpen ? (
         <div
           className="twd-sheet-overlay"

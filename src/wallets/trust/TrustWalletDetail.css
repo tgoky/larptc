@@ -8,11 +8,24 @@
   background: var(--tw-bg);
   color: var(--tw-text);
   font-family: var(--tw-font);
-  overflow: hidden;
-  padding: calc(env(safe-area-inset-top, 0px) + 10px) 17px
-    calc(env(safe-area-inset-bottom, 0px) + 14px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(env(safe-area-inset-top, 0px) + 8px) 17px
+           calc(env(safe-area-inset-bottom, 0px) + 24px) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.twd-scroll-content {
+  display: flex;
+  flex-direction: column;
+  min-height: min-content;
+}
+
+.twd-scroll-spacer {
+  height: 85px;
+  flex-shrink: 0;
 }
 
 /* ---- header ---- */
@@ -36,7 +49,6 @@
   cursor: pointer;
 }
 
-/* ---- Star button with solid white star ---- */
 .twd-circle-btn.star {
   background: #1d2031;
   color: #ffffff;
@@ -55,7 +67,6 @@
   flex-shrink: 0;
 }
 
-/* ---- Token icon container with network overlay badge ---- */
 .twd-token-icon-wrapper {
   position: relative;
   width: 44px;
@@ -139,7 +150,6 @@
   gap: 3px;
 }
 
-/* ---- Price row with ⇄ toggle ---- */
 .twd-price-row {
   display: flex;
   align-items: center;
@@ -190,8 +200,9 @@
 
 .twd-end-dot {
   right: -1px;
-  background: #7a81f8;
-  border: 2px solid var(--tw-bg);
+  background: #7a81f8 !important;
+  border: 2px solid var(--tw-bg) !important;
+  box-shadow: none !important;
 }
 
 .twd-scrub-dot {
@@ -229,7 +240,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 0 4px;
+  padding: 10px 0 6px !important;
   flex-shrink: 0;
 }
 
@@ -248,10 +259,10 @@
   background: transparent;
   color: #8b8fa5;
   font-family: inherit;
-  font-size: 11.5px;
+  font-size: 12px !important;
   font-weight: 700;
   letter-spacing: -0.01em;
-  padding: 6px 9px;
+  padding: 6px 10px !important;
   border-radius: 999px;
   cursor: pointer;
 }
@@ -332,7 +343,7 @@
 .twd-about-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   margin-top: 20px;
   border: 0;
@@ -343,26 +354,35 @@
 }
 
 .twd-about-left {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.01em;
+}
+
+.twd-about-left svg:last-child {
+  width: 15px;
+  height: 15px;
+  stroke-width: 3px;
+  margin-left: 2px;
 }
 
 .twd-about-btn svg {
   color: #ffffff;
 }
 
-/* ---- Trust Green Buy Button ---- */
+/* ---- FIXED Trust Green Buy Button Docked at Bottom ---- */
 .twd-buy-btn {
-  margin-top: 16px;
+  position: fixed !important;
+  left: 17px !important;
+  right: 17px !important;
+  bottom: max(20px, env(safe-area-inset-bottom, 0px)) !important;
   height: 52px;
-  width: 100%;
   border: 0;
   border-radius: 999px;
-  background: #2fb472; /* exact Trust green from screenshot */
+  background: #2fb472;
   color: #ffffff;
   font-family: inherit;
   font-size: 16px;
@@ -371,12 +391,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 40;
   cursor: pointer;
-  flex-shrink: 0;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
 }
 
 .twd-buy-btn:active {
-  opacity: 0.85;
+  transform: scale(0.98);
 }
 
 /* ---- receive / add funds sheet ---- */
