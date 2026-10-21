@@ -60,7 +60,7 @@
 }
 
 .tw-shell {
-  padding: 6px 17px calc(140px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 6px 17px calc(110px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 /* ---------------- header ---------------- */
@@ -465,19 +465,61 @@ background: #1e2132;
   letter-spacing: -0.01em;
 }
 
+/* ---------------- Predictions banner (replaces the sliced Perps cards) ---------------- */
+.tw-predictions-banner {
+  margin: 6px 0 20px;
+  min-height: 84px;
+  border-radius: 20px;
+  background: #141726;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.tw-pred-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tw-pred-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--tw-text);
+  letter-spacing: -0.01em;
+}
+
+.tw-pred-sub {
+  font-size: 12px;
+  color: var(--tw-text-dim);
+  font-weight: 500;
+}
+
+.tw-pred-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(48, 209, 88, 0.16);
+  color: var(--tw-pos);
+  letter-spacing: 0.04em;
+}
+
 /* ---------------- bottom nav ---------------- */
 .tw-bottom-nav {
   position: fixed !important;
   left: 50% !important;
-  /* Locks the pill exactly 14px above the white iOS home indicator */
-  bottom: 22px !important;
+  bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) - 14px)) !important;
   transform: translateX(-50%) !important;
   width: calc(100% - 32px) !important;
   max-width: 396px !important;
   margin: 0 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
   padding: 0 !important;
   background: transparent !important;
   border: none !important;
@@ -489,23 +531,24 @@ background: #1e2132;
 
 .tw-nav-pill {
   flex: 1;
-  height: 56px;
+  height: 60px;
   border-radius: 999px;
   background: #141722;
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
   padding: 4px;
   pointer-events: auto !important;
 }
 
 
+
 .tw-nav-item {
   position: relative;
   width: 100%;
-  height: 48px;
+  height: 52px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -518,14 +561,16 @@ background: #1e2132;
 
 
 
+
 .tw-nav-item.active {
   background: #202438;
   color: #ffffff;
 }
 
+
 .tw-nav-search {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: #141722;
@@ -538,6 +583,7 @@ background: #1e2132;
   cursor: pointer;
   pointer-events: auto !important;
 }
+
 
 /* ---------------- modal (kept for TrustSpoofModal) ---------------- */
 

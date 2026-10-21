@@ -12,11 +12,12 @@ import './TrustWallet.css';
 
 /* ---------------------------------- icons --------------------------------- */
 
+// Exact Trust Wallet 1 Avatar with yellow/orange gradient
 const IconWalletAvatar = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M7.6 6.4V6a3.2 3.2 0 0 1 3.2-3.2h2.4A3.2 3.2 0 0 1 16.4 6v.4" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" />
-    <rect x="2.4" y="6.4" width="19.2" height="13.6" rx="3.6" fill="#fff" />
-    <circle cx="16.9" cy="13.2" r="1.8" fill="#4343ee" />
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M7 7V5.8A2.8 2.8 0 0 1 9.8 3h4.4A2.8 2.8 0 0 1 17 5.8V7" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+    <rect x="3" y="7" width="18" height="14" rx="4" fill="#fff" />
+    <circle cx="16.5" cy="14" r="1.6" fill="#f7931a" />
   </svg>
 );
 
@@ -39,29 +40,26 @@ const IconScan = () => (
   </svg>
 );
 
-const IconInfo = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <circle cx="12" cy="4.9" r="2.1" />
-    <rect x="10.1" y="9.4" width="3.8" height="11" rx="1.9" />
-  </svg>
-);
-
-const IconDollarCircle = () => (
-  <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="9.4" />
-    <path d="M15.6 8.4h-4.4a2.1 2.1 0 1 0 0 4.2h1.6a2.1 2.1 0 1 1 0 4.2H8.4" />
-    <path d="M12 18.4V5.6" />
+const IconHyperliquidInfinity = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M12 12c-2.2-2.8-4.5-4.2-6.6-4.2A4.2 4.2 0 1 0 5.4 16c2.1 0 4.4-1.4 6.6-4.2Zm0 0c2.2 2.8 4.5 4.2 6.6 4.2a4.2 4.2 0 1 0 0-8.4c-2.1 0-4.4 1.4-6.6 4.2Z"
+      stroke="#4ade80"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 const IconChevronRight = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="m9 5 7 7-7 7" />
   </svg>
 );
 
 const IconQr = () => (
-  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <rect x="2.8" y="2.8" width="7.4" height="7.4" rx="2" stroke="currentColor" strokeWidth="2" />
     <rect x="5.6" y="5.6" width="1.8" height="1.8" rx="0.5" fill="currentColor" />
     <rect x="13.6" y="2.8" width="4.6" height="4.6" rx="1.4" fill="currentColor" />
@@ -88,9 +86,8 @@ const IconBnb = ({ size = 32 }) => (
   </svg>
 );
 
-/* Full Badge SVGs for Token List */
 const IconBtcCircle = () => (
-  <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+  <svg width="42" height="42" viewBox="0 0 32 32" fill="none" aria-hidden="true">
     <circle cx="16" cy="16" r="16" fill="#F7931A" />
     <path
       d="M22.3 13.1c.3-2.1-1.3-3.2-3.5-4l.7-2.8-1.7-.4-.7 2.7c-.5-.1-.9-.2-1.4-.3l.7-2.8-1.7-.4-.7 2.8c-.4-.1-.7-.2-1.1-.3l-2.4-.6-.5 1.8s1.3.3 1.3.3c.7.2.8.6.8 1l-.8 3.2c.1 0 .1 0 .2.1l-.2 0-1.1 4.5c-.1.2-.3.5-.8.4 0 0-1.3-.3-1.3-.3l-.9 2 2.3.6c.4.1.8.2 1.2.3l-.7 2.9 1.7.4.7-2.8c.5.1.9.2 1.4.3l-.7 2.8 1.7.4.7-2.9c3 .6 5.2.3 6.1-2.3.7-2.1 0-3.4-1.6-4.2 1.2-.3 2-1 2.2-2.5zm-4 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.8c1.2.3 4.9.9 4.4 3.1zm.6-5.5c-.5 2-3.5 1-4.5.7l.9-3.5c1 .2 4.1.7 3.6 2.8z"
@@ -100,7 +97,7 @@ const IconBtcCircle = () => (
 );
 
 const IconEthCircle = () => (
-  <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+  <svg width="42" height="42" viewBox="0 0 32 32" fill="none" aria-hidden="true">
     <circle cx="16" cy="16" r="16" fill="#627EEA" />
     <path d="M16 4v8.87l7.48 3.35z" fill="#FFFFFF" fillOpacity="0.6" />
     <path d="M16 4L8.52 16.22l7.48-3.35z" fill="#FFFFFF" />
@@ -112,7 +109,7 @@ const IconEthCircle = () => (
 );
 
 const IconBnbCircle = () => (
-  <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+  <svg width="42" height="42" viewBox="0 0 32 32" fill="none" aria-hidden="true">
     <circle cx="16" cy="16" r="16" fill="#F3BA2F" />
     <path d="M16 6.5L18.8 9.3L16 12.1L13.2 9.3Z" fill="#181A20" />
     <path d="M9.3 13.2L12.1 16L9.3 18.8L6.5 16Z" fill="#181A20" />
@@ -131,39 +128,34 @@ const IconApplePay = () => (
   </span>
 );
 
-const IconHome = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+/* Exact glyph from IMG_4914 2: Rounded house/wallet with slot */
+const IconHomeTrust = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      fill="currentColor"
-      d="M12 3.1c.4 0 .79.13 1.11.38l6.9 5.42c.42.33.67.84.67 1.38v8.22c0 1.05-.85 1.9-1.9 1.9h-3.3a.9.9 0 0 1-.9-.9v-3.06c0-1.06-.86-1.92-1.92-1.92h-1.32c-1.06 0-1.92.86-1.92 1.92v3.06a.9.9 0 0 1-.9.9H5.22c-1.05 0-1.9-.85-1.9-1.9v-8.22c0-.54.25-1.05.67-1.38l6.9-5.42A1.79 1.79 0 0 1 12 3.1Z"
+      d="M5 9.5L12 4l7 5.5v8.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 18V9.5Z"
+      fill="#ffffff"
     />
+    <rect x="10" y="16" width="4" height="2" rx="1" fill="#141722" />
   </svg>
 );
 
-const IconTrending = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M16 7h6v6" />
-    <path d="m22 7-8.5 8.5-5-5L2 17" />
+const IconTrendingTrust = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7d8299" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M16 7h5v5" />
+    <path d="m21 7-7.5 7.5-4-4L3 17" />
   </svg>
 );
 
-const IconInfinity = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+const IconInfinityTrust = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7d8299" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
   </svg>
 );
 
-const IconCompass = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="9.3" />
-    <path d="m16.2 7.8-1.9 6.5-6.5 1.9 1.9-6.5 6.5-1.9z" />
-  </svg>
-);
-
 const IconSearch = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="7.3" />
-    <path d="m20.6 20.6-4.7-4.7" />
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b8fa5" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="7" />
+    <path d="m20.5 20.5-4.5-4.5" />
   </svg>
 );
 
@@ -182,13 +174,6 @@ const START_ACTIONS = [
   { key: 'receive', lines: ['Receive', 'crypto'], icon: <IconQr /> },
   { key: 'deposit', lines: ['Deposit from', 'Binance'], icon: <span className="tw-bnb-glyph"><IconBnb size={34} /></span> },
   { key: 'buy', lines: ['Buy with', 'Apple Pay'], icon: <IconApplePay /> },
-];
-
-const PERPS = [
-  { symbol: 'BTC', lev: '40x' },
-  { symbol: 'HYPE', lev: '10x' },
-  { symbol: 'ETH', lev: '25x' },
-  { symbol: 'SOL', lev: '20x' },
 ];
 
 function formatMoney(value) {
@@ -359,10 +344,11 @@ export default function TrustWallet() {
       <div className="tw-device-shell">
         <PullToRefresh className="tw-scroll" onRefresh={refreshTrust} indicatorTop={18}>
           <div className="tw-shell">
+            {/* Header */}
             <header className="tw-header">
               <button className="tw-wallet-pill" type="button" onClick={() => setShowSetupModal(true)}>
                 <span className="tw-wallet-avatar"><IconWalletAvatar /></span>
-                <span>{trust.walletName || 'Main Wallet'}</span>
+                <span>{trust.walletName || 'Wallet 1'}</span>
               </button>
               <div className="tw-header-actions">
                 <button className="tw-circle-btn" type="button" aria-label="History"><IconHistory /></button>
@@ -370,17 +356,19 @@ export default function TrustWallet() {
               </div>
             </header>
 
+            {/* Hyperliquid Banner matching IMG_4914 2 */}
             <section className="tw-banner">
-              <span className="tw-banner-info"><IconInfo /></span>
-              <span className="tw-banner-icon"><IconDollarCircle /></span>
+              <span className="tw-banner-info">i</span>
+              <span className="tw-banner-hl-icon"><IconHyperliquidInfinity /></span>
               <div className="tw-banner-copy">
-                <span className="tw-banner-title">0% swap fees on selected stables</span>
-                <span className="tw-banner-sub">Applicable to same-chain swaps only</span>
+                <span className="tw-banner-title">Explore Hyperliquid: 200+ markets live</span>
+                <span className="tw-banner-sub">Explore now</span>
               </div>
             </section>
 
             <h1 className="tw-hero-title">Get started by adding some crypto</h1>
 
+            {/* 3 Action Cards */}
             <div className="tw-start-grid">
               {START_ACTIONS.map((action) => (
                 <div className="tw-start-item" key={action.key}>
@@ -399,6 +387,7 @@ export default function TrustWallet() {
               ))}
             </div>
 
+            {/* Explore tokens */}
             <section className="tw-section-head">
               <button className="tw-section-link" type="button">
                 Explore tokens
@@ -433,43 +422,42 @@ export default function TrustWallet() {
               </button>
             ) : null}
 
+            {/* Predictions section matching IMG_4914 2 */}
             <section className="tw-section-head">
               <button className="tw-section-link" type="button">
-                Perps
+                Predictions
                 <IconChevronRight />
               </button>
             </section>
 
-            <div className="tw-perps-row">
-              {PERPS.map((perp) => {
-                const match = marketRows.find((row) => row.symbol === perp.symbol);
-                return (
-                  <button
-                    className="tw-perp-card"
-                    type="button"
-                    key={perp.symbol}
-                    onClick={() => { if (match) openToken(match); }}
-                  >
-                    <span className="tw-perp-top">
-                      <span className="tw-perp-symbol">{perp.symbol}</span>
-                      <span className="tw-perp-lev">{perp.lev}</span>
-                    </span>
-                    <span className="tw-perp-price">{match ? formatMoney(match.price) : '—'}</span>
-                  </button>
-                );
-              })}
+            <div className="tw-predictions-row">
+              <div className="tw-prediction-card">
+                <div className="tw-pred-info">
+                  <span className="tw-pred-title">Predict & Earn</span>
+                  <span className="tw-pred-sub">Crypto price moves</span>
+                </div>
+              </div>
             </div>
           </div>
         </PullToRefresh>
 
+        {/* Floating Bottom Dock: 3 items in pill + 1 search button with red notification dot */}
         <nav className="tw-bottom-nav">
           <div className="tw-nav-pill">
-            <button className="tw-nav-item active" type="button" aria-label="Home"><IconHome /></button>
-            <button className="tw-nav-item" type="button" aria-label="Trending"><IconTrending /></button>
-            <button className="tw-nav-item" type="button" aria-label="Perps"><IconInfinity /></button>
-            <button className="tw-nav-item" type="button" aria-label="Discover"><IconCompass /></button>
+            <button className="tw-nav-item active" type="button" aria-label="Home">
+              <IconHomeTrust />
+              <span className="tw-nav-dot" />
+            </button>
+            <button className="tw-nav-item" type="button" aria-label="Markets">
+              <IconTrendingTrust />
+            </button>
+            <button className="tw-nav-item" type="button" aria-label="Swap">
+              <IconInfinityTrust />
+            </button>
           </div>
-          <button className="tw-nav-search" type="button" aria-label="Search"><IconSearch /></button>
+          <button className="tw-nav-search" type="button" aria-label="Search">
+            <IconSearch />
+          </button>
         </nav>
       </div>
 

@@ -207,14 +207,16 @@ const defaultPhantom = {
   prices: {},
 };
 
+// store/useWalletStore.js
 const defaultTrustTokens = [
   { id: 'custom-trx', name: 'TRX', symbol: 'TRX', amount: 0, marketKey: 'tron', dexscreenerAddress: DEX_MARKETS.tron.address, network: 'Tron', icon: getFallbackIconUrl('tron') },
   { id: 'custom-usdt', name: 'USDT', symbol: 'USDT', amount: 0, marketKey: 'usdtTron', dexscreenerAddress: DEX_MARKETS.usdtTron.address, network: 'Tron', networkMarketKey: 'tron', icon: getFallbackIconUrl('usdtTron') },
   { id: 'custom-btc', name: 'Bitcoin', symbol: 'BTC', amount: 0, marketKey: 'bitcoin', dexscreenerAddress: DEX_MARKETS.bitcoin.address, network: 'Bitcoin', icon: getPreferredTokenIconUrl('bitcoin') },
   { id: 'custom-eth', name: 'Ethereum', symbol: 'ETH', amount: 0, marketKey: 'ethereum', dexscreenerAddress: DEX_MARKETS.ethereum.address, network: 'Ethereum', icon: getPreferredTokenIconUrl('ethereum') },
-  { id: 'custom-bnb', name: 'BNB', symbol: 'BNB', amount: 0, marketKey: 'bnb', dexscreenerAddress: DEX_MARKETS.bnb.address, network: 'BNB Smart Chain', icon: getFallbackIconUrl('bnb') },
+  { id: 'custom-bnb', name: 'BNB Smart Chain', symbol: 'BNB', amount: 0, marketKey: 'bnb', dexscreenerAddress: DEX_MARKETS.bnb.address, network: 'BNB Smart Chain', icon: getFallbackIconUrl('bnb') },
   { id: 'custom-sol', name: 'Solana', symbol: 'SOL', amount: 0, marketKey: 'solana', dexscreenerAddress: DEX_MARKETS.solana.address, network: 'Solana', icon: getPreferredTokenIconUrl('solana') },
 ];
+
 
 const defaultTrust = {
   walletName: 'Main Wallet 23',
