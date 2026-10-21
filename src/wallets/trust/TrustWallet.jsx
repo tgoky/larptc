@@ -1,103 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import {
-  fetchBasePrices,
-  getTokenQuote,
   getFallbackIconUrl,
+  getNetworkBadgeIconUrl,
+  getNativeMarketKeyForNetwork,
+  getTokenOverlayIcon,
+  getTokenQuote,
   useWalletStore,
 } from '../../store/useWalletStore';
-import PullToRefresh from '../../components/PullToRefresh';
-import TrustSpoofModal from './TrustSpoofModal';
-import TrustTokenDetail from './TrustTokenDetail';
-import './TrustWallet.css';
+import './TrustWalletDetail.css';
 
 /* ---------------------------------- icons --------------------------------- */
-
-// Genuine yellow/orange gradient avatar matching IMG_4914 2
-const IconWalletAvatar = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M7 6.5V5.5A2.5 2.5 0 0 1 9.5 3h5A2.5 2.5 0 0 1 17 5.5v1" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" />
-    <rect x="2.5" y="6.5" width="19" height="14.5" rx="3.8" fill="#fff" />
-    <circle cx="16.8" cy="13.8" r="1.8" fill="#f7931a" />
+const IconChevronLeft = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m14.5 6-6 6 6 6" />
   </svg>
 );
 
-const IconHistory = () => (
-  <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-    <path d="M3 3v5h5" />
-    <path d="M12 7.2V12l3.4 1.8" />
-  </svg>
-);
-
-const IconScan = () => (
-  <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 7.2V5.4A2.4 2.4 0 0 1 5.4 3h1.8" />
-    <path d="M16.8 3h1.8A2.4 2.4 0 0 1 21 5.4v1.8" />
-    <path d="M21 16.8v1.8a2.4 2.4 0 0 1-2.4 2.4h-1.8" />
-    <path d="M7.2 21H5.4A2.4 2.4 0 0 1 3 18.6v-1.8" />
-    <rect x="8.2" y="8.2" width="3" height="3" rx="0.7" fill="currentColor" stroke="none" />
-    <rect x="12.8" y="12.8" width="3" height="3" rx="0.7" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const IconHyperliquid = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M12 12c-2.4-3.2-5-4.8-7.2-4.8A4.8 4.8 0 1 0 5.4 16.8c2.4 0 5-1.6 7.2-4.8Zm0 0c2.4 3.2 5 4.8 7.2 4.8a4.8 4.8 0 1 0 0-9.6c-2.4 0-5 1.6-7.2 4.8Z"
-      stroke="#4ade80"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const IconChevronRight = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="m9 5 7 7-7 7" />
-  </svg>
-);
-
-const IconQr = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <rect x="2.8" y="2.8" width="7.4" height="7.4" rx="2" stroke="currentColor" strokeWidth="2" />
-    <rect x="5.6" y="5.6" width="1.8" height="1.8" rx="0.5" fill="currentColor" />
-    <rect x="13.6" y="2.8" width="4.6" height="4.6" rx="1.4" fill="currentColor" />
-    <rect x="19.4" y="2.8" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="19.4" y="6.2" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="2.8" y="13.6" width="4.6" height="4.6" rx="1.4" fill="currentColor" />
-    <rect x="2.8" y="19.4" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="6.2" y="19.4" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="13.6" y="13.6" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="16.9" y="16.9" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="19.4" y="13.6" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="13.6" y="19.4" width="2" height="2" rx="0.6" fill="currentColor" />
-    <rect x="19.4" y="19.4" width="2" height="2" rx="0.6" fill="currentColor" />
-  </svg>
-);
-
-const IconBnb = ({ size = 32 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2.4 14.5 4.9 12 7.4 9.5 4.9 12 2.4Z" />
-    <path d="M6.1 8.9 8.6 11.4 6.1 13.9 3.6 11.4 6.1 8.9Z" />
-    <path d="M17.9 8.9 20.4 11.4 17.9 13.9 15.4 11.4 17.9 8.9Z" />
-    <path d="M12 8.9 14.5 11.4 12 13.9 9.5 11.4 12 8.9Z" />
-    <path d="M12 15.4 14.5 17.9 12 20.4 9.5 17.9 12 15.4Z" />
-  </svg>
-);
-
-const IconBtcCircle = () => (
-  <svg width="42" height="42" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-    <circle cx="16" cy="16" r="16" fill="#F7931A" />
-    <path
-      d="M22.3 13.1c.3-2.1-1.3-3.2-3.5-4l.7-2.8-1.7-.4-.7 2.7c-.5-.1-.9-.2-1.4-.3l.7-2.8-1.7-.4-.7 2.8c-.4-.1-.7-.2-1.1-.3l-2.4-.6-.5 1.8s1.3.3 1.3.3c.7.2.8.6.8 1l-.8 3.2c.1 0 .1 0 .2.1l-.2 0-1.1 4.5c-.1.2-.3.5-.8.4 0 0-1.3-.3-1.3-.3l-.9 2 2.3.6c.4.1.8.2 1.2.3l-.7 2.9 1.7.4.7-2.8c.5.1.9.2 1.4.3l-.7 2.8 1.7.4.7-2.9c3 .6 5.2.3 6.1-2.3.7-2.1 0-3.4-1.6-4.2 1.2-.3 2-1 2.2-2.5zm-4 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.8c1.2.3 4.9.9 4.4 3.1zm.6-5.5c-.5 2-3.5 1-4.5.7l.9-3.5c1 .2 4.1.7 3.6 2.8z"
-      fill="#FFFFFF"
-    />
-  </svg>
-);
-
-const IconEthCircle = () => (
-  <svg width="42" height="42" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+const IconEth = () => (
+  <svg width="44" height="44" viewBox="0 0 32 32" fill="none">
     <circle cx="16" cy="16" r="16" fill="#627EEA" />
     <path d="M16 4v8.87l7.48 3.35z" fill="#FFFFFF" fillOpacity="0.6" />
     <path d="M16 4L8.52 16.22l7.48-3.35z" fill="#FFFFFF" />
@@ -108,379 +28,524 @@ const IconEthCircle = () => (
   </svg>
 );
 
-const IconBnbCircle = () => (
-  <svg width="42" height="42" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-    <circle cx="16" cy="16" r="16" fill="#F3BA2F" />
-    <path d="M16 6.5L18.8 9.3L16 12.1L13.2 9.3Z" fill="#181A20" />
-    <path d="M9.3 13.2L12.1 16L9.3 18.8L6.5 16Z" fill="#181A20" />
-    <path d="M22.7 13.2L25.5 16L22.7 18.8L19.9 16Z" fill="#181A20" />
-    <path d="M16 13.2L18.8 16L16 18.8L13.2 16Z" fill="#181A20" />
-    <path d="M16 19.9L18.8 22.7L16 25.5L13.2 22.7Z" fill="#181A20" />
+const IconStar = ({ filled }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? "#ffffff" : "none"} stroke="#ffffff" strokeWidth="2" strokeLinejoin="round">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 );
 
-const IconApplePay = () => (
-  <span className="tw-applepay" aria-hidden="true">
-    <svg width="19" height="23" viewBox="0 0 814 1000" fill="currentColor">
-      <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z" />
-    </svg>
-    <span>Pay</span>
-  </span>
-);
-
-// Exact Trust Wallet 1:1 home icon glyph (house with bottom line slot)
-const IconHomeTrust = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M5 9.8L12 4.2l7 5.6v8.4a2.4 2.4 0 0 1-2.4 2.4H7.4A2.4 2.4 0 0 1 5 18.2V9.8Z"
-      fill="#ffffff"
-    />
-    <rect x="9.8" y="15.8" width="4.4" height="2" rx="1" fill="#131622" />
+const IconSwapHorizontal = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#58617d" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 7H4M16 3l4 4-4 4M4 17h16M8 21l-4-4 4-4" />
   </svg>
 );
 
-const IconTrendingTrust = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#797e93" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M16 7h5v5" />
-    <path d="m21 7-7.5 7.5-4-4L3 17" />
+const IconSend = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6.5 17.5 17.5 6.5" />
+    <path d="M8.5 6.5h9v9" />
   </svg>
 );
 
-const IconInfinityTrust = () => (
-  <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#797e93" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
+const IconReceive = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="3.5" y="3.5" width="7" height="7" rx="1.6" />
+    <rect x="13.5" y="3.5" width="7" height="7" rx="1.6" />
+    <rect x="3.5" y="13.5" width="7" height="7" rx="1.6" />
+    <path d="M14 14h3v3h-3zM19.5 17.5v3M14 20.5h2" strokeWidth="1.9" />
   </svg>
 );
 
-const IconSearch = () => (
-  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8b8fa5" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="7" />
-    <path d="m20.5 20.5-4.5-4.5" />
+const IconCandles = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round">
+    <rect x="4" y="8.5" width="4" height="8" rx="1.4" />
+    <path d="M6 4.5v4M6 16.5v3" />
+    <rect x="14.5" y="5.5" width="4" height="8" rx="1.4" />
+    <path d="M16.5 2.5v3M16.5 13.5v4" />
+  </svg>
+);
+
+const IconSparkle = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M10 3.5l1.6 4.9 4.9 1.6-4.9 1.6L10 16.5 8.4 11.6 3.5 10l4.9-1.6L10 3.5z" />
+    <path d="M18 13.5l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z" opacity="0.7" />
+  </svg>
+);
+
+const IconSwap = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4.5 9.5a8 8 0 0 1 13.6-2.6" />
+    <path d="M18.5 2.5v4.6h-4.6" />
+    <path d="M19.5 14.5a8 8 0 0 1-13.6 2.6" />
+    <path d="M5.5 21.5v-4.6h4.6" />
+  </svg>
+);
+
+const IconChevronRight = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m9 5 7 7-7 7" />
   </svg>
 );
 
 /* --------------------------------- helpers -------------------------------- */
+const TIMEFRAMES = ['1H', '1D', '1W', '1M', '1Y', 'YTD', 'ALL'];
+const QUICK_USD = [100, 500, 1000, 5000];
 
-const SYMBOL_NAMES = { BTC: 'Bitcoin', ETH: 'Ethereum', BNB: 'BNB Smart Chain' };
-const SYMBOL_ORDER = { BTC: 0, ETH: 1, BNB: 2 };
-
-const DEFAULT_TOKEN_META = {
-  BTC: { marketKey: 'bitcoin', network: 'Bitcoin', dexscreenerAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599' },
-  ETH: { marketKey: 'ethereum', network: 'Ethereum', dexscreenerAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' },
-  BNB: { marketKey: 'bnb', network: 'BNB Smart Chain', dexscreenerAddress: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c' },
+const TF_SETTINGS = {
+  '15m': { points: 50, minChange: -0.01, maxChange: 0.01 },
+  '1H':  { points: 60, minChange: -0.02, maxChange: 0.02 },
+  '4H':  { points: 70, minChange: -0.04, maxChange: 0.04 },
+  '1D':  { points: 78, minChange: -0.06, maxChange: 0.06 },
+  '1W':  { points: 84, minChange: -0.14, maxChange: 0.16 },
+  '1M':  { points: 90, minChange: -0.28, maxChange: 0.34 },
+  '1Y':  { points: 104, minChange: -0.55, maxChange: 1.4 },
+  YTD:   { points: 92, minChange: -0.5, maxChange: 1.1 },
+  ALL:   { points: 120, minChange: -0.6, maxChange: 1.5 },
 };
 
-const START_ACTIONS = [
-  { key: 'receive', lines: ['Receive', 'crypto'], icon: <IconQr /> },
-  { key: 'deposit', lines: ['Deposit from', 'Binance'], icon: <span className="tw-bnb-glyph"><IconBnb size={34} /></span> },
-  { key: 'buy', lines: ['Buy with', 'Apple Pay'], icon: <IconApplePay /> },
-];
+function hashSeed(text) {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function formatPrice(value) {
+  if (!Number.isFinite(value) || value === 0) return '$0.00';
+  if (value >= 1000) {
+    return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+  if (value >= 1) return `$${value.toFixed(2)}`;
+  if (value >= 0.01) return `$${value.toFixed(4)}`;
+  return `$${value.toFixed(6)}`;
+}
 
 function formatMoney(value) {
-  if (!value || Math.abs(value) < 0.01) return '$0.00';
+  if (!Number.isFinite(value) || Math.abs(value) < 0.01) return '$0.00';
   return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-function MarketIcon({ symbol, imageUrl }) {
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    setHasError(false);
-  }, [imageUrl]);
-
-  if (symbol === 'BTC') return <IconBtcCircle />;
-  if (symbol === 'ETH') return <IconEthCircle />;
-  if (symbol === 'BNB') return <IconBnbCircle />;
-  if (imageUrl && !hasError) {
-    return (
-      <span className="tw-mkt-icon">
-        <img src={imageUrl} alt="" onError={() => setHasError(true)} />
-      </span>
-    );
-  }
-  return (
-    <span className="tw-mkt-icon tw-mkt-fallback">
-      <span>{(symbol || '?').slice(0, 1)}</span>
-    </span>
-  );
+function formatAmount(value) {
+  if (!Number.isFinite(value) || value === 0) return '0';
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(2)}M`;
+  if (value >= 1000) return value.toLocaleString(undefined, { maximumFractionDigits: 4 });
+  if (value < 0.00001) return '< 0.00001';
+  return value.toLocaleString(undefined, {
+    minimumFractionDigits: value < 1 ? 5 : 2,
+    maximumFractionDigits: value < 1 ? 5 : 4,
+  });
 }
 
 /* -------------------------------- component ------------------------------- */
+export default function TrustTokenDetail({ token, onBack }) {
+  const { trust, updateTrustTokenAmount } = useWalletStore();
+  const [timeframe, setTimeframe] = useState('1D');
+  const [starred, setStarred] = useState(true);
+  const [scrubIndex, setScrubIndex] = useState(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [mode, setMode] = useState('add');
+  const [amountInput, setAmountInput] = useState('');
+  const [error, setError] = useState('');
+  const chartRef = useRef(null);
 
-export default function TrustWallet() {
-  const { trust, setPhantomPrices, addTrustToken } = useWalletStore();
-  const [showSetupModal, setShowSetupModal] = useState(false);
-  const [showAllTokens, setShowAllTokens] = useState(false);
-  const [selectedToken, setSelectedToken] = useState(null);
-  const [deferredInstallPrompt, setDeferredInstallPrompt] = useState(null);
-  const [isStandalone, setIsStandalone] = useState(
-    () => window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true
+  const quote = useMemo(
+    () => getTokenQuote(token, trust.prices) || { usd: 0, change: 0, imageUrl: '' },
+    [token, trust.prices]
   );
 
-  const refreshTrust = useCallback(async () => {
-    const prices = await fetchBasePrices();
-    if (Object.keys(prices).length > 0) {
-      setPhantomPrices(prices);
+  // Trust Wallet displays network badges for ALL tokens (BTC on Bitcoin, ETH on Ethereum, etc.)
+  const overlayBadge = useMemo(() => {
+    const directOverlay = getTokenOverlayIcon(token);
+    if (directOverlay) return directOverlay;
+    const netKey =
+      token.networkMarketKey ||
+      getNativeMarketKeyForNetwork(token.network) ||
+      (token.symbol === 'BTC' ? 'bitcoin' : '') ||
+      (token.symbol === 'ETH' ? 'ethereum' : '') ||
+      (token.symbol === 'BNB' ? 'bnb' : '') ||
+      (token.symbol || '').toLowerCase();
+
+    return getNetworkBadgeIconUrl(netKey) || getFallbackIconUrl(netKey);
+  }, [token]);
+
+  const price = Number(quote.usd) || 0;
+  const change = Number(quote.change) || 0;
+  const amount = Number(token.amount) || 0;
+  const balanceUsd = price * amount;
+  const negative = change < 0;
+  const changeUsd = change !== 0 ? price - price / (1 + change / 100) : 0;
+
+  // Chart layout with right padding so the dot halo is never clipped
+  const chart = useMemo(() => {
+    const cfg = TF_SETTINGS[timeframe] || TF_SETTINGS['1D'];
+    const rng = mulberry32(hashSeed(`${token.id || token.symbol}|${timeframe}`));
+    const end = price || 1;
+    let totalChange;
+    if (timeframe === '1D' && change !== 0) {
+      totalChange = change / 100;
+    } else {
+      totalChange = cfg.minChange + rng() * (cfg.maxChange - cfg.minChange);
     }
-  }, [setPhantomPrices]);
+    const start = end / (1 + totalChange);
+    const n = cfg.points;
+    const raw = [0];
+    for (let i = 1; i < n; i++) raw.push(raw[i - 1] + (rng() - 0.5) * 2);
+    const rMin = Math.min(...raw);
+    const rMax = Math.max(...raw);
+    const rSpan = rMax - rMin || 1;
+    const prices = raw.map((v) => start + ((end - start) * (v - rMin)) / rSpan);
+    const pMin = Math.min(...prices);
+    const pMax = Math.max(...prices);
+    const pad = (pMax - pMin) * 0.14 || Math.max(pMax * 0.02, 0.01);
+    const lo = pMin - pad;
+    const hi = pMax + pad;
+    const W = 390;
+    const H = 260;
+    const padRight = 14;
+    const plotW = W - padRight;
 
-  useEffect(() => {
-    refreshTrust();
-    const timer = window.setInterval(refreshTrust, 60000);
-    return () => window.clearInterval(timer);
-  }, [refreshTrust]);
+    const x = (i) => (i / (n - 1)) * plotW;
+    const yFor = (p) => H - ((p - lo) / (hi - lo)) * H;
+    const lineD = prices
+      .map((p, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(2)} ${yFor(p).toFixed(2)}`)
+      .join(' ');
 
-  useEffect(() => {
-    const displayMode = window.matchMedia?.('(display-mode: standalone)');
-    const handleModeChange = (event) => {
-      setIsStandalone(event.matches || window.navigator.standalone === true);
-    };
-    const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault();
-      setDeferredInstallPrompt(event);
-    };
-    const handleInstalled = () => {
-      setDeferredInstallPrompt(null);
-      setIsStandalone(true);
-    };
+    const lastX = x(n - 1);
+    const areaD = `${lineD} L ${lastX.toFixed(2)} ${H} L 0 ${H} Z`;
+    return { prices, lineD, areaD, yFor, H, W, x, lastX, plotW };
+  }, [token.id, token.symbol, timeframe, price, change]);
 
-    displayMode?.addEventListener?.('change', handleModeChange);
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleInstalled);
+  const gradientId = useMemo(
+    () => `twd-fill-${String(token.id || token.symbol).replace(/[^a-zA-Z0-9]/g, '')}`,
+    [token.id, token.symbol]
+  );
 
-    return () => {
-      displayMode?.removeEventListener?.('change', handleModeChange);
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleInstalled);
-    };
-  }, []);
+  const lineColor = negative ? '#ff453a' : '#30d158';
+  const lastIndex = chart.prices.length - 1;
+  const endX = chart.lastX;
+  const endY = chart.yFor(chart.prices[lastIndex]);
 
-  const handleInstallApp = useCallback(async () => {
-    if (!deferredInstallPrompt) return;
-    await deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    setDeferredInstallPrompt(null);
-  }, [deferredInstallPrompt]);
+  const handleScrubMove = (event) => {
+    const rect = chartRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return;
+    const fraction = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
+    setScrubIndex(Math.round(fraction * lastIndex));
+  };
 
-  const marketRows = useMemo(() => {
-    const rows = (trust.tokens || []).map((token) => {
-      const quote = getTokenQuote(token, trust.prices);
-      return {
-        key: token.id ?? `${token.symbol}-${token.network ?? ''}`,
-        symbol: token.symbol,
-        name: token.name || SYMBOL_NAMES[token.symbol] || token.symbol,
-        price: quote?.usd ?? 0,
-        change: Number(quote?.change ?? 0),
-        imageUrl: quote?.imageUrl || token.icon || '',
-        token,
-      };
-    });
+  const parsedInput = parseFloat(amountInput);
+  const inputValid = Number.isFinite(parsedInput) && parsedInput >= 0;
+  const usdPreview = inputValid ? parsedInput * price : 0;
 
-    if (rows.length === 0) {
-      return Object.entries(SYMBOL_NAMES).map(([symbol, name]) => ({
-        key: symbol,
-        symbol,
-        name,
-        price: 0,
-        change: 0,
-        imageUrl: '',
-        token: null,
-      }));
-    }
+  const applyQuickUsd = (usd) => {
+    if (!price) return;
+    setAmountInput(String(Number((usd / price).toFixed(6))));
+    setError('');
+  };
 
-    return [...rows].sort(
-      (a, b) => (SYMBOL_ORDER[a.symbol] ?? 99) - (SYMBOL_ORDER[b.symbol] ?? 99)
-    );
-  }, [trust.tokens, trust.prices]);
-
-  const openToken = useCallback((row) => {
-    const list = trust.tokens || [];
-    const existing =
-      list.find((t) => row.token && t.id === row.token.id) ||
-      list.find((t) => t.symbol === row.symbol);
-
-    if (existing) {
-      setSelectedToken(existing);
+  const saveBalance = () => {
+    if (!inputValid) {
+      setError('Enter a valid amount');
       return;
     }
+    const next = mode === 'add' ? amount + parsedInput : parsedInput;
+    if (token.id) updateTrustTokenAmount(token.id, next);
+    setSheetOpen(false);
+    setAmountInput('');
+    setError('');
+  };
 
-    const meta = DEFAULT_TOKEN_META[row.symbol];
-    if (!meta) return;
-
-    const id = `tw-default-${row.symbol.toLowerCase()}`;
-    const newToken = {
-      id,
-      name: row.name,
-      symbol: row.symbol,
-      amount: 0,
-      icon: getFallbackIconUrl(meta.marketKey),
-      currentPrice: row.price,
-      priceChange24h: row.change,
-      label: meta.network,
-      network: meta.network,
-      networkMarketKey: meta.marketKey,
-      dexscreenerAddress: meta.dexscreenerAddress,
-    };
-
-    addTrustToken(newToken);
-    setSelectedToken(newToken);
-  }, [trust.tokens, addTrustToken]);
-
-  const visibleRows = showAllTokens ? marketRows : marketRows.slice(0, 3);
-  const canToggleTokenRows = marketRows.length > 3;
-
-  if (selectedToken) {
-    return (
-      <div className="trust-app">
-        <div className="tw-device-shell">
-          <TrustTokenDetail token={selectedToken} onBack={() => setSelectedToken(null)} />
-        </div>
-      </div>
-    );
-  }
+  const activeDisplayPrice = scrubIndex !== null ? chart.prices[scrubIndex] : price;
 
   return (
-    <div className="trust-app">
-      <div className="tw-device-shell">
-        <PullToRefresh className="tw-scroll" onRefresh={refreshTrust} indicatorTop={18}>
-          <div className="tw-shell">
-            {/* Top header */}
-            <header className="tw-header">
-              <button className="tw-wallet-pill" type="button" onClick={() => setShowSetupModal(true)}>
-                <span className="tw-wallet-avatar"><IconWalletAvatar /></span>
-                <span>{trust.walletName || 'Wallet 1'}</span>
-              </button>
-              <div className="tw-header-actions">
-                <button className="tw-circle-btn" type="button" aria-label="History"><IconHistory /></button>
-                <button className="tw-circle-btn" type="button" aria-label="Scan"><IconScan /></button>
-              </div>
-            </header>
-
-            {/* Hyperliquid banner matching IMG_4914 2 */}
-            <section className="tw-banner">
-              <span className="tw-banner-info">i</span>
-              <span className="tw-banner-hl-icon"><IconHyperliquid /></span>
-              <div className="tw-banner-copy">
-                <span className="tw-banner-title">Explore Hyperliquid: 200+ markets live</span>
-                <span className="tw-banner-sub">Explore now</span>
-              </div>
-            </section>
-
-            <h1 className="tw-hero-title">Get started by adding some crypto</h1>
-
-            {/* 3 action cards */}
-            <div className="tw-start-grid">
-              {START_ACTIONS.map((action) => (
-                <div className="tw-start-item" key={action.key}>
-                  <button
-                    className="tw-start-card"
-                    type="button"
-                    aria-label={action.lines.join(' ')}
-                    onClick={action.key === 'buy' ? () => setShowSetupModal(true) : undefined}
-                  >
-                    {action.icon}
-                  </button>
-                  <div className="tw-start-labels">
-                    {action.lines.map((line) => <span key={line}>{line}</span>)}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Explore tokens */}
-            <section className="tw-section-head">
-              <button className="tw-section-link" type="button">
-                Explore tokens
-                <IconChevronRight />
-              </button>
-            </section>
-
-            <div className="tw-market-list">
-              {visibleRows.map((row) => {
-                const negative = row.change < 0;
-                return (
-                  <button className="tw-market-row" type="button" key={row.key} onClick={() => openToken(row)}>
-                    <MarketIcon symbol={row.symbol} imageUrl={row.imageUrl} />
-                    <span className="tw-mkt-name">{row.name}</span>
-                    <span className="tw-mkt-right">
-                      <span className="tw-mkt-price">{formatMoney(row.price)}</span>
-                      <span className={`tw-mkt-change ${negative ? 'neg' : 'pos'}`}>
-                        {negative ? '' : '+'}{row.change.toFixed(2)}%
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {canToggleTokenRows ? (
-              <button className="tw-view-all" type="button" onClick={() => setShowAllTokens((current) => !current)}>
-                <span>{showAllTokens ? 'View less' : 'View all'}</span>
-                <span className={`tw-view-all-chevron ${showAllTokens ? 'expanded' : ''}`}>
-                  <IconChevronRight />
-                </span>
-              </button>
-            ) : null}
-
-            {/* Predictions section matching IMG_4914 2 */}
-            <section className="tw-section-head">
-              <button className="tw-section-link" type="button">
-                Predictions
-                <IconChevronRight />
-              </button>
-            </section>
-
-            {/* Card with illustrated mascot character peeking behind dock */}
-            <div className="tw-predictions-card">
-              <div className="tw-pred-left">
-                <span className="tw-pred-tag">TRENDING</span>
-                <span className="tw-pred-title">Crypto Predictions</span>
-                <span className="tw-pred-sub">Predict price moves and win</span>
-              </div>
-              <div className="tw-pred-mascot" aria-hidden="true">
-                <svg width="68" height="68" viewBox="0 0 100 100" fill="none">
-                  {/* Outer body dome */}
-                  <rect x="20" y="24" width="60" height="62" rx="30" fill="#7582b5" />
-                  <rect x="25" y="28" width="50" height="52" rx="25" fill="#919ecc" />
-                  {/* Visor */}
-                  <rect x="28" y="38" width="44" height="26" rx="13" fill="#1b2034" />
-                  <rect x="33" y="42" width="16" height="5" rx="2.5" fill="rgba(255,255,255,0.45)" />
-                  {/* Feet/Boots */}
-                  <rect x="26" y="80" width="18" height="12" rx="6" fill="#4349e5" />
-                  <rect x="56" y="80" width="18" height="12" rx="6" fill="#4349e5" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </PullToRefresh>
-
-        {/* Floating dock matching IMG_4914 2 */}
-        <nav className="tw-bottom-nav">
-          <div className="tw-nav-pill">
-            <button className="tw-nav-item active" type="button" aria-label="Home">
-              <IconHomeTrust />
-              <span className="tw-nav-dot" />
-            </button>
-            <button className="tw-nav-item" type="button" aria-label="Markets">
-              <IconTrendingTrust />
-            </button>
-            <button className="tw-nav-item" type="button" aria-label="Swap">
-              <IconInfinityTrust />
-            </button>
-          </div>
-          <button className="tw-nav-search" type="button" aria-label="Search">
-            <IconSearch />
+    <div className="twd-screen">
+      <div className="twd-scroll-content">
+        <header className="twd-header">
+          <button className="twd-circle-btn" type="button" onClick={onBack} aria-label="Back">
+            <IconChevronLeft />
           </button>
-        </nav>
+          <button
+            className={`twd-circle-btn star ${starred ? 'active' : ''}`}
+            type="button"
+            onClick={() => setStarred((s) => !s)}
+            aria-label="Favorite"
+          >
+            <IconStar filled={starred} />
+          </button>
+        </header>
+
+        <div className="twd-token-row">
+          <div className="twd-token-icon-wrapper">
+            <span className="twd-token-icon">
+              {quote.imageUrl || token.icon ? (
+                <img
+                  src={quote.imageUrl || token.icon}
+                  alt={token.symbol}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+              ) : token.symbol === 'ETH' ? (
+                <IconEth />
+              ) : (
+                (token.symbol || '?').slice(0, 1)
+              )}
+            </span>
+            {overlayBadge ? (
+              <span className="twd-token-badge">
+                <img
+                  src={overlayBadge}
+                  alt=""
+                  onError={(e) => {
+                    const netKey = token.networkMarketKey || getNativeMarketKeyForNetwork(token.network) || (token.symbol || '').toLowerCase();
+                    const fallback = getFallbackIconUrl(netKey);
+                    if (fallback && e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    } else {
+                      e.currentTarget.style.display = 'none';
+                    }
+                  }}
+                />
+              </span>
+            ) : null}
+          </div>
+          <div className="twd-token-id">
+            <span className="twd-token-sym">{token.symbol}</span>
+            <span className="twd-token-name">{token.name || token.symbol}</span>
+          </div>
+          <div className="twd-token-side">
+            <div className="twd-price-row">
+              <IconSwapHorizontal />
+              <span className="twd-token-price">{formatPrice(activeDisplayPrice)}</span>
+            </div>
+            <span className={`twd-token-change ${change === 0 ? 'flat' : negative ? 'neg' : 'pos'}`}>
+              {change !== 0
+                ? `${changeUsd >= 0 ? '+' : '-'}${formatPrice(Math.abs(changeUsd))} (${Math.abs(change).toFixed(2)}%)`
+                : '0.00%'}
+            </span>
+          </div>
+        </div>
+
+        <div
+          className="twd-chart"
+          ref={chartRef}
+          onPointerDown={(e) => {
+            e.currentTarget.setPointerCapture?.(e.pointerId);
+            handleScrubMove(e);
+          }}
+          onPointerMove={(e) => {
+            if (scrubIndex !== null) handleScrubMove(e);
+          }}
+          onPointerUp={() => setScrubIndex(null)}
+          onPointerCancel={() => setScrubIndex(null)}
+          onPointerLeave={() => setScrubIndex(null)}
+        >
+          <svg viewBox="0 0 390 260" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+            <defs>
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={lineColor} stopOpacity="0.26" />
+                <stop offset="100%" stopColor={lineColor} stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d={chart.areaD} fill={`url(#${gradientId})`} />
+            <path
+              d={chart.lineD}
+              fill="none"
+              stroke={lineColor}
+              strokeWidth="2.4"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+
+            {/* Resting state: green dot with halo matching reference */}
+            {scrubIndex === null && (
+              <g>
+                <circle
+                  cx={endX}
+                  cy={endY}
+                  r="13"
+                  fill={lineColor}
+                  fillOpacity="0.22"
+                />
+                <circle
+                  cx={endX}
+                  cy={endY}
+                  r="5"
+                  fill={lineColor}
+                />
+              </g>
+            )}
+
+            {/* Scrubbing state: synchronized touch tracking */}
+            {scrubIndex !== null && (
+              <g>
+                <line
+                  x1={chart.x(scrubIndex)}
+                  y1={0}
+                  x2={chart.x(scrubIndex)}
+                  y2={chart.H}
+                  stroke="rgba(255, 255, 255, 0.22)"
+                  strokeWidth="1.5"
+                />
+                <circle
+                  cx={chart.x(scrubIndex)}
+                  cy={chart.yFor(chart.prices[scrubIndex])}
+                  r="10"
+                  fill="#ffffff"
+                  fillOpacity="0.22"
+                />
+                <circle
+                  cx={chart.x(scrubIndex)}
+                  cy={chart.yFor(chart.prices[scrubIndex])}
+                  r="4.5"
+                  fill="#ffffff"
+                />
+              </g>
+            )}
+          </svg>
+
+          {scrubIndex !== null && (
+            <div
+              className="twd-scrub-label"
+              style={{ left: `${(chart.x(scrubIndex) / chart.W) * 100}%` }}
+            >
+              {formatPrice(chart.prices[scrubIndex])}
+            </div>
+          )}
+        </div>
+
+        <div className="twd-timeframes">
+          <button className="twd-tf-settings" type="button" aria-label="Chart settings">
+            <IconCandles />
+          </button>
+          {TIMEFRAMES.map((tf) => (
+            <button
+              key={tf}
+              className={`twd-tf ${timeframe === tf ? 'active' : ''}`}
+              type="button"
+              onClick={() => {
+                setTimeframe(tf);
+                setScrubIndex(null);
+              }}
+            >
+              {tf}
+            </button>
+          ))}
+        </div>
+
+        <button className="twd-balance" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
+          <span className="twd-balance-label">Balance</span>
+          <span className="twd-balance-value">{formatMoney(balanceUsd)}</span>
+          <span className="twd-balance-amount">{formatAmount(amount)} {token.symbol}</span>
+        </button>
+
+        <div className="twd-actions">
+          <button className="twd-action-btn" type="button">
+            <IconSend />
+            <span>Send</span>
+          </button>
+          <button className="twd-action-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
+            <IconReceive />
+            <span>Receive</span>
+          </button>
+          <button className="twd-action-btn" type="button">
+            <IconSwap />
+            <span>Swap</span>
+          </button>
+        </div>
+
+        <button className="twd-about-btn" type="button">
+          <div className="twd-about-left">
+            <IconSparkle />
+            <span>About {token.name || token.symbol}</span>
+            <IconChevronRight />
+          </div>
+        </button>
+
+        {/* Real Trust Wallet feed section beneath 'About' */}
+        <section className="twd-recent-section">
+          <h2 className="twd-recent-heading">Recent Transactions</h2>
+          <div className="twd-recent-empty">
+            <p>No transactions yet</p>
+          </div>
+        </section>
+
+        <div className="twd-scroll-spacer" />
       </div>
 
-      {showSetupModal ? (
-        <TrustSpoofModal
-          canInstall={Boolean(deferredInstallPrompt) && !isStandalone}
-          isStandalone={isStandalone}
-          onClose={() => setShowSetupModal(false)}
-          onInstall={handleInstallApp}
-        />
+      <button className="twd-buy-btn" type="button" onClick={() => { setMode('add'); setSheetOpen(true); }}>
+        Buy
+      </button>
+
+      {sheetOpen ? (
+        <div
+          className="twd-sheet-overlay"
+          onClick={(e) => { if (e.target === e.currentTarget) setSheetOpen(false); }}
+        >
+          <div className="twd-sheet">
+            <div className="twd-sheet-handle" />
+            <div className="twd-sheet-title">
+              <h3>Receive {token.symbol}</h3>
+              <button className="twd-sheet-close" type="button" onClick={() => setSheetOpen(false)}>×</button>
+            </div>
+            <div className="twd-mode-seg">
+              <button
+                className={mode === 'add' ? 'active' : ''}
+                type="button"
+                onClick={() => setMode('add')}
+              >
+                Add to balance
+              </button>
+              <button
+                className={mode === 'set' ? 'active' : ''}
+                type="button"
+                onClick={() => setMode('set')}
+              >
+                Set exact
+              </button>
+            </div>
+            <div className="twd-form-group">
+              <label>Amount ({token.symbol})</label>
+              <input
+                type="number"
+                step="any"
+                inputMode="decimal"
+                className="twd-amount-input"
+                value={amountInput}
+                placeholder="0.00"
+                onChange={(e) => { setAmountInput(e.target.value); setError(''); }}
+              />
+              <div className="twd-usd-preview">≈ {formatMoney(usdPreview)}</div>
+            </div>
+            <div className="twd-chip-row">
+              {QUICK_USD.map((usd) => (
+                <button
+                  key={usd}
+                  className="twd-chip"
+                  type="button"
+                  disabled={!price}
+                  onClick={() => applyQuickUsd(usd)}
+                >
+                  +${usd.toLocaleString()}
+                </button>
+              ))}
+            </div>
+            {error ? <div className="twd-error">{error}</div> : null}
+            <button className="twd-sheet-save" type="button" onClick={saveBalance}>
+              {mode === 'add' ? 'Add to balance' : 'Save balance'}
+            </button>
+          </div>
+        </div>
       ) : null}
     </div>
   );
