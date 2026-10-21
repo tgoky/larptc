@@ -1,28 +1,26 @@
 :root {
---tw-bg: #0e111a;            /* Darker, cooler background tone */
---tw-surface: #1d2031;       /* Muted dark-slate for cards and buttons */
---tw-surface-soft: #20222f;   /* Standardized surface color for header pills */
---tw-nav-bg: #0e1017;         /* Darker bottom navigation bar */
---tw-nav-active: #1e2130;    /* Active state background inside bottom nav */
---tw-text: #f5f6fa;
---tw-text-dim: #797e93;       /* Slightly dimmer secondary text */
+  --tw-bg: #0e111a;
+  --tw-surface: #1d2031;
+  --tw-surface-soft: #20222f;
+  --tw-nav-bg: #141722;
+  --tw-nav-active: #202438;
+  --tw-text: #f5f6fa;
+  --tw-text-dim: #797e93;
   --tw-border: rgba(255, 255, 255, 0.07);
   --tw-border-strong: rgba(255, 255, 255, 0.12);
-  --tw-red-dot: #ff5b61;
-  --tw-green: #42f782;
   --tw-pos: #30d158;
   --tw-neg: #ff453a;
   --tw-bnb: #f0b90b;
   --tw-btc: #f7931a;
   --tw-eth: #627eea;
-  --tw-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --tw-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
 }
 
 .trust-app {
   position: fixed !important;
   inset: 0 !important;
   width: 100% !important;
-  height: auto !important; /* Change from 100% to auto so top:0 and bottom:0 stretch edge-to-edge */
+  height: auto !important;
   background: var(--tw-bg) !important;
   color: var(--tw-text);
   font-family: var(--tw-font);
@@ -59,11 +57,12 @@
   display: none;
 }
 
+/* Bottom runway allows full scrolling clear of the dock */
 .tw-shell {
-  padding: 6px 17px calc(110px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 4px 17px calc(115px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
-/* ---------------- header ---------------- */
+/* ---------------- HEADER ---------------- */
 
 .tw-header {
   display: flex;
@@ -76,25 +75,25 @@
 .tw-wallet-pill {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  height: 44px;
-  padding: 0 18px 0 5px;
+  gap: 9px;
+  height: 42px;
+  padding: 0 16px 0 5px;
   border: 0;
   border-radius: 999px;
   background: var(--tw-surface-soft);
   color: var(--tw-text);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
   cursor: pointer;
 }
 
 .tw-wallet-avatar {
-  width: 34px;
-  height: 34px;
+  width: 33px;
+  height: 33px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #5d5df8 0%, #3e3eea 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   display: grid;
   place-items: center;
   color: #fff;
@@ -108,8 +107,8 @@
 }
 
 .tw-circle-btn {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border: 0;
   border-radius: 50%;
   background: var(--tw-surface-soft);
@@ -120,33 +119,35 @@
   cursor: pointer;
 }
 
-/* ---------------- swap-fee banner ---------------- */
+/* ---------------- HYPERLIQUID BANNER ---------------- */
 
 .tw-banner {
-  margin-top: 20px;
+  margin-top: 14px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
-background: rgba(255, 255, 255, 0.025);
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.025);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 20px;
-
 }
 
 .tw-banner-info {
+  font-family: serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
   color: #6f7288;
   display: grid;
   place-items: center;
   flex-shrink: 0;
 }
 
-.tw-banner-icon {
-  width: 38px;
-  height: 38px;
+.tw-banner-hl-icon {
+  width: 36px;
+  height: 36px;
   border-radius: 12px;
-  background: rgba(48, 209, 88, 0.16);
-  color: var(--tw-pos);
+  background: rgba(37, 214, 149, 0.12);
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -155,7 +156,7 @@ background: rgba(255, 255, 255, 0.025);
 .tw-banner-copy {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   min-width: 0;
 }
 
@@ -163,37 +164,36 @@ background: rgba(255, 255, 255, 0.025);
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: -0.015em;
-  line-height: 1.15;
   color: var(--tw-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tw-banner-sub {
   font-size: 11px;
   font-weight: 500;
   color: var(--tw-text-dim);
-  letter-spacing: -0.01em;
-  line-height: 1.2;
 }
 
-/* ---------------- hero ---------------- */
+/* ---------------- HERO TITLE ---------------- */
 
 .tw-hero-title {
-  margin: 26px 0 0;
-  font-size: clamp(14px, 4.5vw, 17px);
+  margin: 18px 0 0;
+  font-size: 16px;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  letter-spacing: -0.025em;
   color: var(--tw-text);
   white-space: nowrap;
 }
 
-/* ---------------- get-started cards ---------------- */
+/* ---------------- GET STARTED 3 CARDS ---------------- */
 
 .tw-start-grid {
-  margin-top: 28px;
+  margin-top: 18px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .tw-start-item {
@@ -204,9 +204,9 @@ background: rgba(255, 255, 255, 0.025);
 
 .tw-start-card {
   width: 100%;
-  height: 66px;
+  height: 62px;
   border: 0;
-  border-radius: 21px;
+  border-radius: 20px;
   background: var(--tw-surface);
   color: #fff;
   display: grid;
@@ -232,11 +232,6 @@ background: rgba(255, 255, 255, 0.025);
   color: #fff;
 }
 
-.tw-applepay svg {
-  width: 15px;
-  height: 19px;
-}
-
 .tw-applepay span {
   font-size: 15px;
   font-weight: 600;
@@ -245,7 +240,7 @@ background: rgba(255, 255, 255, 0.025);
 }
 
 .tw-start-labels {
-  margin-top: 12px;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -253,40 +248,33 @@ background: rgba(255, 255, 255, 0.025);
 }
 
 .tw-start-labels span {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.015em;
-  line-height: 1.3;
+  line-height: 1.25;
   color: var(--tw-text);
 }
 
-/* ---------------- sections ---------------- */
+/* ---------------- SECTIONS & EXPLORE TOKENS ---------------- */
 
 .tw-section-head {
-  margin: 34px 0 12px;
+  margin: 20px 0 8px;
 }
 
 .tw-section-link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   border: 0;
   background: transparent;
   padding: 0;
   color: var(--tw-text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   letter-spacing: -0.02em;
   cursor: pointer;
 }
-
-.tw-section-link svg {
-  width: 15px;
-  height: 15px;
-}
-
-/* ---------------- explore tokens ---------------- */
 
 .tw-market-list {
   display: flex;
@@ -296,9 +284,9 @@ background: rgba(255, 255, 255, 0.025);
 .tw-market-row {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
   width: 100%;
-  padding: 10px 0;
+  padding: 8px 0;
   border: 0;
   background: transparent;
   color: inherit;
@@ -308,8 +296,8 @@ background: rgba(255, 255, 255, 0.025);
 }
 
 .tw-mkt-icon {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -331,17 +319,10 @@ background: rgba(255, 255, 255, 0.025);
   font-weight: 700;
 }
 
-.tw-mkt-btc { background: var(--tw-btc); color: #fff; }
-.tw-mkt-eth { background: var(--tw-eth); color: #fff; }
-.tw-mkt-bnb { 
-  background: var(--tw-bnb); 
-  color: #0d0e1b; 
-}
-
 .tw-mkt-name {
   flex: 1;
   min-width: 0;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.02em;
   white-space: nowrap;
@@ -353,19 +334,19 @@ background: rgba(255, 255, 255, 0.025);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 3px;
   flex-shrink: 0;
 }
 
 .tw-mkt-price {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
 }
 
 .tw-mkt-change {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -374,15 +355,15 @@ background: rgba(255, 255, 255, 0.025);
 .tw-mkt-change.pos { color: var(--tw-pos); }
 .tw-mkt-change.neg { color: var(--tw-neg); }
 
-/* ---------------- view all ---------------- */
+/* ---------------- VIEW ALL ---------------- */
 
 .tw-view-all {
-  margin-top: 22px;
+  margin-top: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  height: 44px;
-  padding: 0 18px 0 20px;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px 0 18px;
   border: 0;
   border-radius: 999px;
   background: var(--tw-surface);
@@ -392,11 +373,6 @@ background: rgba(255, 255, 255, 0.025);
   font-weight: 700;
   letter-spacing: -0.01em;
   cursor: pointer;
-}
-
-.tw-view-all svg {
-  width: 14px;
-  height: 14px;
 }
 
 .tw-view-all-chevron {
@@ -409,68 +385,13 @@ background: rgba(255, 255, 255, 0.025);
   transform: rotate(90deg);
 }
 
-/* ---------------- perps ---------------- */
+/* ---------------- PREDICTIONS CARD MATCHING IMG_4914 2 ---------------- */
 
-.tw-perps-row {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  margin: 6px -17px 0;
-  padding: 4px 17px 8px;
-}
-
-.tw-perps-row::-webkit-scrollbar {
-  display: none;
-}
-
-.tw-perp-card {
-  flex: 0 0 150px;
-  height: 116px;
-  border: 0;
-  border-radius: 21px;
-background: #1e2132;
-  color: var(--tw-text);
-  padding: 14px 14px 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.tw-perp-top {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.tw-perp-symbol {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.tw-perp-lev {
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--tw-text-dim);
-}
-
-.tw-perp-price {
-  font-size: 12px;
-  font-weight: 600;
-  color: #b6bac9;
-  letter-spacing: -0.01em;
-}
-
-/* ---------------- Predictions banner (replaces the sliced Perps cards) ---------------- */
-.tw-predictions-banner {
-  margin: 6px 0 20px;
-  min-height: 84px;
+.tw-predictions-card {
+  margin-top: 6px;
+  height: 104px;
   border-radius: 20px;
-  background: #141726;
+  background: #141727;
   border: 1px solid rgba(255, 255, 255, 0.06);
   padding: 16px 18px;
   display: flex;
@@ -479,47 +400,52 @@ background: #1e2132;
   cursor: pointer;
 }
 
-.tw-pred-copy {
+.tw-pred-left {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+}
+
+.tw-pred-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #797e93;
+  letter-spacing: 0.05em;
 }
 
 .tw-pred-title {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--tw-text);
+  color: #ffffff;
   letter-spacing: -0.01em;
 }
 
 .tw-pred-sub {
   font-size: 12px;
-  color: var(--tw-text-dim);
-  font-weight: 500;
+  color: #797e93;
 }
 
-.tw-pred-badge {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(48, 209, 88, 0.16);
-  color: var(--tw-pos);
-  letter-spacing: 0.04em;
+.tw-pred-mascot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transform: translateY(-2px);
 }
 
-/* ---------------- bottom nav ---------------- */
+/* ---------------- FLOATING BOTTOM NAV MATCHING IMG_4914 2 ---------------- */
+
 .tw-bottom-nav {
   position: fixed !important;
   left: 50% !important;
-  bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) - 14px)) !important;
+  /* Resting cleanly ~15px above the home indicator */
+  bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) - 18px)) !important;
   transform: translateX(-50%) !important;
   width: calc(100% - 32px) !important;
   max-width: 396px !important;
-  margin: 0 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 10px !important;
   padding: 0 !important;
   background: transparent !important;
   border: none !important;
@@ -528,12 +454,12 @@ background: #1e2132;
   pointer-events: none !important;
 }
 
-
+/* 3 equal columns for Home, Markets, Swap */
 .tw-nav-pill {
   flex: 1;
-  height: 60px;
+  height: 56px;
   border-radius: 999px;
-  background: #141722;
+  background: var(--tw-nav-bg);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
   display: grid;
@@ -543,37 +469,43 @@ background: #1e2132;
   pointer-events: auto !important;
 }
 
-
-
 .tw-nav-item {
   position: relative;
   width: 100%;
-  height: 52px;
+  height: 48px;
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: #797e95;
+  color: #797e93;
   display: grid;
   place-items: center;
   padding: 0;
   cursor: pointer;
 }
 
-
-
-
 .tw-nav-item.active {
-  background: #202438;
+  background: var(--tw-nav-active);
   color: #ffffff;
 }
 
+/* Red notification dot from IMG_4914 2 */
+.tw-nav-dot {
+  position: absolute;
+  top: 6px;
+  right: 18px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff5b61;
+}
 
+/* Circular Search Icon */
 .tw-nav-search {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  background: #141722;
+  background: var(--tw-nav-bg);
   color: #8b8fa5;
   display: grid;
   place-items: center;
@@ -584,8 +516,7 @@ background: #1e2132;
   pointer-events: auto !important;
 }
 
-
-/* ---------------- modal (kept for TrustSpoofModal) ---------------- */
+/* ---------------- SPOOF MODAL STYLES ---------------- */
 
 .tw-modal-overlay {
   position: fixed;
@@ -679,7 +610,6 @@ background: #1e2132;
   color: #fff;
   padding: 0 14px;
   font-size: 12.5px;
-  font-family: var(--tw-font-medium);
 }
 
 .tw-input:focus {
@@ -707,7 +637,6 @@ background: #1e2132;
   background: #14162a;
   color: #fff;
   font-size: 11.5px;
-  font-family: var(--tw-font-semibold);
 }
 
 .tw-quick-btn.active {
@@ -715,19 +644,17 @@ background: #1e2132;
   background: rgba(66, 247, 130, 0.08);
 }
 
-.tw-btn-primary,
-.tw-btn-secondary,
-.tw-btn-danger {
+.tw-btn-primary, .tw-btn-secondary, .tw-btn-danger {
   width: 100%;
   height: 46px;
   border-radius: 14px;
   border: 0;
   font-size: 12.5px;
-  font-family: var(--tw-font-semibold);
+  font-weight: 700;
 }
 
 .tw-btn-primary {
-  background: var(--tw-green);
+  background: var(--tw-pos);
   color: #102013;
 }
 

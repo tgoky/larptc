@@ -12,12 +12,12 @@ import './TrustWallet.css';
 
 /* ---------------------------------- icons --------------------------------- */
 
-// Exact Trust Wallet 1 Avatar with yellow/orange gradient
+// Genuine yellow/orange gradient avatar matching IMG_4914 2
 const IconWalletAvatar = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M7 7V5.8A2.8 2.8 0 0 1 9.8 3h4.4A2.8 2.8 0 0 1 17 5.8V7" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-    <rect x="3" y="7" width="18" height="14" rx="4" fill="#fff" />
-    <circle cx="16.5" cy="14" r="1.6" fill="#f7931a" />
+    <path d="M7 6.5V5.5A2.5 2.5 0 0 1 9.5 3h5A2.5 2.5 0 0 1 17 5.5v1" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" />
+    <rect x="2.5" y="6.5" width="19" height="14.5" rx="3.8" fill="#fff" />
+    <circle cx="16.8" cy="13.8" r="1.8" fill="#f7931a" />
   </svg>
 );
 
@@ -40,10 +40,10 @@ const IconScan = () => (
   </svg>
 );
 
-const IconHyperliquidInfinity = () => (
+const IconHyperliquid = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      d="M12 12c-2.2-2.8-4.5-4.2-6.6-4.2A4.2 4.2 0 1 0 5.4 16c2.1 0 4.4-1.4 6.6-4.2Zm0 0c2.2 2.8 4.5 4.2 6.6 4.2a4.2 4.2 0 1 0 0-8.4c-2.1 0-4.4 1.4-6.6 4.2Z"
+      d="M12 12c-2.4-3.2-5-4.8-7.2-4.8A4.8 4.8 0 1 0 5.4 16.8c2.4 0 5-1.6 7.2-4.8Zm0 0c2.4 3.2 5 4.8 7.2 4.8a4.8 4.8 0 1 0 0-9.6c-2.4 0-5 1.6-7.2 4.8Z"
       stroke="#4ade80"
       strokeWidth="2.4"
       strokeLinecap="round"
@@ -53,7 +53,7 @@ const IconHyperliquidInfinity = () => (
 );
 
 const IconChevronRight = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="m9 5 7 7-7 7" />
   </svg>
 );
@@ -128,32 +128,32 @@ const IconApplePay = () => (
   </span>
 );
 
-/* Exact glyph from IMG_4914 2: Rounded house/wallet with slot */
+// Exact Trust Wallet 1:1 home icon glyph (house with bottom line slot)
 const IconHomeTrust = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      d="M5 9.5L12 4l7 5.5v8.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 18V9.5Z"
+      d="M5 9.8L12 4.2l7 5.6v8.4a2.4 2.4 0 0 1-2.4 2.4H7.4A2.4 2.4 0 0 1 5 18.2V9.8Z"
       fill="#ffffff"
     />
-    <rect x="10" y="16" width="4" height="2" rx="1" fill="#141722" />
+    <rect x="9.8" y="15.8" width="4.4" height="2" rx="1" fill="#131622" />
   </svg>
 );
 
 const IconTrendingTrust = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7d8299" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#797e93" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M16 7h5v5" />
     <path d="m21 7-7.5 7.5-4-4L3 17" />
   </svg>
 );
 
 const IconInfinityTrust = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7d8299" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#797e93" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
   </svg>
 );
 
 const IconSearch = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8b8fa5" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8b8fa5" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
     <circle cx="11" cy="11" r="7" />
     <path d="m20.5 20.5-4.5-4.5" />
   </svg>
@@ -344,7 +344,7 @@ export default function TrustWallet() {
       <div className="tw-device-shell">
         <PullToRefresh className="tw-scroll" onRefresh={refreshTrust} indicatorTop={18}>
           <div className="tw-shell">
-            {/* Header */}
+            {/* Top header */}
             <header className="tw-header">
               <button className="tw-wallet-pill" type="button" onClick={() => setShowSetupModal(true)}>
                 <span className="tw-wallet-avatar"><IconWalletAvatar /></span>
@@ -356,10 +356,10 @@ export default function TrustWallet() {
               </div>
             </header>
 
-            {/* Hyperliquid Banner matching IMG_4914 2 */}
+            {/* Hyperliquid banner matching IMG_4914 2 */}
             <section className="tw-banner">
               <span className="tw-banner-info">i</span>
-              <span className="tw-banner-hl-icon"><IconHyperliquidInfinity /></span>
+              <span className="tw-banner-hl-icon"><IconHyperliquid /></span>
               <div className="tw-banner-copy">
                 <span className="tw-banner-title">Explore Hyperliquid: 200+ markets live</span>
                 <span className="tw-banner-sub">Explore now</span>
@@ -368,7 +368,7 @@ export default function TrustWallet() {
 
             <h1 className="tw-hero-title">Get started by adding some crypto</h1>
 
-            {/* 3 Action Cards */}
+            {/* 3 action cards */}
             <div className="tw-start-grid">
               {START_ACTIONS.map((action) => (
                 <div className="tw-start-item" key={action.key}>
@@ -430,18 +430,31 @@ export default function TrustWallet() {
               </button>
             </section>
 
-            <div className="tw-predictions-row">
-              <div className="tw-prediction-card">
-                <div className="tw-pred-info">
-                  <span className="tw-pred-title">Predict & Earn</span>
-                  <span className="tw-pred-sub">Crypto price moves</span>
-                </div>
+            {/* Card with illustrated mascot character peeking behind dock */}
+            <div className="tw-predictions-card">
+              <div className="tw-pred-left">
+                <span className="tw-pred-tag">TRENDING</span>
+                <span className="tw-pred-title">Crypto Predictions</span>
+                <span className="tw-pred-sub">Predict price moves and win</span>
+              </div>
+              <div className="tw-pred-mascot" aria-hidden="true">
+                <svg width="68" height="68" viewBox="0 0 100 100" fill="none">
+                  {/* Outer body dome */}
+                  <rect x="20" y="24" width="60" height="62" rx="30" fill="#7582b5" />
+                  <rect x="25" y="28" width="50" height="52" rx="25" fill="#919ecc" />
+                  {/* Visor */}
+                  <rect x="28" y="38" width="44" height="26" rx="13" fill="#1b2034" />
+                  <rect x="33" y="42" width="16" height="5" rx="2.5" fill="rgba(255,255,255,0.45)" />
+                  {/* Feet/Boots */}
+                  <rect x="26" y="80" width="18" height="12" rx="6" fill="#4349e5" />
+                  <rect x="56" y="80" width="18" height="12" rx="6" fill="#4349e5" />
+                </svg>
               </div>
             </div>
           </div>
         </PullToRefresh>
 
-        {/* Floating Bottom Dock: 3 items in pill + 1 search button with red notification dot */}
+        {/* Floating dock matching IMG_4914 2 */}
         <nav className="tw-bottom-nav">
           <div className="tw-nav-pill">
             <button className="tw-nav-item active" type="button" aria-label="Home">
